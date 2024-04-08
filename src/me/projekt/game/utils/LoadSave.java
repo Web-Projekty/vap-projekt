@@ -1,7 +1,5 @@
 package me.projekt.game.utils;
 
-import me.projekt.game.main.Game;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
