@@ -22,14 +22,14 @@ public class Player extends Entity {
     private boolean left, up, right, down, jump;
     private final float playerSpeed = 2.0f;
     private int[][] lvlData;
-    private float xDrawOffset = 8 * Game.SCALE;
-    private float yDrawOffset = 4 * Game.SCALE;
+    private float xDrawOffset = 8 * Game.SCALE; // umístění borderu na spritu hráče na ose x
+    private float yDrawOffset = 4 * Game.SCALE; // umístění borderu na spritu hráče na ose y
 
     // Jumping / Gravity
-    private float airSpeed = 0f;
-    private float gravity = 0.04f * Game.SCALE;
-    private float jumpSpeed = -2.25f * Game.SCALE;
-    private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
+    private float airSpeed = 0f; // rychlost ve vzduchu
+    private float gravity = 0.04f * Game.SCALE; // síla gravitace
+    private float jumpSpeed = -2.25f * Game.SCALE; // rychlost skoku
+    private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
     private boolean inAir = false;
 
     public Player(float x, float y, int width, int height) {
