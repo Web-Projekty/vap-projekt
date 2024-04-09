@@ -23,11 +23,11 @@ public class LevelManager {
 
     private void importSprites() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
-        ;
-        levelSprite = new BufferedImage[48];
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < 12; i++) {
-                int index = j * 12 + i;
+
+        levelSprite = new BufferedImage[48]; // 4x12 spritů v sheetu
+        for (int j = 0; j < 4; j++) { // projde řádky
+            for (int i = 0; i < 12; i++) { // projde sloupce
+                int index = j * 12 + i; // vypočítá index pro sprite
                 levelSprite[index] = img.getSubimage(i * 32, j * 32, 32, 32);
             }
         }
