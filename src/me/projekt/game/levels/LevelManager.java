@@ -5,6 +5,7 @@ import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import static me.projekt.game.main.Game.TILES_SIZE;
 
@@ -38,7 +39,6 @@ public class LevelManager {
             for (int i = 0; i < levelOne.getLevelData()[0].length; i++) {
                 int index = levelOne.getSpriteIndex(i, j);
                 g.drawImage(levelSprite[index], TILES_SIZE * i - lvlOffset, TILES_SIZE * j, TILES_SIZE, TILES_SIZE, null);
-
             }
         }
     }

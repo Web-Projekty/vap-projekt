@@ -5,5 +5,13 @@ public enum GameState {
     PLAYING,
     MENU;
 
-    public static GameState state = MENU;
+    private static GameState state = MENU;
+
+    public static GameState getState() {
+        return state;
+    }
+
+    public static void setState(GameState newState) {
+        state = newState;
+    }
 }

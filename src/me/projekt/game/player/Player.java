@@ -1,12 +1,13 @@
-package me.projekt.game.entities;
+package me.projekt.game.player;
 
+import me.projekt.game.entities.Entity;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static me.projekt.game.utils.Constants.PlayerConstants.*;
+import static me.projekt.game.player.PlayerAction.*;
 import static me.projekt.game.utils.Utils.*;
 
 public class Player extends Entity {
@@ -14,7 +15,7 @@ public class Player extends Entity {
     // Animations
     private BufferedImage[][] animations;
     private int animTick, animIndex, animSpeed = 25; // čím menší, tím bude rychlejší animace
-    private int playerAction = IDLE;
+    private PlayerAction playerAction = IDLE;
 
     // Moving
     private boolean moving = false, attacking = false;
@@ -44,7 +45,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g, int lvlOffset) {
-        g.drawImage(animations[playerAction][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+        g.drawImage(animations[playerAction.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
 //        drawHitbox(g);
     }
 
@@ -53,7 +54,7 @@ public class Player extends Entity {
         if (animTick >= animSpeed) {
             animTick = 0;
             animIndex++;
-            if (animIndex >= getSpriteAmount(playerAction)) {
+            if (animIndex >= playerAction.getSpriteAmount()) {
                 animIndex = 0;
                 attacking = false;
             }
@@ -62,7 +63,7 @@ public class Player extends Entity {
 
     private void setAnimation() {
 
-        int startAnim = playerAction;
+        PlayerAction startAnim = playerAction;
 
         if (moving) playerAction = RUNNING;
         else playerAction = IDLE;

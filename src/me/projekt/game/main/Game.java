@@ -15,7 +15,7 @@ public class Game implements Runnable {
     private final int UPS_SET = 200;
 
     private Playing playing;
-    private me.projekt.game.gamestates.Menu menu;
+    private Menu menu;
 
     public static final int TILES_DEFAULT_SIZE = 32;
     public static final float SCALE = 2f;
@@ -48,7 +48,7 @@ public class Game implements Runnable {
 
     public void update() {
 
-        switch (GameState.state) {
+        switch (GameState.getState()) {
             case MENU:
                 menu.update();
                 break;
@@ -62,7 +62,7 @@ public class Game implements Runnable {
 
     public void render(Graphics g) {
 
-        switch (GameState.state) {
+        switch (GameState.getState()) {
             case MENU:
                 menu.draw(g);
                 break;
@@ -120,7 +120,7 @@ public class Game implements Runnable {
     }
 
     public void windowFocusLost() {
-        if (GameState.state == GameState.PLAYING) {
+        if (GameState.getState() == GameState.PLAYING) {
             playing.windowFocusLost();
         }
     }

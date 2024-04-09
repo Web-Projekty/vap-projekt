@@ -1,6 +1,6 @@
 package me.projekt.game.gamestates;
 
-import me.projekt.game.entities.Player;
+import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
@@ -112,7 +112,7 @@ public class Playing extends State implements StateMethods {
                 player.setJump(true);
                 break;
             case KeyEvent.VK_ENTER:
-                GameState.state = GameState.MENU;
+                GameState.setState(GameState.MENU);
                 break;
         }
     }
