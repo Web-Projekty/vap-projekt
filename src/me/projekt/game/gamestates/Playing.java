@@ -17,8 +17,8 @@ public class Playing extends State implements StateMethods {
     private LevelManager levelManager;
 
     private int xLvlOffset;
-    private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
-    private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
+    private int leftBorder = (int) (0.4 * Game.GAME_WIDTH);
+    private int rightBorder = (int) (0.6 * Game.GAME_WIDTH);
     private int lvlTilesWide = LoadSave.getLevelData()[0].length; // celková délka mapy na tily
     private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH; // maximální offset
     private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE; // transformace na pixely
