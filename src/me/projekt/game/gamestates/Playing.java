@@ -1,5 +1,6 @@
 package me.projekt.game.gamestates;
 
+import me.projekt.game.UI.PauseOverlay;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
 import me.projekt.game.main.Game;
@@ -19,6 +20,8 @@ public class Playing extends State implements StateMethods {
 
     private boolean gameOver;
     private boolean levelCompleted;
+    private boolean paused = false;
+    private PauseOverlay pauseOverlay;
 
     private int xLvlOffset;
     private int leftBorder = (int) (0.5 * GAME_WIDTH);
@@ -45,6 +48,7 @@ public class Playing extends State implements StateMethods {
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
         this.levelCompletedOverlay = new LevelCompletedOverlay(this);
+        pauseOverlay = new PauseOverlay(this);
     }
 
     public void loadNextLevel() {
@@ -71,9 +75,14 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void update() {
-        levelManager.update();
-        player.update();
-        checkCloseToBorder();
+        if(!paused) {
+            levelManager.update();
+            player.update();
+            checkCloseToBorder();
+        }
+        else {
+            pauseOverlay.update();
+        }
     }
 
     @Override
@@ -81,6 +90,8 @@ public class Playing extends State implements StateMethods {
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
 
+        if(paused)
+            pauseOverlay.draw(g);
         /*if (paused) {
             //Tohle Matyáši jenom odkomentuj, bylo do toho něco přidáno
             g.setColor(new Color(0, 0, 0, 100));
@@ -110,6 +121,11 @@ public class Playing extends State implements StateMethods {
         else if (yLvlOffset < 0) yLvlOffset = 0;
     }
 
+    public void mouseDragged(MouseEvent e) {
+        if(paused)
+            pauseOverlay.mouseDragged(e);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -119,17 +135,23 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if(paused)
+            pauseOverlay.mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if(paused)
+            pauseOverlay.mouseReleased(e);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if(paused)
+            pauseOverlay.mouseMoved(e);
+    }
+    public void unpauseGame() {
+        paused = false;
     }
 
     @Override
@@ -147,8 +169,8 @@ public class Playing extends State implements StateMethods {
             case KeyEvent.VK_SPACE:
                 player.setJump(true);
                 break;
-            case KeyEvent.VK_ENTER:
-                GameState.setState(GameState.MENU);
+            case KeyEvent.VK_ESCAPE:
+                paused = !paused;
                 break;
             case KeyEvent.VK_N:
                 game.getPlaying().loadNextLevel();

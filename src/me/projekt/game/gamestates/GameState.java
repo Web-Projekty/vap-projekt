@@ -3,9 +3,11 @@ package me.projekt.game.gamestates;
 public enum GameState {
 
     PLAYING,
-    MENU;
+    MENU,
+    OPTIONS,
+    QUIT, gameState;
 
-    private static GameState state = MENU;
+    public static GameState state = MENU;
 
     public static GameState getState() {
         return state;
