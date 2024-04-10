@@ -90,14 +90,11 @@ public class Playing extends State implements StateMethods {
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
 
-        if(paused)
-            pauseOverlay.draw(g);
-        /*if (paused) {
-            //Tohle Matyáši jenom odkomentuj, bylo do toho něco přidáno
+        if (paused) {
             g.setColor(new Color(0, 0, 0, 100));
             g.drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
             pauseOverlay.draw(g);
-        }*/
+        }
         if (levelCompleted) levelCompletedOverlay.draw(g);
     }
 
