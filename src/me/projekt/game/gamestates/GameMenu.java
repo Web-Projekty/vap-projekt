@@ -1,6 +1,6 @@
 package me.projekt.game.gamestates;
 
-import me.projekt.game.UI.MenuButton;
+import me.projekt.game.ui.MenuButton;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
@@ -9,13 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class Menu extends State implements StateMethods {
+public class GameMenu extends State implements StateMethods {
 
     private MenuButton[] buttons = new MenuButton[3];
     private BufferedImage backgroundImg;
     private int menuX, menuY, menuWidth, menuHeight;
 
-    public Menu(Game game) {
+    public GameMenu(Game game) {
         super(game);
         loadButtons();
         loadBackground();

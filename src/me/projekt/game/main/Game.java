@@ -1,9 +1,8 @@
 package me.projekt.game.main;
 
 import me.projekt.game.gamestates.GameState;
-import me.projekt.game.gamestates.Menu;
+import me.projekt.game.gamestates.GameMenu;
 import me.projekt.game.gamestates.Playing;
-import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 
@@ -16,7 +15,7 @@ public class Game implements Runnable {
     private final int UPS_SET = 120;
 
     private Playing playing;
-    private Menu menu;
+    private GameMenu menu;
 
     public static final int TILES_DEFAULT_SIZE = 32;
     public static final float SCALE = 2f;
@@ -39,7 +38,7 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
-        menu = new me.projekt.game.gamestates.Menu(this);
+        menu = new GameMenu(this);
         playing = new Playing(this);
     }
 
@@ -131,7 +130,7 @@ public class Game implements Runnable {
         }
     }
 
-    public Menu getMenu() {
+    public GameMenu getMenu() {
         return this.menu;
     }
 

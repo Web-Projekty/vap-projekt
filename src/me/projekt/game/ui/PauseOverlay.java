@@ -1,4 +1,4 @@
-package me.projekt.game.UI;
+package me.projekt.game.ui;
 
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
@@ -9,9 +9,9 @@ import me.projekt.game.utils.LoadSave;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import static me.projekt.game.UI.SoundButton.*;
-import static me.projekt.game.UI.UrmButton.*;
-import static me.projekt.game.UI.VolumeButton.*;
+import static me.projekt.game.ui.SoundButton.*;
+import static me.projekt.game.ui.UrmButton.*;
+import static me.projekt.game.ui.VolumeButton.*;
 
 
 public class PauseOverlay {

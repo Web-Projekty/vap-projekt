@@ -1,4 +1,4 @@
-package me.projekt.game.UI;
+package me.projekt.game.ui;
 
 import java.awt.image.BufferedImage;
 import me.projekt.game.gamestates.GameState;

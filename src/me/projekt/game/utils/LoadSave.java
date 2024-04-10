@@ -16,8 +16,6 @@ public class LoadSave {
 
     // UI
     public static final String COMPLETED_IMG = "completed_sprite.png";
-    //public static final String LEVEL_ONE_DATA = "level_one_data.png";
-    public static final String LEVEL_ONE_DATA = "level_one_data_long.png";
     public static final String MENU_BUTTONS = "menu_buttons.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String PAUSE_BACKGROUND = "pause_menu.png";

@@ -1,6 +1,6 @@
 package me.projekt.game.gamestates;
 
-import me.projekt.game.UI.PauseOverlay;
+import me.projekt.game.ui.PauseOverlay;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
 import me.projekt.game.main.Game;
