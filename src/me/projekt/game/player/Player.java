@@ -28,7 +28,7 @@ public class Player extends Entity {
     // Jumping / Gravity
     private float airSpeed = 0f; // rychlost ve vzduchu
     private float gravity = 0.04f * Game.SCALE; // síla gravitace
-    private float jumpSpeed = -2.25f * Game.SCALE; // rychlost skoku
+    private float jumpSpeed = -2.5f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
     private boolean inAir = false;
 
