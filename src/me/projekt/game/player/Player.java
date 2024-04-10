@@ -20,7 +20,7 @@ public class Player extends Entity {
     // Moving
     private boolean moving = false, attacking = false;
     private boolean left, up, right, down, jump;
-    private final float playerSpeed = 2.0f;
+    private final float playerSpeed = 1.0f * Game.SCALE;
     private int[][] lvlData;
     private float xDrawOffset = 8 * Game.SCALE; // umístění borderu na spritu hráče na ose x
     private float yDrawOffset = 4 * Game.SCALE; // umístění borderu na spritu hráče na ose y
@@ -35,7 +35,7 @@ public class Player extends Entity {
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimations();
-        initHitbox(x, y, 15 * Game.SCALE, 27 * Game.SCALE);
+        initHitbox(x, y, (int) (15 * Game.SCALE), (int) (27 * Game.SCALE));
     }
 
     public void update() {
