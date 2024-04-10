@@ -3,7 +3,7 @@ package me.projekt.game.gamestates;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
 import me.projekt.game.main.Game;
-import me.projekt.game.utils.LoadSave;
+import me.projekt.game.ui.LevelCompletedOverlay;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,34 +15,62 @@ public class Playing extends State implements StateMethods {
 
     private Player player;
     private LevelManager levelManager;
+    private LevelCompletedOverlay levelCompletedOverlay;
+
+    private boolean gameOver;
+    private boolean levelCompleted;
 
     private int xLvlOffset;
     private int leftBorder = (int) (0.5 * GAME_WIDTH);
     private int rightBorder = (int) (0.5 * GAME_WIDTH);
-    private int lvlTilesWide = LoadSave.getLevelData()[0].length; // celková délka mapy na tily
-    private int maxTilesOffsetX = lvlTilesWide - TILES_IN_WIDTH; // maximální offset
-    private int maxLvlOffsetX = maxTilesOffsetX * TILES_SIZE; // transformace na pixely
+    private int maxLvlOffsetX;
 
     private int yLvlOffset;
     private int upBorder = (int) (0.5 * GAME_HEIGHT);
     private int downBorder = (int) (0.5 * GAME_HEIGHT);
-    private int lvlTilesHigh = LoadSave.getLevelData().length; // celková délka mapy na tily
-    private int maxTilesOffsetY = lvlTilesHigh - TILES_IN_HEIGHT; // maximální offset
-    private int maxLvlOffsetY = maxTilesOffsetY * TILES_SIZE; // transformace na pixely
+    private int maxLvlOffsetY; // transformace na pixely
 
     public Playing(Game game) {
         super(game);
         initClasses();
+
+        calculateLevelOffset();
+        loadStartLevel();
+    }
+
+    public void loadNextLevel() {
+        resetEverything();
+        levelManager.loadNextLevel();
+        player.setSpawn(levelManager.getCurrentLevel().getSpawn());
+    }
+
+    private void resetEverything() {
+        gameOver = false;
+        levelCompleted = false;
+//        paused = false;
+        player.reset();
+    }
+
+    private void loadStartLevel() {
+        // TODO - loadEnemies
+    }
+
+    private void calculateLevelOffset() {
+        this.maxLvlOffsetX = levelManager.getCurrentLevel().getMaxLvlOffsetX();
+        this.maxLvlOffsetY = levelManager.getCurrentLevel().getMaxLvlOffsetY();
+    }
+
+    public void setLevelCompleted(boolean levelCompleted) {
+        this.levelCompleted = levelCompleted;
     }
 
     private void initClasses() {
         this.levelManager = new LevelManager(game);
-        player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
-        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
-    }
+        this.player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
+        this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+        player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
-    public void windowFocusLost() {
-        player.cancelMovement();
+        this.levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
     @Override
@@ -59,25 +87,17 @@ public class Playing extends State implements StateMethods {
         int playerY = (int) player.getHitbox().y;
         int diffY = playerY - yLvlOffset;
 
-        if (diffX > rightBorder)
-            xLvlOffset += diffX - rightBorder;
-        else if (diffX < leftBorder)
-            xLvlOffset += diffX - leftBorder;
+        if (diffX > rightBorder) xLvlOffset += diffX - rightBorder;
+        else if (diffX < leftBorder) xLvlOffset += diffX - leftBorder;
 
-        if (xLvlOffset > maxLvlOffsetX)
-            xLvlOffset = maxLvlOffsetX;
-        else if (xLvlOffset < 0)
-            xLvlOffset = 0;
+        if (xLvlOffset > maxLvlOffsetX) xLvlOffset = maxLvlOffsetX;
+        else if (xLvlOffset < 0) xLvlOffset = 0;
 
-        if (diffY > upBorder)
-            yLvlOffset += diffY - upBorder;
-        else if (diffY < downBorder)
-            yLvlOffset += diffY - downBorder;
+        if (diffY > upBorder) yLvlOffset += diffY - upBorder;
+        else if (diffY < downBorder) yLvlOffset += diffY - downBorder;
 
-        if (yLvlOffset > maxLvlOffsetY)
-            yLvlOffset = maxLvlOffsetY;
-        else if (yLvlOffset < 0)
-            yLvlOffset = 0;
+        if (yLvlOffset > maxLvlOffsetY) yLvlOffset = maxLvlOffsetY;
+        else if (yLvlOffset < 0) yLvlOffset = 0;
 
     }
 
@@ -92,6 +112,7 @@ public class Playing extends State implements StateMethods {
             g.drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
             pauseOverlay.draw(g);
         }*/
+        if (levelCompleted) levelCompletedOverlay.draw(g);
     }
 
     @Override
@@ -134,6 +155,9 @@ public class Playing extends State implements StateMethods {
             case KeyEvent.VK_ENTER:
                 GameState.setState(GameState.MENU);
                 break;
+            case KeyEvent.VK_N:
+                game.getPlaying().loadNextLevel();
+                break;
         }
     }
 
@@ -153,6 +177,15 @@ public class Playing extends State implements StateMethods {
                 player.setJump(false);
                 break;
         }
+    }
+
+    public void windowFocusLost() {
+        player.cancelMovement();
+    }
+
+    public void setMaxLevelOffsets(int levelOffsetX, int levelOffsetY) {
+        this.maxLvlOffsetX = levelOffsetX;
+        this.maxLvlOffsetY = levelOffsetY;
     }
 
     public Player getPlayer() {

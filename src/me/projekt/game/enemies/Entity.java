@@ -1,4 +1,4 @@
-package me.projekt.game.entities;
+package me.projekt.game.enemies;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

@@ -2,7 +2,9 @@ package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Utils {
 
@@ -70,4 +72,34 @@ public class Utils {
 
         return true;
     }
+
+    public static int[][] getLevelData(BufferedImage img) {
+        int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+
+        for (int j = 0; j < img.getHeight(); j++) { // projedeme loopem každý pixel v okně
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getRed();
+                if (value >= 48) {
+                    value = 0;
+                }
+                lvlData[j][i] = value;
+            }
+        }
+        return lvlData;
+    }
+
+    public static Point getPlayerSpawn(BufferedImage img) {
+        for (int j = 0; j < img.getHeight(); j++) {
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getGreen();
+                if (value == 100) {
+                    return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
+                }
+            }
+        }
+        return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
+    }
+
 }

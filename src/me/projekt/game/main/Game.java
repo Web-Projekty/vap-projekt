@@ -3,6 +3,7 @@ package me.projekt.game.main;
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Menu;
 import me.projekt.game.gamestates.Playing;
+import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 
@@ -31,6 +32,7 @@ public class Game implements Runnable {
 
         this.gamePanel = new GamePanel(this);
         this.gameWindow = new GameWindow("Platformer Game", gamePanel);
+        gamePanel.setFocusable(true);
         gamePanel.requestFocus();
 
         startGameLoop();

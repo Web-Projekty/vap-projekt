@@ -1,6 +1,6 @@
 package me.projekt.game.player;
 
-import me.projekt.game.entities.Entity;
+import me.projekt.game.enemies.Entity;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
@@ -36,6 +36,13 @@ public class Player extends Entity {
         super(x, y, width, height);
         loadAnimations();
         initHitbox(x, y, 15 * Game.SCALE, 27 * Game.SCALE);
+    }
+
+    public void setSpawn(Point spawn) {
+        this.x = spawn.x;
+        this.y = spawn.y;
+        hitbox.x = x;
+        hitbox.y = y;
     }
 
     public void update() {
@@ -211,5 +218,18 @@ public class Player extends Entity {
 
     public void setJump(boolean jump) {
         this.jump = jump;
+    }
+
+    public void reset() {
+        cancelMovement();
+        inAir = false;
+        attacking = false;
+        moving = false;
+        playerAction = IDLE;
+
+        hitbox.x = x;
+        hitbox.y = y;
+
+        if (!isOnFloor(hitbox, lvlData)) inAir = true;
     }
 }
