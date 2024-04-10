@@ -34,8 +34,17 @@ public class Playing extends State implements StateMethods {
         super(game);
         initClasses();
 
-        calculateLevelOffset();
+        setLevelOffsets();
         loadStartLevel();
+    }
+
+    private void initClasses() {
+        this.levelManager = new LevelManager(game);
+        this.player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
+        this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
+        player.setSpawn(levelManager.getCurrentLevel().getSpawn());
+
+        this.levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
     public void loadNextLevel() {
@@ -55,22 +64,9 @@ public class Playing extends State implements StateMethods {
         // TODO - loadEnemies
     }
 
-    private void calculateLevelOffset() {
+    private void setLevelOffsets() {
         this.maxLvlOffsetX = levelManager.getCurrentLevel().getMaxLvlOffsetX();
         this.maxLvlOffsetY = levelManager.getCurrentLevel().getMaxLvlOffsetY();
-    }
-
-    public void setLevelCompleted(boolean levelCompleted) {
-        this.levelCompleted = levelCompleted;
-    }
-
-    private void initClasses() {
-        this.levelManager = new LevelManager(game);
-        this.player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
-        this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
-        player.setSpawn(levelManager.getCurrentLevel().getSpawn());
-
-        this.levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
     @Override
@@ -78,6 +74,20 @@ public class Playing extends State implements StateMethods {
         levelManager.update();
         player.update();
         checkCloseToBorder();
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        levelManager.draw(g, xLvlOffset, yLvlOffset);
+        player.render(g, xLvlOffset, yLvlOffset);
+
+        /*if (paused) {
+            //Tohle Matyáši jenom odkomentuj, bylo do toho něco přidáno
+            g.setColor(new Color(0, 0, 0, 100));
+            g.drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+            pauseOverlay.draw(g);
+        }*/
+        if (levelCompleted) levelCompletedOverlay.draw(g);
     }
 
     private void checkCloseToBorder() {
@@ -98,21 +108,6 @@ public class Playing extends State implements StateMethods {
 
         if (yLvlOffset > maxLvlOffsetY) yLvlOffset = maxLvlOffsetY;
         else if (yLvlOffset < 0) yLvlOffset = 0;
-
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        levelManager.draw(g, xLvlOffset, yLvlOffset);
-        player.render(g, xLvlOffset, yLvlOffset);
-
-        /*if (paused) {
-            //Tohle Matyáši jenom odkomentuj, bylo do toho něco přidáno
-            g.setColor(new Color(0, 0, 0, 100));
-            g.drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-            pauseOverlay.draw(g);
-        }*/
-        if (levelCompleted) levelCompletedOverlay.draw(g);
     }
 
     @Override
@@ -181,6 +176,10 @@ public class Playing extends State implements StateMethods {
 
     public void windowFocusLost() {
         player.cancelMovement();
+    }
+
+    public void setLevelCompleted(boolean levelCompleted) {
+        this.levelCompleted = levelCompleted;
     }
 
     public void setMaxLevelOffsets(int levelOffsetX, int levelOffsetY) {
