@@ -14,7 +14,7 @@ public class Player extends Entity {
 
     // Animations
     private BufferedImage[][] animations;
-    private int animTick, animIndex, animSpeed = 25; // čím menší, tím bude rychlejší animace
+    private int animTick, animIndex, animSpeed = 30; // čím menší, tím bude rychlejší animace
     private PlayerAction playerAction = IDLE;
 
     // Moving
