@@ -22,9 +22,10 @@ public class Utils {
 
     private static boolean isSolid(float x, float y, int[][] lvlData) {
         int maxWidth = lvlData[0].length * Game.TILES_SIZE;
+        int maxHeight = lvlData.length * Game.TILES_SIZE;
         if (x < 0 || x >= maxWidth) // pokud by chtěl hráč vyjít z okna doprava nebo doleva, je mu to zakázáno
             return true;
-        if (y < 0 || y >= Game.GAME_HEIGHT) // pokud by chtěl hráč vyjít z okna nahoru nebo dolu, je mu to zakázáno
+        if (y < 0 || y >= maxHeight) // pokud by chtěl hráč vyjít z okna nahoru nebo dolu, je mu to zakázáno
             return true;
 
         float xIndex = x / Game.TILES_SIZE;

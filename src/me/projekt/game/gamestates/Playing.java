@@ -17,11 +17,18 @@ public class Playing extends State implements StateMethods {
     private LevelManager levelManager;
 
     private int xLvlOffset;
-    private int leftBorder = (int) (0.4 * Game.GAME_WIDTH);
-    private int rightBorder = (int) (0.6 * Game.GAME_WIDTH);
+    private int leftBorder = (int) (0.5 * GAME_WIDTH);
+    private int rightBorder = (int) (0.5 * GAME_WIDTH);
     private int lvlTilesWide = LoadSave.getLevelData()[0].length; // celková délka mapy na tily
-    private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH; // maximální offset
-    private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE; // transformace na pixely
+    private int maxTilesOffsetX = lvlTilesWide - TILES_IN_WIDTH; // maximální offset
+    private int maxLvlOffsetX = maxTilesOffsetX * TILES_SIZE; // transformace na pixely
+
+    private int yLvlOffset;
+    private int upBorder = (int) (0.5 * GAME_HEIGHT);
+    private int downBorder = (int) (0.5 * GAME_HEIGHT);
+    private int lvlTilesHigh = LoadSave.getLevelData().length; // celková délka mapy na tily
+    private int maxTilesOffsetY = lvlTilesHigh - TILES_IN_HEIGHT; // maximální offset
+    private int maxLvlOffsetY = maxTilesOffsetY * TILES_SIZE; // transformace na pixely
 
     public Playing(Game game) {
         super(game);
@@ -47,24 +54,37 @@ public class Playing extends State implements StateMethods {
 
     private void checkCloseToBorder() {
         int playerX = (int) player.getHitbox().x;
-        int diff = playerX - xLvlOffset;
+        int diffX = playerX - xLvlOffset;
 
-        if (diff > rightBorder)
-            xLvlOffset += diff - rightBorder;
-        else if (diff < leftBorder)
-            xLvlOffset += diff - leftBorder;
+        int playerY = (int) player.getHitbox().y;
+        int diffY = playerY - yLvlOffset;
+
+        if (diffX > rightBorder)
+            xLvlOffset += diffX - rightBorder;
+        else if (diffX < leftBorder)
+            xLvlOffset += diffX - leftBorder;
 
         if (xLvlOffset > maxLvlOffsetX)
             xLvlOffset = maxLvlOffsetX;
         else if (xLvlOffset < 0)
             xLvlOffset = 0;
 
+        if (diffY > upBorder)
+            yLvlOffset += diffY - upBorder;
+        else if (diffY < downBorder)
+            yLvlOffset += diffY - downBorder;
+
+        if (yLvlOffset > maxLvlOffsetY)
+            yLvlOffset = maxLvlOffsetY;
+        else if (yLvlOffset < 0)
+            yLvlOffset = 0;
+
     }
 
     @Override
     public void draw(Graphics g) {
-        levelManager.draw(g, xLvlOffset);
-        player.render(g, xLvlOffset);
+        levelManager.draw(g, xLvlOffset, yLvlOffset);
+        player.render(g, xLvlOffset, yLvlOffset);
 
         /*if (paused) {
             //Tohle Matyáši jenom odkomentuj, bylo do toho něco přidáno

@@ -28,7 +28,7 @@ public class Player extends Entity {
     // Jumping / Gravity
     private float airSpeed = 0f; // rychlost ve vzduchu
     private float gravity = 0.04f * Game.SCALE; // síla gravitace
-    private float jumpSpeed = -2.5f * Game.SCALE; // rychlost skoku
+    private float jumpSpeed = -4f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
     private boolean inAir = false;
 
@@ -44,8 +44,8 @@ public class Player extends Entity {
         setAnimation();
     }
 
-    public void render(Graphics g, int lvlOffset) {
-        g.drawImage(animations[playerAction.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+    public void render(Graphics g, int xLvlOffset, int yLvlOffset) {
+        g.drawImage(animations[playerAction.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - xLvlOffset, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
         //drawHitbox(g);
     }
 
