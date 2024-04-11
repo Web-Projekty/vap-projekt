@@ -17,7 +17,8 @@ public class LoadSave {
     // UI
     public static final String COMPLETED_IMG = "completed_sprite.png";
     public static final String MENU_BUTTONS = "menu_buttons.png";
-    public static final String MENU_BACKGROUND = "menu_background.png";
+    public static final String MAIN_MENU_IMG = "main_menu.png";
+    public static final String MAIN_MENU_BACKGROUND = "main_menu_background.png";
     public static final String PAUSE_BACKGROUND = "pause_menu.png";
     public static final String SOUND_BUTTONS = "sound_button.png";
     public static final String URM_BUTTONS = "urm_buttons.png";

@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import static me.projekt.game.ui.UrmButton.URM_SIZE;
+
 public class LevelCompletedOverlay {
 
-    // TODO - this
-
     private Playing playing;
-    //private UrmButton menu, next;
+    private UrmButton menu, next;
     private BufferedImage img;
     private int bgX, bgY, bgW, bgH;
 
@@ -27,8 +27,8 @@ public class LevelCompletedOverlay {
         int menuX = (int) (330 * Game.SCALE);
         int nextX = (int) (445 * Game.SCALE);
         int y = (int) (195 * Game.SCALE);
-//        next = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 0);
-//        menu = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 2);
+        next = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 0);
+        menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
     }
 
     private void initImage() {
