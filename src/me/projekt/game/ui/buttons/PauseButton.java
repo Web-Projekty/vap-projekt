@@ -1,4 +1,4 @@
-package me.projekt.game.ui;
+package me.projekt.game.ui.buttons;
 
 import java.awt.*;
 

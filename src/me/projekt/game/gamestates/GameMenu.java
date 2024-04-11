@@ -1,6 +1,6 @@
 package me.projekt.game.gamestates;
 
-import me.projekt.game.ui.MenuButton;
+import me.projekt.game.ui.buttons.MenuButton;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 

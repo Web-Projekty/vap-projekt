@@ -2,13 +2,14 @@ package me.projekt.game.ui;
 
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
+import me.projekt.game.ui.buttons.UrmButton;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import static me.projekt.game.ui.UrmButton.URM_SIZE;
+import static me.projekt.game.ui.buttons.UrmButton.URM_SIZE;
 
 public class LevelCompletedOverlay {
 

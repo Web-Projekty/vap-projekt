@@ -3,6 +3,10 @@ package me.projekt.game.ui;
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
+import me.projekt.game.ui.buttons.PauseButton;
+import me.projekt.game.ui.buttons.SoundButton;
+import me.projekt.game.ui.buttons.UrmButton;
+import me.projekt.game.ui.buttons.VolumeButton;
 import me.projekt.game.utils.LoadSave;
 
 
@@ -12,9 +16,9 @@ import java.awt.image.BufferedImage;
 
 import static me.projekt.game.main.Game.GAME_HEIGHT;
 import static me.projekt.game.main.Game.GAME_WIDTH;
-import static me.projekt.game.ui.SoundButton.*;
-import static me.projekt.game.ui.UrmButton.*;
-import static me.projekt.game.ui.VolumeButton.*;
+import static me.projekt.game.ui.buttons.SoundButton.*;
+import static me.projekt.game.ui.buttons.UrmButton.*;
+import static me.projekt.game.ui.buttons.VolumeButton.*;
 
 
 public class PauseOverlay {

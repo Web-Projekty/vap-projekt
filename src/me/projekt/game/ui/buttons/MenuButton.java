@@ -1,6 +1,7 @@
-package me.projekt.game.ui;
+package me.projekt.game.ui.buttons;
 
 import java.awt.image.BufferedImage;
+
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
@@ -27,54 +28,58 @@ public class MenuButton {
         this.state = state;
         loadImgs();
         initBounds();
-     }
+    }
 
 
-    private void initBounds(){
+    private void initBounds() {
         bounds = new Rectangle(xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
-     }
+    }
 
-     private void loadImgs() {
+    private void loadImgs() {
         imgs = new BufferedImage[3];
         BufferedImage temp = LoadSave.getSpriteAtlas(LoadSave.MENU_BUTTONS);
-        for(int i = 0; i< imgs.length;i++) {
-            imgs[i] = temp.getSubimage(i * B_WIDTH_DEFAULT,rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
+        for (int i = 0; i < imgs.length; i++) {
+            imgs[i] = temp.getSubimage(i * B_WIDTH_DEFAULT, rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
         }
-     }
-     public void draw(Graphics g){
+    }
+
+    public void draw(Graphics g) {
         g.drawImage(imgs[index], xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT, null);
-     }
-     public void update() {
+    }
+
+    public void update() {
         index = 0;
-        if(mouseOver)
-            index = 1;
-         if(mousePressed)
-             index = 2;
-     }
-     public boolean isMouseOver() {
+        if (mouseOver) index = 1;
+        if (mousePressed) index = 2;
+    }
+
+    public boolean isMouseOver() {
         return mouseOver;
-     }
-     public void setMouseOver(boolean mouseOver) {
+    }
+
+    public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
-     }
+    }
 
-     public boolean isMousePressed() {
+    public boolean isMousePressed() {
         return mousePressed;
-     }
-     public void setMousePressed(boolean mousePressed){
+    }
+
+    public void setMousePressed(boolean mousePressed) {
         this.mousePressed = mousePressed;
-     }
-     public Rectangle getBounds() {
+    }
+
+    public Rectangle getBounds() {
         return bounds;
-     }
+    }
 
-     public void applyGameState() {
+    public void applyGameState() {
         GameState.state = state;
-     }
+    }
 
-     public void resetBools(){
+    public void resetBools() {
         mousePressed = false;
         mouseOver = false;
-     }
+    }
 
 }

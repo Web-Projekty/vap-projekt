@@ -1,4 +1,4 @@
-package me.projekt.game.ui;
+package me.projekt.game.ui.buttons;
 
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;

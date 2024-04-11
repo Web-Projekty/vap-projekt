@@ -60,6 +60,8 @@ public class LevelManager {
 
     public void draw(Graphics g, int xLvlOffset, int yLvlOffset) {
 
+
+
         for (int j = 0; j < levels.get(levelIndex).getLevelData().length; j++) {
             for (int i = 0; i < levels.get(levelIndex).getLevelData()[0].length; i++) {
                 int index = levels.get(levelIndex).getSpriteIndex(i, j);
