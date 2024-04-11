@@ -1,5 +1,6 @@
 package me.projekt.game.ui;
 
+import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
 import me.projekt.game.ui.buttons.UrmButton;
@@ -42,21 +43,39 @@ public class LevelCompletedOverlay {
 
     public void draw(Graphics g) {
         g.drawImage(img, bgX, bgY, bgW, bgH, null);
+        next.draw(g);
+        menu.draw(g);
     }
 
     public void update() {
+        next.update();
+        menu.update();
+    }
 
+    private boolean isIn(UrmButton button, MouseEvent e) {
+        return button.getBounds().contains(e.getX(), e.getY());
     }
 
     public void mouseMoved(MouseEvent e) {
+        menu.setMouseOver(false);
+        next.setMouseOver(false);
 
+        if (isIn(menu, e)) menu.setMouseOver(true);
+        else if (isIn(next, e)) next.setMouseOver(true);
     }
 
     public void mouseReleased(MouseEvent e) {
-
+        if (isIn(menu, e)) {
+            if (menu.isMousePressed()) GameState.setState(GameState.MENU);
+        } else if (isIn(next, e)) {
+            if (next.isMousePressed()) playing.loadNextLevel();
+        }
+        menu.resetBools();
+        next.resetBools();
     }
 
     public void mousePressed(MouseEvent e) {
-
+        if (isIn(menu, e)) menu.setMousePressed(true);
+        else if (isIn(next, e)) next.setMousePressed(true);
     }
 }

@@ -20,7 +20,7 @@ public class Player extends Entity {
     // Moving
     private boolean moving = false, attacking = false;
     private boolean left, up, right, down, jump;
-    private final float playerSpeed = 1.0f * Game.SCALE;
+    private final float playerSpeed = 1.25f * Game.SCALE;
     private int[][] lvlData;
     private float xDrawOffset = 8 * Game.SCALE; // umístění borderu na spritu hráče na ose x
     private float yDrawOffset = 4 * Game.SCALE; // umístění borderu na spritu hráče na ose y
@@ -28,7 +28,7 @@ public class Player extends Entity {
     // Jumping / Gravity
     private float airSpeed = 0f; // rychlost ve vzduchu
     private float gravity = 0.04f * Game.SCALE; // síla gravitace
-    private float jumpSpeed = -4f * Game.SCALE; // rychlost skoku
+    private float jumpSpeed = -2.25f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
     private boolean inAir = false;
 

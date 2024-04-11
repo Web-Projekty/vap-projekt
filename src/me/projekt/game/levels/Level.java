@@ -27,11 +27,10 @@ public class Level {
     public Level(BufferedImage img) {
         this.img = img;
         setLevelData();
-        //addEmemies();
+        //addEnemies();
         setLevelOffsets();
         setPlayerSpawn();
     }
-
 
     private void setLevelData() {
         this.lvlData = Utils.getLevelData(this.img);
@@ -41,7 +40,7 @@ public class Level {
         this.spawn = getPlayerSpawn(img);
     }
 
-    private void addEmemies() {
+    private void addEnemies() {
 
     }
 

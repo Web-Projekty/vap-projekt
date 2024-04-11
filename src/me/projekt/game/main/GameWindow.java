@@ -1,6 +1,7 @@
 package me.projekt.game.main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
@@ -11,9 +12,10 @@ public class GameWindow extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.add(gamePanel);
+        //setFullscreen();
         
-        this.setResizable(false);
         this.pack();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.addWindowFocusListener(new WindowFocusListener() {
@@ -26,5 +28,15 @@ public class GameWindow extends JFrame {
                 gamePanel.getGame().windowFocusLost();
             }
         });
+    }
+
+    public void setFullscreen() {
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = env.getDefaultScreenDevice();
+
+        if (gd.isFullScreenSupported()) {
+            this.setUndecorated(true);
+            gd.setFullScreenWindow(this);
+        }
     }
 }

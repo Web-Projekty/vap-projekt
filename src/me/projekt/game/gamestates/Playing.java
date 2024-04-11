@@ -17,21 +17,21 @@ public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private LevelCompletedOverlay levelCompletedOverlay;
+    private PauseOverlay pauseOverlay;
 
     private boolean gameOver;
     private boolean levelCompleted;
     private boolean paused = false;
-    private PauseOverlay pauseOverlay;
 
     private int xLvlOffset;
-    private int leftBorder = (int) (0.5 * GAME_WIDTH);
-    private int rightBorder = (int) (0.5 * GAME_WIDTH);
+    private int leftBorder = (int) (0.4 * GAME_WIDTH);
+    private int rightBorder = (int) (0.6 * GAME_WIDTH);
     private int maxLvlOffsetX;
 
     private int yLvlOffset;
-    private int upBorder = (int) (0.5 * GAME_HEIGHT);
-    private int downBorder = (int) (0.5 * GAME_HEIGHT);
-    private int maxLvlOffsetY; // transformace na pixely
+    private int upBorder = (int) (0.4 * GAME_HEIGHT);
+    private int downBorder = (int) (0.6 * GAME_HEIGHT);
+    private int maxLvlOffsetY;
 
     public Playing(Game game) {
         super(game);
@@ -52,15 +52,15 @@ public class Playing extends State implements StateMethods {
     }
 
     public void loadNextLevel() {
-        resetEverything();
+        reset();
         levelManager.loadNextLevel();
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
     }
 
-    private void resetEverything() {
+    private void reset() {
         gameOver = false;
+        paused = false;
         levelCompleted = false;
-//        paused = false;
         player.reset();
     }
 
@@ -75,13 +75,14 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void update() {
-        if(!paused) {
+        if (paused) {
+            pauseOverlay.update();
+        } else if (levelCompleted) {
+            levelCompletedOverlay.update();
+        } else if (!gameOver) {
             levelManager.update();
             player.update();
             checkCloseToBorder();
-        }
-        else {
-            pauseOverlay.update();
         }
     }
 
@@ -92,8 +93,11 @@ public class Playing extends State implements StateMethods {
 
         if (paused) {
             pauseOverlay.draw(g);
+        } else if (gameOver) {
+            //gameOverOverlay.draw(g);
+        } else if (levelCompleted) {
+            levelCompletedOverlay.draw(g);
         }
-        if (levelCompleted) levelCompletedOverlay.draw(g);
     }
 
     private void checkCloseToBorder() {
@@ -117,8 +121,7 @@ public class Playing extends State implements StateMethods {
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(paused)
-            pauseOverlay.mouseDragged(e);
+        if (paused) pauseOverlay.mouseDragged(e);
     }
 
     @Override
@@ -130,21 +133,37 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(paused)
-            pauseOverlay.mousePressed(e);
+        if (!gameOver) {
+            if (paused)
+                pauseOverlay.mousePressed(e);
+            else if (levelCompleted) {
+                levelCompletedOverlay.mousePressed(e);
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(paused)
-            pauseOverlay.mouseReleased(e);
+        if (!gameOver) {
+            if (paused)
+                pauseOverlay.mouseReleased(e);
+            else if (levelCompleted) {
+                levelCompletedOverlay.mouseReleased(e);
+            }
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if(paused)
-            pauseOverlay.mouseMoved(e);
+        if (!gameOver) {
+            if (paused)
+                pauseOverlay.mouseMoved(e);
+            else if (levelCompleted) {
+                levelCompletedOverlay.mouseMoved(e);
+            }
+        }
     }
+
     public void unpauseGame() {
         paused = false;
     }
@@ -168,7 +187,7 @@ public class Playing extends State implements StateMethods {
                 paused = !paused;
                 break;
             case KeyEvent.VK_N:
-                game.getPlaying().loadNextLevel();
+                game.getPlaying().setLevelCompleted(true);
                 break;
         }
     }
