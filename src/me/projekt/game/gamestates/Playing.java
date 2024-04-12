@@ -175,10 +175,6 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    public void unpauseGame() {
-        paused = false;
-    }
-
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -219,6 +215,10 @@ public class Playing extends State implements StateMethods {
                 player.setJump(false);
                 break;
         }
+    }
+
+    public void unpauseGame() {
+        this.paused = false;
     }
 
     private void checkCloseToBorder() {
