@@ -122,10 +122,12 @@ public class Playing extends State implements StateMethods {
 
     private void drawClouds(Graphics g) {
         for (int i = 0; i < 3; i++) {
-            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
+            int offSet = (int) (xLvlOffset * 0.3); // čím menší, tím rychlejší
+            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - offSet, (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
         }
         for (int i = 0; i < smallCloudsPos.length; i++) {
-            g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+            int offSet = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
+            g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - offSet, smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
         }
     }
 
