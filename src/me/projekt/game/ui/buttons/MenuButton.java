@@ -74,7 +74,7 @@ public class MenuButton {
     }
 
     public void applyGameState() {
-        GameState.state = state;
+        GameState.setState(state);
     }
 
     public void resetBools() {

@@ -120,7 +120,7 @@ public class PauseOverlay {
             }
         } else if (IsIn(e, menuB)) {
             if (menuB.isMousePressed()) {
-                GameState.state = GameState.MENU;
+                GameState.setState(GameState.MENU);
                 playing.unpauseGame();
             }
         } else if (IsIn(e, replayB)) {

@@ -2,12 +2,12 @@ package me.projekt.game.gamestates;
 
 public enum GameState {
 
-    PLAYING,
     MENU,
     OPTIONS,
+    PLAYING,
     QUIT;
 
-    public static GameState state = MENU;
+    private static GameState state = MENU;
 
     public static GameState getState() {
         return state;
