@@ -53,7 +53,7 @@ public class Playing extends State implements StateMethods {
         smallCloud = LoadSave.getSpriteAtlas(LoadSave.SMALL_CLOUDS);
         smallCloudsPos = new int[8];
         for (int i = 0; i < smallCloudsPos.length; i++) {
-
+            smallCloudsPos[i] = (int) (90 * SCALE) + ran.nextInt((int) (100 * SCALE));
         }
     }
 
@@ -64,7 +64,7 @@ public class Playing extends State implements StateMethods {
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
         this.levelCompletedOverlay = new LevelCompletedOverlay(this);
-        pauseOverlay = new PauseOverlay(this);
+        this.pauseOverlay = new PauseOverlay(this);
     }
 
     public void loadNextLevel() {
@@ -122,29 +122,11 @@ public class Playing extends State implements StateMethods {
 
     private void drawClouds(Graphics g) {
         for (int i = 0; i < 3; i++) {
-            g.drawImage(bigCloud, 0 + i * BIG_CLOUD_WIDTH, (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
+            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
         }
-        g.drawImage(smallCloud, 300, 600, SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
-    }
-
-    private void checkCloseToBorder() {
-        int playerX = (int) player.getHitbox().x;
-        int diffX = playerX - xLvlOffset;
-
-        int playerY = (int) player.getHitbox().y;
-        int diffY = playerY - yLvlOffset;
-
-        if (diffX > rightBorder) xLvlOffset += diffX - rightBorder;
-        else if (diffX < leftBorder) xLvlOffset += diffX - leftBorder;
-
-        if (xLvlOffset > maxLvlOffsetX) xLvlOffset = maxLvlOffsetX;
-        else if (xLvlOffset < 0) xLvlOffset = 0;
-
-        if (diffY > upBorder) yLvlOffset += diffY - upBorder;
-        else if (diffY < downBorder) yLvlOffset += diffY - downBorder;
-
-        if (yLvlOffset > maxLvlOffsetY) yLvlOffset = maxLvlOffsetY;
-        else if (yLvlOffset < 0) yLvlOffset = 0;
+        for (int i = 0; i < smallCloudsPos.length; i++) {
+            g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+        }
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -235,6 +217,26 @@ public class Playing extends State implements StateMethods {
                 player.setJump(false);
                 break;
         }
+    }
+
+    private void checkCloseToBorder() {
+        int playerX = (int) player.getHitbox().x;
+        int diffX = playerX - xLvlOffset;
+
+        int playerY = (int) player.getHitbox().y;
+        int diffY = playerY - yLvlOffset;
+
+        if (diffX > rightBorder) xLvlOffset += diffX - rightBorder;
+        else if (diffX < leftBorder) xLvlOffset += diffX - leftBorder;
+
+        if (xLvlOffset > maxLvlOffsetX) xLvlOffset = maxLvlOffsetX;
+        else if (xLvlOffset < 0) xLvlOffset = 0;
+
+        if (diffY > upBorder) yLvlOffset += diffY - upBorder;
+        else if (diffY < downBorder) yLvlOffset += diffY - downBorder;
+
+        if (yLvlOffset > maxLvlOffsetY) yLvlOffset = maxLvlOffsetY;
+        else if (yLvlOffset < 0) yLvlOffset = 0;
     }
 
     public void windowFocusLost() {
