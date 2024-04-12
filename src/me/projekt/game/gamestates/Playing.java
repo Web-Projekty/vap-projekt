@@ -5,12 +5,16 @@ import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
 import me.projekt.game.main.Game;
 import me.projekt.game.ui.LevelCompletedOverlay;
+import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import static me.projekt.game.main.Game.*;
+import static me.projekt.game.utils.Constants.Background.*;
 
 public class Playing extends State implements StateMethods {
 
@@ -33,12 +37,24 @@ public class Playing extends State implements StateMethods {
     private int downBorder = (int) (0.6 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
+    private BufferedImage backgroundImg, bigCloud, smallCloud;
+    private int[] smallCloudsPos;
+    private Random ran = new Random();
+
     public Playing(Game game) {
         super(game);
         initClasses();
 
         setLevelOffsets();
         loadStartLevel();
+
+        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
+        bigCloud = LoadSave.getSpriteAtlas(LoadSave.BIG_CLOUDS);
+        smallCloud = LoadSave.getSpriteAtlas(LoadSave.SMALL_CLOUDS);
+        smallCloudsPos = new int[8];
+        for (int i = 0; i < smallCloudsPos.length; i++) {
+
+        }
     }
 
     private void initClasses() {
@@ -88,6 +104,10 @@ public class Playing extends State implements StateMethods {
 
     @Override
     public void draw(Graphics g) {
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, GAME_HEIGHT, null);
+
+        drawClouds(g);
+
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
 
@@ -98,6 +118,13 @@ public class Playing extends State implements StateMethods {
         } else if (levelCompleted) {
             levelCompletedOverlay.draw(g);
         }
+    }
+
+    private void drawClouds(Graphics g) {
+        for (int i = 0; i < 3; i++) {
+            g.drawImage(bigCloud, 0 + i * BIG_CLOUD_WIDTH, (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
+        }
+        g.drawImage(smallCloud, 300, 600, SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
     }
 
     private void checkCloseToBorder() {
