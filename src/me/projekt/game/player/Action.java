@@ -1,6 +1,6 @@
 package me.projekt.game.player;
 
-public enum PlayerAction {
+public enum Action {
 
     IDLE(0, 4),
     RUNNING(2, 3),
@@ -15,7 +15,7 @@ public enum PlayerAction {
     private int orderInSheet = 0;
     private int spriteAmount = 1;
 
-    PlayerAction(int orderInSheet, int spriteAmount) {
+    Action(int orderInSheet, int spriteAmount) {
         this.orderInSheet = orderInSheet;
         this.spriteAmount = spriteAmount;
     }
