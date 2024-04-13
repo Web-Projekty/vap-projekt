@@ -27,6 +27,10 @@ public class LoadSave {
     public static final String BIG_CLOUDS = "big_clouds.png";
     public static final String SMALL_CLOUDS = "small_clouds.png";
 
+    // Objects
+    public static final String OBJECT_ATLAS = "objects_sprites.png";
+    public static final String POTION_ATLAS = "potions_sprites.png";
+
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);

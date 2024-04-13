@@ -1,7 +1,7 @@
 package me.projekt.game.enemies;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.player.Action;
+import me.projekt.game.player.PlayerAction;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -11,7 +11,7 @@ public abstract class Entity {
     protected float x, y;
     protected int width, height;
     protected Rectangle2D.Float hitbox;
-    protected Action action;
+    protected PlayerAction action;
     protected int animTick, animIndex;
 
     protected int maxHealth, currentHealth;
@@ -30,17 +30,17 @@ public abstract class Entity {
         hitbox = new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
     }
 
-    protected void drawHitbox(Graphics g) {
+    public void drawHitbox(Graphics g, int xLvlOffset, int yLvlOffset) {
         // for debugging hitbox
         g.setColor(Color.PINK);
-        g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+        g.drawRect((int) hitbox.x - xLvlOffset, (int) hitbox.y - yLvlOffset, (int) hitbox.width, (int) hitbox.height);
     }
 
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 
-    public Action getAction() {
+    public PlayerAction getAction() {
         return action;
     }
 

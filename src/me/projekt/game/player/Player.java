@@ -8,7 +8,7 @@ import me.projekt.game.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static me.projekt.game.player.Action.*;
+import static me.projekt.game.player.PlayerAction.*;
 import static me.projekt.game.utils.Utils.*;
 
 public class Player extends Entity {
@@ -54,7 +54,7 @@ public class Player extends Entity {
 
     public void render(Graphics g, int xLvlOffset, int yLvlOffset) {
         g.drawImage(animations[action.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - xLvlOffset, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width, height, null);
-        //drawHitbox(g);
+        // drawHitbox(g, xLvlOffset, yLvlOffset);
     }
 
     private void updateAnimationTick() {
@@ -71,7 +71,7 @@ public class Player extends Entity {
 
     private void setAnimation() {
 
-        Action startAnim = action;
+        PlayerAction startAnim = action;
 
         if (moving) action = RUNNING;
         else action = IDLE;
