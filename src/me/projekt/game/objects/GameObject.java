@@ -9,16 +9,17 @@ import java.awt.geom.Rectangle2D;
 public class GameObject {
 
     protected int x,y;
-    protected ObjectAction action;
+    protected ObjectType objectType;
     protected Rectangle2D.Float hitbox;
-    protected boolean animated, active = true;
+    protected boolean doAnimation, active = true;
     protected int animTick, animIndex;
+
     protected int xDrawOffset, yDrawOffset;
 
-    public GameObject(int x, int y, ObjectAction action) {
+    public GameObject(int x, int y, ObjectType objectType) {
         this.x = x;
         this.y = y;
-        this.action = action;
+        this.objectType = objectType;
     }
 
     protected void updateAnimationTick() {
@@ -26,8 +27,12 @@ public class GameObject {
         if (animTick >= Constants.ANIMATION_SPEED) {
             animTick = 0;
             animIndex++;
-            if (animIndex >= action.getSpriteAmount()) {
+            if (animIndex >= objectType.getSpriteAmount()) {
                 animIndex = 0;
+                if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX) {
+                    doAnimation = false;
+                    active = false;
+                }
             }
         }
     }
@@ -42,7 +47,39 @@ public class GameObject {
         g.drawRect((int) hitbox.x - xLvlOffset, (int) hitbox.y - yLvlOffset, (int) hitbox.width, (int) hitbox.height);
     }
 
-    public boolean isAnimated() {
-        return animated;
+    public void reset() {
+        animIndex = 0;
+        animTick = 0;
+        active = true;
+
+        if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX) {
+            doAnimation = false;
+        } else {
+            doAnimation = true;
+        }
+    }
+
+    public void setAction(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean doAnimation() {
+        return doAnimation;
+    }
+
+    public ObjectType getObjectType() {
+        return objectType;
+    }
+
+    public int getXDrawOffset() {
+        return xDrawOffset;
+    }
+
+    public int getYDrawOffset() {
+        return yDrawOffset;
     }
 }

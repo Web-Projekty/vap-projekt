@@ -1,5 +1,6 @@
 package me.projekt.game.gamestates;
 
+import me.projekt.game.objects.ObjectManager;
 import me.projekt.game.ui.PauseOverlay;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
@@ -20,6 +21,7 @@ public class Playing extends State implements StateMethods {
 
     private Player player;
     private LevelManager levelManager;
+    private ObjectManager objectManager;
     private LevelCompletedOverlay levelCompletedOverlay;
     private PauseOverlay pauseOverlay;
 
@@ -59,6 +61,7 @@ public class Playing extends State implements StateMethods {
 
     private void initClasses() {
         this.levelManager = new LevelManager(game);
+        this.objectManager = new ObjectManager(this);
         this.player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());

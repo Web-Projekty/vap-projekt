@@ -3,12 +3,12 @@ package me.projekt.game.player;
 public enum PlayerAction {
 
     IDLE(0, 4),
-    RUNNING(2, 3),
-    JUMP(0, 4),
-    FALLING(0, 4),
+    RUNNING(1, 6),
+    JUMP(2, 2),
+    FALLING(3, 2),
     GROUND(4, 2),
     HIT(5, 4),
-    ATTACK_1(0, 4),
+    ATTACK_1(4, 3),
     ATTACK_JUMP_1(7, 3),
     ATTACK_JUMP_2(8, 3);
 
