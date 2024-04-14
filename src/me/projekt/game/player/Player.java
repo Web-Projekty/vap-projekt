@@ -30,7 +30,7 @@ public class Player extends Entity {
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
 
     public Player(float x, float y, int width, int height) {
-        super(x, y, (int) (width * 1.5), height);
+        super(x, y, (int) width, height);
 
         this.action = IDLE;
         this.moveSpeed = 1f * Game.SCALE;

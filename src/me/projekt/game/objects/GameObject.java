@@ -52,11 +52,10 @@ public class GameObject {
         animTick = 0;
         active = true;
 
-        if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX) {
+        if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX)
             doAnimation = false;
-        } else {
+        else
             doAnimation = true;
-        }
     }
 
     public void setAction(boolean active) {
@@ -71,8 +70,16 @@ public class GameObject {
         return doAnimation;
     }
 
-    public ObjectType getObjectType() {
+    public Rectangle2D.Float getHitbox() {
+        return hitbox;
+    }
+
+    public ObjectType getObject() {
         return objectType;
+    }
+
+    public int getAnimIndex() {
+        return animIndex;
     }
 
     public int getXDrawOffset() {

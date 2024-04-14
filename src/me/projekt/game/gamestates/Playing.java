@@ -62,7 +62,7 @@ public class Playing extends State implements StateMethods {
     private void initClasses() {
         this.levelManager = new LevelManager(game);
         this.objectManager = new ObjectManager(this);
-        this.player = new Player(200, 200, (int) (32 * SCALE), (int) (32 * SCALE));
+        this.player = new Player(200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
@@ -100,6 +100,7 @@ public class Playing extends State implements StateMethods {
             levelCompletedOverlay.update();
         } else if (!gameOver) {
             levelManager.update();
+            objectManager.update();
             player.update();
             checkCloseToBorder();
         }
@@ -113,6 +114,7 @@ public class Playing extends State implements StateMethods {
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
+        objectManager.draw(g, xLvlOffset, yLvlOffset);
 
         if (paused) {
             pauseOverlay.draw(g);

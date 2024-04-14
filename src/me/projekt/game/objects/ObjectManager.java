@@ -1,6 +1,8 @@
 package me.projekt.game.objects;
 
 import me.projekt.game.gamestates.Playing;
+import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
@@ -20,6 +22,12 @@ public class ObjectManager {
         loadImages();
         potions = new ArrayList<>();
         containers = new ArrayList<>();
+
+        potions.add(new Potion(300, 300, ObjectType.RED_POTION));
+        potions.add(new Potion(400, 300, ObjectType.BLUE_POTION));
+
+        containers.add(new GameContainer(500, 300, ObjectType.BARREL));
+        containers.add(new GameContainer(600, 300, ObjectType.BOX));
     }
 
     private void loadImages() {
@@ -61,18 +69,36 @@ public class ObjectManager {
     }
 
     private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (Potion p : potions) {
+            if (p.isActive()) {
+                int type = p.getObject() == ObjectType.BLUE_POTION ? 0 : 1;
+
+                g.drawImage(potionImg[type][p.getAnimIndex()],
+                        (int) (p.getHitbox().x - p.getXDrawOffset() - xLvlOffset),
+                        (int) (p.getHitbox().y - p.getYDrawOffset() - yLvlOffset),
+                        p.getObject().getWidth(),
+                        p.getObject().getHeight(),
+                        null);
+
+                p.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
     }
 
     private void drawContainers(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (GameContainer gc : containers) {
             if (gc.isActive()) {
-                if (gc.getObjectType() == ObjectType.BOX) {
+                int type = gc.getObject() == ObjectType.BOX ? 0 : 1;
 
-                } else {
+                g.drawImage(containerImg[type][gc.getAnimIndex()],
+                        (int) (gc.getHitbox().x - gc.getXDrawOffset() - xLvlOffset),
+                        (int) (gc.getHitbox().y - gc.getYDrawOffset() - yLvlOffset),
+                        gc.getObject().getWidth(),
+                        gc.getObject().getHeight(),
+                        null);
 
-                }
+                gc.drawHitbox(g, xLvlOffset, yLvlOffset);
             }
-
         }
     }
 }

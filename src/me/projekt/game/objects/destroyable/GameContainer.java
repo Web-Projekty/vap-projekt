@@ -1,6 +1,8 @@
-package me.projekt.game.objects;
+package me.projekt.game.objects.destroyable;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.GameObject;
+import me.projekt.game.objects.ObjectType;
 
 public class GameContainer extends GameObject {
 

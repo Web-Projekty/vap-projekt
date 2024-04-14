@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import static me.projekt.game.main.Game.GAME_HEIGHT;
+import static me.projekt.game.main.Game.GAME_WIDTH;
 import static me.projekt.game.ui.buttons.UrmButton.URM_SIZE;
 
 public class LevelCompletedOverlay {
@@ -42,6 +44,8 @@ public class LevelCompletedOverlay {
     }
 
     public void draw(Graphics g) {
+        g.setColor(new Color(0, 0, 0, 100));
+        g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         g.drawImage(img, bgX, bgY, bgW, bgH, null);
         next.draw(g);
         menu.draw(g);
