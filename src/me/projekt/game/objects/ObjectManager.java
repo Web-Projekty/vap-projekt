@@ -1,6 +1,7 @@
 package me.projekt.game.objects;
 
 import me.projekt.game.gamestates.Playing;
+import me.projekt.game.levels.Level;
 import me.projekt.game.objects.destroyable.GameContainer;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.utils.LoadSave;
@@ -20,14 +21,6 @@ public class ObjectManager {
         this.playing = playing;
 
         loadImages();
-        potions = new ArrayList<>();
-        containers = new ArrayList<>();
-
-        potions.add(new Potion(300, 300, ObjectType.RED_POTION));
-        potions.add(new Potion(400, 300, ObjectType.BLUE_POTION));
-
-        containers.add(new GameContainer(500, 300, ObjectType.BARREL));
-        containers.add(new GameContainer(600, 300, ObjectType.BOX));
     }
 
     private void loadImages() {
@@ -48,6 +41,11 @@ public class ObjectManager {
                 containerImg[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
             }
         }
+    }
+
+    public void loadObjects(Level newLevel) {
+        potions = newLevel.getPotions();
+        containers = newLevel.getContainers();
     }
 
     public void update() {

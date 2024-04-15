@@ -85,6 +85,7 @@ public class Playing extends State implements StateMethods {
 
     private void loadStartLevel() {
         // TODO - loadEnemies
+        objectManager.loadObjects(levelManager.getCurrentLevel());
     }
 
     private void setLevelOffsets() {
@@ -261,5 +262,13 @@ public class Playing extends State implements StateMethods {
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public ObjectManager getObjectManager() {
+        return objectManager;
+    }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
     }
 }

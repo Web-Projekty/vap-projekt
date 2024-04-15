@@ -83,7 +83,7 @@ public class GameMenu extends State implements StateMethods {
 
     public void resetButtons() {
         for (MenuButton mb : buttons) {
-            mb.resetBools();
+            mb.reset();
         }
     }
 

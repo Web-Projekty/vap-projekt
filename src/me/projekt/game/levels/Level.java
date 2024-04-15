@@ -1,18 +1,23 @@
 package me.projekt.game.levels;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-import static me.projekt.game.utils.Utils.getPlayerSpawn;
+import static me.projekt.game.utils.Utils.getPlayerSpawnFromImage;
 
 public class Level {
 
     private BufferedImage img;
     private int[][] lvlData;
-//    private ArrayList<Slime> slimes;
+    //    private ArrayList<Slime> slimes;
+    private ArrayList<Potion> potions;
+    private ArrayList<GameContainer> containers;
 
     private int lvlTilesWide;
     private int maxTilesOffsetX;
@@ -27,17 +32,28 @@ public class Level {
     public Level(BufferedImage img) {
         this.img = img;
         setLevelData();
-        //addEnemies();
+        //setEnemies();
+        setPotions();
+        setContainers();
         setLevelOffsets();
         setPlayerSpawn();
     }
 
+
+    private void setPotions() {
+        this.potions = Utils.getPotionsFromImage(img);
+    }
+
+    private void setContainers() {
+        this.containers = Utils.getContainersFromImage(img);
+    }
+
     private void setLevelData() {
-        this.lvlData = Utils.getLevelData(this.img);
+        this.lvlData = Utils.getLevelDataFromImage(img);
     }
 
     private void setPlayerSpawn() {
-        this.spawn = getPlayerSpawn(img);
+        this.spawn = getPlayerSpawnFromImage(img);
     }
 
     private void addEnemies() {
@@ -72,5 +88,13 @@ public class Level {
 
     public Point getSpawn() {
         return this.spawn;
+    }
+
+    public ArrayList<Potion> getPotions() {
+        return potions;
+    }
+
+    public ArrayList<GameContainer> getContainers() {
+        return containers;
     }
 }

@@ -3,23 +3,19 @@ package me.projekt.game.ui.buttons;
 import java.awt.image.BufferedImage;
 
 import me.projekt.game.gamestates.GameState;
-import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
+
+import static me.projekt.game.utils.Constants.Buttons.*;
 
 public class MenuButton {
     private int xPos, yPos, rowIndex, index;
     private GameState state;
     private BufferedImage[] imgs;
-    public int B_WIDTH_DEFAULT = 140;
-    public int B_HEIGHT_DEFAULT = 56;
-    public int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
-    public int B_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
     public int xOffsetCenter = B_WIDTH / 2;
     private boolean mousePressed, mouseOver;
     private Rectangle bounds;
-
 
     public MenuButton(int xPos, int yPos, int rowIndex, GameState state) {
         this.xPos = xPos;
@@ -29,7 +25,6 @@ public class MenuButton {
         loadImgs();
         initBounds();
     }
-
 
     private void initBounds() {
         bounds = new Rectangle(xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
@@ -77,7 +72,7 @@ public class MenuButton {
         GameState.setState(state);
     }
 
-    public void resetBools() {
+    public void reset() {
         mousePressed = false;
         mouseOver = false;
     }

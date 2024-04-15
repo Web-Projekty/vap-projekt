@@ -1,10 +1,15 @@
 package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.pickable.Potion;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static me.projekt.game.objects.ObjectType.*;
 
 public class Utils {
 
@@ -73,7 +78,7 @@ public class Utils {
         return true;
     }
 
-    public static int[][] getLevelData(BufferedImage img) {
+    public static int[][] getLevelDataFromImage(BufferedImage img) {
         int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 
         for (int j = 0; j < img.getHeight(); j++) { // projedeme loopem každý pixel v okně
@@ -89,7 +94,7 @@ public class Utils {
         return lvlData;
     }
 
-    public static Point getPlayerSpawn(BufferedImage img) {
+    public static Point getPlayerSpawnFromImage(BufferedImage img) {
         for (int j = 0; j < img.getHeight(); j++) {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
@@ -100,6 +105,32 @@ public class Utils {
             }
         }
         return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
+    }
+
+    public static ArrayList<Potion> getPotionsFromImage(BufferedImage img) {
+        ArrayList<Potion> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == RED_POTION.getId() || value == BLUE_POTION.getId())
+                    list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+            }
+
+        return list;
+    }
+
+    public static ArrayList<GameContainer> getContainersFromImage(BufferedImage img) {
+        ArrayList<GameContainer> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == BOX.getId() || value == BARREL.getId())
+                    list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+            }
+
+        return list;
     }
 
 }

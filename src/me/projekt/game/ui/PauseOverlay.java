@@ -16,10 +16,7 @@ import java.awt.image.BufferedImage;
 
 import static me.projekt.game.main.Game.GAME_HEIGHT;
 import static me.projekt.game.main.Game.GAME_WIDTH;
-import static me.projekt.game.ui.buttons.SoundButton.*;
-import static me.projekt.game.ui.buttons.UrmButton.*;
-import static me.projekt.game.ui.buttons.VolumeButton.*;
-
+import static me.projekt.game.utils.Constants.Buttons.*;
 
 public class PauseOverlay {
 
@@ -33,18 +30,18 @@ public class PauseOverlay {
     public PauseOverlay(Playing playing) {
         this.playing = playing;
         loadBackground();
-        createSoundButtons();
-        createUrmButtons();
-        createVolumeBUtton();
+        setSoundButtons();
+        setUrmButtons();
+        setVolumeBUtton();
     }
 
-    private void createVolumeBUtton() {
+    private void setVolumeBUtton() {
         int vX = (int) (309 * Game.SCALE);
         int vY = (int) (278 * Game.SCALE);
         volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
     }
 
-    private void createUrmButtons() {
+    private void setUrmButtons() {
         int menuX = (int) (313 * Game.SCALE);
         int replayX = (int) (387 * Game.SCALE);
         int unpauseX = (int) (462 * Game.SCALE);
@@ -54,7 +51,7 @@ public class PauseOverlay {
         unpauseB = new UrmButton(unpauseX, buttonY, URM_SIZE, URM_SIZE, 0);
     }
 
-    private void createSoundButtons() {
+    private void setSoundButtons() {
         int soundX = (int) (450 * Game.SCALE);
         int musicY = (int) (140 * Game.SCALE);
         int sfxY = (int) (186 * Game.SCALE);
@@ -133,12 +130,12 @@ public class PauseOverlay {
             }
         }
 
-        menuB.resetBools();
-        unpauseB.resetBools();
-        replayB.resetBools();
+        menuB.reset();
+        unpauseB.reset();
+        replayB.reset();
         musicButton.resetBools();
         sfxButton.resetBools();
-        volumeButton.resetBools();
+        volumeButton.reset();
     }
 
     public void mouseMoved(MouseEvent e) {

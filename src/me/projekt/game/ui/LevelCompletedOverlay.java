@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 import static me.projekt.game.main.Game.GAME_HEIGHT;
 import static me.projekt.game.main.Game.GAME_WIDTH;
-import static me.projekt.game.ui.buttons.UrmButton.URM_SIZE;
+import static me.projekt.game.utils.Constants.Buttons.URM_SIZE;
 
 public class LevelCompletedOverlay {
 
@@ -31,7 +31,7 @@ public class LevelCompletedOverlay {
         int menuX = (int) (330 * Game.SCALE);
         int nextX = (int) (445 * Game.SCALE);
         int y = (int) (195 * Game.SCALE);
-        next = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 0);
+        next = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 0); // TODO Button Type Enum
         menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
     }
 
@@ -74,8 +74,8 @@ public class LevelCompletedOverlay {
         } else if (isIn(next, e)) {
             if (next.isMousePressed()) playing.loadNextLevel();
         }
-        menu.resetBools();
-        next.resetBools();
+        menu.reset();
+        next.reset();
     }
 
     public void mousePressed(MouseEvent e) {
