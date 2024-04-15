@@ -11,8 +11,8 @@ public class Game implements Runnable {
     private GameWindow gameWindow;
     private GamePanel gamePanel;
     private Thread gameThread;
-    private final int FPS_SET = 60;
-    private final int UPS_SET = 200;
+    private final float FPS_SET = 60;
+    private final float UPS_SET = 120;
 
     private Playing playing;
     private GameMenu menu;
