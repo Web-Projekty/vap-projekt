@@ -22,15 +22,14 @@ public class Player extends Entity {
     private int[][] lvlData;
     private float xDrawOffset = 18 * Game.SCALE; // umístění borderu na spritu hráče na ose x
     private float yDrawOffset = 4 * Game.SCALE; // umístění borderu na spritu hráče na ose y
-    private int flipX = 0;
-    private int flipW = 1;
+    private int flipX = 0, flipW = 1;
 
     // Jumping / Gravity
     private float jumpSpeed = -3f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
 
     public Player(float x, float y, int width, int height) {
-        super(x, y, (int) width, height);
+        super(x, y, width, height);
 
         this.action = IDLE;
         this.moveSpeed = 1.2f * Game.SCALE;
@@ -87,10 +86,9 @@ public class Player extends Entity {
         if (inAir) {
             if (airSpeed < 0) action = JUMP;
             else action = FALLING;
-
         }
 
-        if (attacking) action = ATTACK_1;
+        if (attacking) action = ATTACK;
 
         if (startAnim != action)
             // pokud se animace změnila, tak ji resetujeme, aby se mohla přehrát nová

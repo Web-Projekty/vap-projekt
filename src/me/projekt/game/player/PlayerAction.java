@@ -7,10 +7,8 @@ public enum PlayerAction {
     JUMP(2, 2),
     FALLING(3, 2),
     GROUND(4, 2),
-    HIT(5, 4),
-    ATTACK_1(4, 3),
-    ATTACK_JUMP_1(7, 3),
-    ATTACK_JUMP_2(8, 3);
+    HIT(5, 3),
+    ATTACK(4, 3);
 
     private int orderInSheet = 0;
     private int spriteAmount = 1;
