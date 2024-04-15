@@ -11,8 +11,8 @@ public class Game implements Runnable {
     private GameWindow gameWindow;
     private GamePanel gamePanel;
     private Thread gameThread;
-    private final float FPS_SET = 60;
-    private final float UPS_SET = 120;
+    private final int FPS_SET = 60;
+    private final int UPS_SET = 120;
 
     private Playing playing;
     private GameMenu menu;
@@ -26,6 +26,8 @@ public class Game implements Runnable {
 
     public static final int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public static final int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
+
+    public boolean showFpsUps = true;
 
     public Game() {
         initClasses();
@@ -115,10 +117,11 @@ public class Game implements Runnable {
                 frames++;
                 deltaF--;
             }
-
             if (System.currentTimeMillis() - lastCheck >= 1000) {
                 lastCheck = System.currentTimeMillis();
-                System.out.println("FPS: " + frames + " | UPS: " + updates);
+                if (showFpsUps) {
+                    System.out.println("FPS: " + frames + " | UPS: " + updates);
+                }
                 frames = 0;
                 updates = 0;
             }
