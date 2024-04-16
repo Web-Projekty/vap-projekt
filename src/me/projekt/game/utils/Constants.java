@@ -5,7 +5,12 @@ import me.projekt.game.main.Game;
 public class Constants {
 
     public static final float GRAVITY = 0.04f * Game.SCALE;
-    public static final int ANIMATION_SPEED = 25; // čím menší, tím bude rychlejší animace
+
+
+    public static class Animations {
+        public static final int DEFAULT_SPEED = 25; // čím menší, tím bude rychlejší animace
+        public static final int MOVING_SPEED = 13; // čím menší, tím bude rychlejší animace
+    }
 
     public static class Buttons {
 

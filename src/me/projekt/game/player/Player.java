@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static me.projekt.game.player.PlayerAction.*;
+import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
+import static me.projekt.game.utils.Constants.Animations.MOVING_SPEED;
 import static me.projekt.game.utils.Utils.*;
 
 public class Player extends Entity {
@@ -66,7 +68,7 @@ public class Player extends Entity {
 
     private void updateAnimationTick() {
         animTick++;
-        if (animTick >= Constants.ANIMATION_SPEED) {
+        if (animTick >= (moving ? MOVING_SPEED : DEFAULT_SPEED)) {
             animTick = 0;
             animIndex++;
             if (animIndex >= action.getSpriteAmount()) {
