@@ -24,7 +24,7 @@ public class GameObject {
 
     protected void updateAnimationTick() {
         animTick++;
-        if (animTick >= Constants.ANIMATION_SPEED) {
+        if (animTick >= Constants.Animations.DEFAULT_SPEED) {
             animTick = 0;
             animIndex++;
             if (animIndex >= objectType.getSpriteAmount()) {
