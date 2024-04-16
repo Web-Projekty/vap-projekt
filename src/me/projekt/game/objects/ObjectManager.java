@@ -78,7 +78,7 @@ public class ObjectManager {
                         p.getObject().getHeight(),
                         null);
 
-                p.drawHitbox(g, xLvlOffset, yLvlOffset);
+                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
             }
         }
     }
@@ -95,7 +95,7 @@ public class ObjectManager {
                         gc.getObject().getHeight(),
                         null);
 
-                gc.drawHitbox(g, xLvlOffset, yLvlOffset);
+                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
             }
         }
     }
