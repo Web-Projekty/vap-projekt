@@ -1,10 +1,11 @@
 package me.projekt.game.objects;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.utils.Constants;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+
+import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
 
 public class GameObject {
 
@@ -24,7 +25,7 @@ public class GameObject {
 
     protected void updateAnimationTick() {
         animTick++;
-        if (animTick >= Constants.ANIMATION_SPEED) {
+        if (animTick >= DEFAULT_SPEED) {
             animTick = 0;
             animIndex++;
             if (animIndex >= objectType.getSpriteAmount()) {

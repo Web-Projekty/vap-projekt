@@ -67,8 +67,10 @@ public class Player extends Entity {
     }
 
     private void updateAnimationTick() {
+        int animationSpeed = moving ? MOVING_SPEED : DEFAULT_SPEED;
+
         animTick++;
-        if (animTick >= (moving ? MOVING_SPEED : DEFAULT_SPEED)) {
+        if (animTick >= animationSpeed) {
             animTick = 0;
             animIndex++;
             if (animIndex >= action.getSpriteAmount()) {
