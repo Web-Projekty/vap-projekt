@@ -1,5 +1,6 @@
 package me.projekt.game.main;
 
+import me.projekt.game.gamestates.GameOptions;
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.GameMenu;
 import me.projekt.game.gamestates.Playing;
@@ -16,6 +17,7 @@ public class Game implements Runnable {
 
     private Playing playing;
     private GameMenu menu;
+    private GameOptions options;
 
     public static final int TILES_DEFAULT_SIZE = 32;
     public static final float SCALE = 2f;
@@ -43,6 +45,7 @@ public class Game implements Runnable {
     private void initClasses() {
         menu = new GameMenu(this);
         playing = new Playing(this);
+        options = new GameOptions(this);
     }
 
     private void startGameLoop() {
@@ -60,6 +63,8 @@ public class Game implements Runnable {
                 playing.update();
                 break;
             case OPTIONS:
+                options.update();
+                break;
             case QUIT:
                 System.exit(0);
                 break;
@@ -76,6 +81,9 @@ public class Game implements Runnable {
                 break;
             case PLAYING:
                 playing.draw(g);
+                break;
+            case OPTIONS:
+                options.draw(g);
                 break;
             default:
                 break;
