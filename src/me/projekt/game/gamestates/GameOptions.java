@@ -131,6 +131,12 @@ public class GameOptions extends State implements StateMethods {
 
     }
 
+    public void mouseDragged(MouseEvent e) {
+        if (volumeButton.isMousePressed()) {
+            volumeButton.changeX(e.getX());
+        }
+    }
+
     private boolean isIn(MouseEvent e, PauseButton b) {
         return b.getBounds().contains(e.getX(), e.getY());
     }

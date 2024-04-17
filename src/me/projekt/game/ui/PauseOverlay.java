@@ -29,10 +29,10 @@ public class PauseOverlay {
 
     public PauseOverlay(Playing playing) {
         this.playing = playing;
-        loadBackground();
         setSoundButtons();
         setUrmButtons();
         setVolumeBUtton();
+        loadBackground();
     }
 
     private void setVolumeBUtton() {

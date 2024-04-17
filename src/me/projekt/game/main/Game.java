@@ -44,8 +44,8 @@ public class Game implements Runnable {
 
     private void initClasses() {
         menu = new GameMenu(this);
-        playing = new Playing(this);
         options = new GameOptions(this);
+        playing = new Playing(this);
     }
 
     private void startGameLoop() {
@@ -144,6 +144,10 @@ public class Game implements Runnable {
 
     public GameMenu getMenu() {
         return this.menu;
+    }
+
+    public GameOptions getOptions() {
+        return this.options;
     }
 
     public Playing getPlaying() {
