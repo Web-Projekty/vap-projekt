@@ -3,11 +3,8 @@ package me.projekt.game.utils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class LoadSave {
 
