@@ -1,6 +1,7 @@
 package me.projekt.game.gamestates;
 
 import me.projekt.game.objects.ObjectManager;
+import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.ui.PauseOverlay;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
@@ -22,6 +23,7 @@ public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private ObjectManager objectManager;
+    private SoundManager soundManager;
     private LevelCompletedOverlay levelCompletedOverlay;
     private PauseOverlay pauseOverlay;
 

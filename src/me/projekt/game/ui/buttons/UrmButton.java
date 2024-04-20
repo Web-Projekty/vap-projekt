@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import static me.projekt.game.utils.Constants.Buttons.*;
 
-public class UrmButton extends PauseButton {
+public class UrmButton extends Button {
 
     private BufferedImage[] imgs;
     private int rowIndex, index;

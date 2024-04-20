@@ -7,13 +7,13 @@ import java.awt.image.BufferedImage;
 
 import static me.projekt.game.utils.Constants.Buttons.*;
 
-public class VolumeButton extends PauseButton {
+public class VolumeButton extends Button {
 
     private BufferedImage[] imgs;
     private BufferedImage slider;
-    private int index = 0;
-    private boolean mouseOver, mousePressed;
-    private int buttonX, minX, maxX;
+    private static int index = 0;
+    private static boolean mouseOver, mousePressed;
+    private static int buttonX, minX, maxX;
 
     public VolumeButton(int x, int y, int width, int height) {
         super(x + width / 2, y, VOLUME_WIDTH, height);
@@ -68,15 +68,15 @@ public class VolumeButton extends PauseButton {
         return mousePressed;
     }
 
-    public void setMousePressed(boolean mousePressed) {
-        this.mousePressed = mousePressed;
+    public void setMousePressed(boolean pressed) {
+        mousePressed = pressed;
     }
 
     public boolean isMouseOver() {
         return mouseOver;
     }
 
-    public void setMouseOver(boolean mouseOver) {
-        this.mouseOver = mouseOver;
+    public void setMouseOver(boolean over) {
+        mouseOver = over;
     }
 }

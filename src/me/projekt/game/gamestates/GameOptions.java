@@ -1,10 +1,9 @@
 package me.projekt.game.gamestates;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.ui.buttons.PauseButton;
-import me.projekt.game.ui.buttons.SoundButton;
-import me.projekt.game.ui.buttons.UrmButton;
-import me.projekt.game.ui.buttons.VolumeButton;
+import me.projekt.game.sounds.SoundManager;
+import me.projekt.game.ui.buttons.*;
+import me.projekt.game.ui.buttons.Button;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
@@ -22,7 +21,8 @@ public class GameOptions extends State implements StateMethods {
     private int bgOptWidth, bgOptHeight;
 
     private UrmButton menuB;
-    private SoundButton musicButton, sfxButton;
+    private SoundButton musicButton;
+    private SFXButton sfxButton;
     private VolumeButton volumeButton;
 
     public GameOptions(Game game) {
@@ -63,7 +63,7 @@ public class GameOptions extends State implements StateMethods {
         int musicY = (int) (140 * Game.SCALE);
         int sfxY = (int) (186 * Game.SCALE);
         musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
-        sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
+        sfxButton = new SFXButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
     }
 
     @Override
@@ -92,20 +92,32 @@ public class GameOptions extends State implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (isIn(e, menuB)) {
-            menuB.setMousePressed(true);
-        }
+        if (isIn(e, musicButton)) musicButton.setMousePressed(true);
+        else if (isIn(e, sfxButton)) sfxButton.setMousePressed(true);
+        else if (isIn(e, menuB)) menuB.setMousePressed(true);
+        else if (isIn(e, volumeButton)) volumeButton.setMousePressed(true);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (isIn(e, menuB)) {
+        if (isIn(e, musicButton)) {
+            if (musicButton.isMousePressed()) {
+                SoundManager.setSoundsMuted(!SoundManager.isSoundsMuted());
+            }
+        } else if (isIn(e, sfxButton)) {
+            if (sfxButton.isMousePressed()) {
+                SoundManager.setSFXMuted(!SoundManager.isSFXMuted());
+            }
+        } else if (isIn(e, menuB)) {
             if (menuB.isMousePressed()) {
                 GameState.setState(GameState.MENU);
             }
         }
 
         menuB.reset();
+        musicButton.resetBools();
+        sfxButton.resetBools();
+        volumeButton.reset();
     }
 
     @Override
@@ -137,7 +149,7 @@ public class GameOptions extends State implements StateMethods {
         }
     }
 
-    private boolean isIn(MouseEvent e, PauseButton b) {
+    private boolean isIn(MouseEvent e, Button b) {
         return b.getBounds().contains(e.getX(), e.getY());
     }
 }

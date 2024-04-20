@@ -3,10 +3,9 @@ package me.projekt.game.ui;
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
-import me.projekt.game.ui.buttons.PauseButton;
-import me.projekt.game.ui.buttons.SoundButton;
-import me.projekt.game.ui.buttons.UrmButton;
-import me.projekt.game.ui.buttons.VolumeButton;
+import me.projekt.game.sounds.SoundManager;
+import me.projekt.game.ui.buttons.*;
+import me.projekt.game.ui.buttons.Button;
 import me.projekt.game.utils.LoadSave;
 
 
@@ -23,7 +22,8 @@ public class PauseOverlay {
     private Playing playing;
     private int bgX, bgY, bgW, bgH;
     private BufferedImage backgroundImg;
-    private SoundButton musicButton, sfxButton;
+    private SFXButton sfxButton;
+    private SoundButton musicButton;
     private UrmButton menuB, replayB, unpauseB;
     private VolumeButton volumeButton;
 
@@ -56,7 +56,7 @@ public class PauseOverlay {
         int musicY = (int) (140 * Game.SCALE);
         int sfxY = (int) (186 * Game.SCALE);
         musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
-        sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
+        sfxButton = new SFXButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
     }
 
     private void loadBackground() {
@@ -109,11 +109,11 @@ public class PauseOverlay {
     public void mouseReleased(MouseEvent e) {
         if (isIn(e, musicButton)) {
             if (musicButton.isMousePressed()) {
-                musicButton.setMuted(!musicButton.isMuted());
+                SoundManager.setSoundsMuted(!SoundManager.isSoundsMuted());
             }
         } else if (isIn(e, sfxButton)) {
             if (sfxButton.isMousePressed()) {
-                sfxButton.setMuted(!sfxButton.isMuted());
+                SoundManager.setSFXMuted(!SoundManager.isSFXMuted());
             }
         } else if (isIn(e, menuB)) {
             if (menuB.isMousePressed()) {
@@ -160,7 +160,7 @@ public class PauseOverlay {
         }
     }
 
-    private boolean isIn(MouseEvent e, PauseButton b) {
+    private boolean isIn(MouseEvent e, Button b) {
         return b.getBounds().contains(e.getX(), e.getY());
     }
 
