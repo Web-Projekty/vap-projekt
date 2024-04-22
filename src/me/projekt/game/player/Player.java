@@ -130,7 +130,7 @@ public class Player extends Entity {
         if (inAir) {
             if (canMoveTo(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
                 hitbox.y += airSpeed;
-                airSpeed += Constants.GRAVITY;
+                airSpeed += Constants.Entities.GRAVITY;
                 updateXPos(xSpeed);
             } else {
                 hitbox.y = getYUndRoofOrAboFloor(hitbox, airSpeed);

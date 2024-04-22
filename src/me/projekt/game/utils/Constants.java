@@ -4,7 +4,10 @@ import me.projekt.game.main.Game;
 
 public class Constants {
 
-    public static final float GRAVITY = 0.04f * Game.SCALE;
+    public static class Entities {
+        public static final float GRAVITY = 0.04f * Game.SCALE;
+    }
+
 
 
     public static class Animations {
@@ -24,13 +27,6 @@ public class Constants {
 
         public static int SOUND_SIZE_DEFAULT = 42;
         public static int SOUND_SIZE = (int) (SOUND_SIZE_DEFAULT * Game.SCALE);
-
-        public static int VOLUME_DEFAULT_WIDTH = 28;
-        public static int VOLUME_DEFAULT_HEIGHT = 44;
-        public static int SLIDER_DEFAULT_WIDTH = 215;
-        public static int VOLUME_WIDTH = (int) (VOLUME_DEFAULT_WIDTH * Game.SCALE);
-        public static int VOLUME_HEIGHT = (int) (VOLUME_DEFAULT_HEIGHT * Game.SCALE);
-        public static int SLIDER_WIDTH = (int) (SLIDER_DEFAULT_WIDTH * Game.SCALE);
     }
 
     public static class Background {

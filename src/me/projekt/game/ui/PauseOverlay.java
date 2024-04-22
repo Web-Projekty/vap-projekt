@@ -20,8 +20,10 @@ import static me.projekt.game.utils.Constants.Buttons.*;
 public class PauseOverlay {
 
     private Playing playing;
+
     private int bgX, bgY, bgW, bgH;
     private BufferedImage backgroundImg;
+
     private SFXButton sfxButton;
     private SoundButton musicButton;
     private UrmButton menuB, replayB, unpauseB;
