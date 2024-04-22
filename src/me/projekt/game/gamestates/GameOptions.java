@@ -23,13 +23,11 @@ public class GameOptions extends State implements StateMethods {
     private UrmButton menuB;
     private SoundButton musicButton;
     private SFXButton sfxButton;
-    private VolumeButton volumeButton;
 
     public GameOptions(Game game) {
         super(game);
 
         loadBackground();
-        setVolumeBUtton();
         setSoundButtons();
         setUrmButtons();
     }
@@ -52,12 +50,6 @@ public class GameOptions extends State implements StateMethods {
         menuB = new UrmButton(menuX, buttonY, URM_SIZE, URM_SIZE, 2);
     }
 
-    private void setVolumeBUtton() {
-        int vX = (int) (309 * Game.SCALE);
-        int vY = (int) (278 * Game.SCALE);
-        volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
-    }
-
     private void setSoundButtons() {
         int soundX = (int) (450 * Game.SCALE);
         int musicY = (int) (140 * Game.SCALE);
@@ -70,7 +62,6 @@ public class GameOptions extends State implements StateMethods {
     public void update() {
         musicButton.update();
         sfxButton.update();
-        volumeButton.update();
         menuB.update();
     }
 
@@ -81,7 +72,6 @@ public class GameOptions extends State implements StateMethods {
 
         musicButton.draw(g);
         sfxButton.draw(g);
-        volumeButton.draw(g);
         menuB.draw(g);
     }
 
@@ -95,7 +85,6 @@ public class GameOptions extends State implements StateMethods {
         if (isIn(e, musicButton)) musicButton.setMousePressed(true);
         else if (isIn(e, sfxButton)) sfxButton.setMousePressed(true);
         else if (isIn(e, menuB)) menuB.setMousePressed(true);
-        else if (isIn(e, volumeButton)) volumeButton.setMousePressed(true);
     }
 
     @Override
@@ -117,20 +106,17 @@ public class GameOptions extends State implements StateMethods {
         menuB.reset();
         musicButton.resetBools();
         sfxButton.resetBools();
-        volumeButton.reset();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         musicButton.setMouseOver(false);
         sfxButton.setMouseOver(false);
-        volumeButton.setMouseOver(false);
         menuB.setMouseOver(false);
 
         if (isIn(e, musicButton)) musicButton.setMouseOver(true);
         else if (isIn(e, sfxButton)) sfxButton.setMouseOver(true);
         else if (isIn(e, menuB)) menuB.setMouseOver(true);
-        else if (isIn(e, volumeButton)) volumeButton.setMouseOver(true);
     }
 
     @Override
@@ -141,12 +127,6 @@ public class GameOptions extends State implements StateMethods {
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-
-    public void mouseDragged(MouseEvent e) {
-        if (volumeButton.isMousePressed()) {
-            volumeButton.changeX(e.getX());
-        }
     }
 
     private boolean isIn(MouseEvent e, Button b) {

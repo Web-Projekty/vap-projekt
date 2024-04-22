@@ -140,7 +140,7 @@ public class Playing extends State implements StateMethods {
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (paused) pauseOverlay.mouseDragged(e);
+
     }
 
     @Override
@@ -272,5 +272,9 @@ public class Playing extends State implements StateMethods {
 
     public LevelManager getLevelManager() {
         return levelManager;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

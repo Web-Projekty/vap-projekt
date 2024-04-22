@@ -74,9 +74,6 @@ public class MouseInput implements MouseListener, MouseMotionListener {
             case PLAYING:
                 gamePanel.getGame().getPlaying().mouseDragged(e);
                 break;
-            case OPTIONS:
-                gamePanel.getGame().getOptions().mouseDragged(e);
-                break;
             default:
                 break;
         }
