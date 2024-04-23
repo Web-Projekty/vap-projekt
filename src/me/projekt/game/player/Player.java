@@ -9,8 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static me.projekt.game.player.PlayerAction.*;
-import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
-import static me.projekt.game.utils.Constants.Animations.MOVING_SPEED;
+import static me.projekt.game.utils.Constants.Entities.*;
+import static me.projekt.game.utils.Constants.Animations.*;
 import static me.projekt.game.utils.Utils.*;
 
 public class Player extends Entity {
@@ -34,7 +34,7 @@ public class Player extends Entity {
         super(x, y, width, height);
 
         this.action = IDLE;
-        this.moveSpeed = 1.2f * Game.SCALE;
+        this.moveSpeed = PLAYER_SPEED;
         this.maxHealth = 100;
         this.currentHealth = maxHealth;
 
