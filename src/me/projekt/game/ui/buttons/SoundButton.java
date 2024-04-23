@@ -40,7 +40,7 @@ public class SoundButton extends Button {
             columnIndex = 2;
     }
 
-    public void resetBools() {
+    public void reset() {
         mouseOver = false;
         mousePressed = false;
     }

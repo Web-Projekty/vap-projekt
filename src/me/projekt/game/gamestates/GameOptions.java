@@ -104,8 +104,8 @@ public class GameOptions extends State implements StateMethods {
         }
 
         menuB.reset();
-        musicButton.resetBools();
-        sfxButton.resetBools();
+        musicButton.reset();
+        sfxButton.reset();
     }
 
     @Override

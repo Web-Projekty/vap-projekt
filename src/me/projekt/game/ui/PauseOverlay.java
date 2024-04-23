@@ -120,8 +120,8 @@ public class PauseOverlay {
         menuB.reset();
         unpauseB.reset();
         replayB.reset();
-        musicButton.resetBools();
-        sfxButton.resetBools();
+        musicButton.reset();
+        sfxButton.reset();
     }
 
     public void mouseMoved(MouseEvent e) {
