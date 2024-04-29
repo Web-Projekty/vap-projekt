@@ -48,7 +48,7 @@ public class ObjectManager {
 
         for (int j = 0; j < soulImg.length; j++) {
             for (int i = 0; i < soulImg[j].length; i++) {
-                soulImg[j][i] = soulSprite.getSubimage(40 * i, 30 * j, 40, 30);
+                soulImg[j][i] = soulSprite.getSubimage(32 * i, 32 * j, 32, 32);
             }
         }
 

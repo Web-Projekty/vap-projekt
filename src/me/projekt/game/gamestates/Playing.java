@@ -62,7 +62,7 @@ public class Playing extends State implements StateMethods {
     }
 
     private void initClasses() {
-        this.levelManager = new LevelManager(game);
+        this.levelManager = new LevelManager(this);
         this.objectManager = new ObjectManager(this);
         this.player = new Player(this, 200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
@@ -73,12 +73,12 @@ public class Playing extends State implements StateMethods {
     }
 
     public void loadNextLevel() {
-        reset();
         levelManager.loadNextLevel();
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
+        reset();
     }
 
-    private void reset() {
+    public void reset() {
         gameOver = false;
         paused = false;
         levelCompleted = false;

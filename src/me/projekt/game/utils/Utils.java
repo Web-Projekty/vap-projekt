@@ -85,8 +85,8 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= 48) {
-                    value = 0;
+                if (value >= 48) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
+                    value = 11; // nastaví se prázdný tile
                 }
                 lvlData[j][i] = value;
             }
@@ -116,7 +116,6 @@ public class Utils {
                 if (value == RED_POTION.getId() || value == BLUE_POTION.getId())
                     list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
-
         return list;
     }
 
@@ -129,8 +128,6 @@ public class Utils {
                 if (value == BOX.getId() || value == BARREL.getId())
                     list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
-
         return list;
     }
-
 }

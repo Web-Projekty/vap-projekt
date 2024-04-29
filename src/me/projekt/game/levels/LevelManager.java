@@ -1,6 +1,7 @@
 package me.projekt.game.levels;
 
 import me.projekt.game.gamestates.GameState;
+import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
@@ -12,13 +13,13 @@ import static me.projekt.game.main.Game.TILES_SIZE;
 
 public class LevelManager {
 
-    private Game game;
+    private Playing playing;
     private BufferedImage[] levelSprite;
     private ArrayList<Level> levels;
     private int levelIndex = 0;
 
-    public LevelManager(Game game) {
-        this.game = game;
+    public LevelManager(Playing playing) {
+        this.playing = playing;
         importSprites();
         levels = new ArrayList<>();
         setupLevels();
@@ -42,18 +43,22 @@ public class LevelManager {
 
         Level newLevel = levels.get(levelIndex);
         // game.getPlaying().getEnemyManager().loadEnemies(newLevel);
-        game.getPlaying().getPlayer().loadLevelData(newLevel.getLevelData());
-        game.getPlaying().setMaxLevelOffsets(newLevel.getMaxLvlOffsetX(), newLevel.getMaxLvlOffsetY());
-        game.getPlaying().getObjectManager().loadObjects(newLevel);
+        playing.getPlayer().loadLevelData(newLevel.getLevelData());
+        playing.setMaxLevelOffsets(newLevel.getMaxLvlOffsetX(), newLevel.getMaxLvlOffsetY());
+        playing.getObjectManager().loadObjects(newLevel);
     }
 
     private void importSprites() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
 
-        levelSprite = new BufferedImage[48]; // 4x12 spritů v sheetu
-        for (int j = 0; j < 4; j++) { // projde řádky
-            for (int i = 0; i < 12; i++) { // projde sloupce
-                int index = j * 12 + i; // vypočítá index pro sprite
+        int spritesInSheet = 48;
+        int rows = 4;
+        int columns = 12;
+
+        levelSprite = new BufferedImage[spritesInSheet]; // 4x12 spritů v sheetu
+        for (int j = 0; j < rows; j++) { // projde řádky
+            for (int i = 0; i < columns; i++) { // projde sloupce
+                int index = j * columns + i; // vypočítá index pro sprite
                 levelSprite[index] = img.getSubimage(i * 32, j * 32, 32, 32);
             }
         }
@@ -70,7 +75,7 @@ public class LevelManager {
     }
 
     public void update() {
-
+        // animace třeba vody
     }
 
     public void setCurrentLevel(int levelIndex) {
