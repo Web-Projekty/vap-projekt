@@ -9,7 +9,7 @@ import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
 
 public class GameObject {
 
-    protected int x,y;
+    protected int x, y;
     protected ObjectType objectType;
     protected Rectangle2D.Float hitbox;
     protected boolean doAnimation, active = true;
@@ -59,12 +59,16 @@ public class GameObject {
             doAnimation = true;
     }
 
-    public void setAction(boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setAnimation(boolean doAnimation) {
+        this.doAnimation = doAnimation;
     }
 
     public boolean doAnimation() {

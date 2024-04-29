@@ -1,12 +1,16 @@
 package me.projekt.game.enemies;
 
+import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
+import me.projekt.game.player.Player;
 import me.projekt.game.player.PlayerAction;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Entity {
+
+    protected Playing playing;
 
     protected float x, y;
     protected int width, height;
@@ -19,7 +23,8 @@ public abstract class Entity {
     protected float airSpeed;
     protected boolean inAir = false;
 
-    public Entity(float x, float y, int width, int height) {
+    public Entity(Playing playing, float x, float y, int width, int height) {
+        this.playing = playing;
         this.x = x;
         this.y = y;
         this.width = width;

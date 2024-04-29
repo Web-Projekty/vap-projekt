@@ -7,13 +7,14 @@ import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage[][] potionImg, containerImg;
+    private BufferedImage[][] potionImg, soulImg, containerImg;
     private ArrayList<Potion> potions;
     private ArrayList<GameContainer> containers;
 
@@ -39,6 +40,59 @@ public class ObjectManager {
         for (int j = 0; j < containerImg.length; j++) {
             for (int i = 0; i < containerImg[j].length; i++) {
                 containerImg[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
+            }
+        }
+
+        BufferedImage soulSprite = LoadSave.getSpriteAtlas(LoadSave.SOUL_ATLAS);
+        soulImg = new BufferedImage[1][4];
+
+        for (int j = 0; j < soulImg.length; j++) {
+            for (int i = 0; i < soulImg[j].length; i++) {
+                soulImg[j][i] = soulSprite.getSubimage(40 * i, 30 * j, 40, 30);
+            }
+        }
+
+
+    }
+
+    public void checkObjectTouched(Rectangle2D.Float hitbox) {
+        for (Potion p : potions) {
+            if (p.isActive()) {
+                if (hitbox.intersects(p.getHitbox())) {
+                    p.setActive(false);
+                    applyEffectToPlayer(p);
+                }
+            }
+        }
+        for (GameContainer gc : containers) {
+            if (gc.isActive()) {
+                if (gc.getHitbox().intersects(hitbox)) {
+                    gc.setAnimation(true);
+                    potions.add(new Potion((int) (gc.getHitbox().x + gc.getHitbox().width / 2), (int) (gc.getHitbox().y), ObjectType.RED_POTION));
+                    return;
+                }
+            }
+        }
+    }
+
+    public void applyEffectToPlayer(Potion potion) {
+        if (potion.getObject() == ObjectType.RED_POTION) {
+            // TODO add player health
+        } else if (potion.getObject() == ObjectType.BLUE_POTION) {
+            // TODO idk, for example power, speed...
+        }
+    }
+
+    public void checkObjectHit(Rectangle2D.Float attackBox) {
+        for (GameContainer gc : containers) {
+            if (gc.isActive()) {
+                if (gc.getHitbox().intersects(attackBox)) {
+                    gc.setAnimation(true);
+                    if (gc.getObject() == ObjectType.BARREL) {
+                        potions.add(new Potion((int) (gc.getHitbox().x + gc.getHitbox().width / 2), (int) (gc.getHitbox().y + gc.getHitbox().height / 4), ObjectType.RED_POTION));
+                        return;
+                    }
+                }
             }
         }
     }
@@ -97,6 +151,15 @@ public class ObjectManager {
 
                 //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
             }
+        }
+    }
+
+    public void reset() {
+        for (Potion p : potions) {
+            p.reset();
+        }
+        for (GameContainer gc : containers) {
+            gc.reset();
         }
     }
 }

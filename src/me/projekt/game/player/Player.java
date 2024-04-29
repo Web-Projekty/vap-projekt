@@ -1,6 +1,7 @@
 package me.projekt.game.player;
 
 import me.projekt.game.enemies.Entity;
+import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.Constants;
 import me.projekt.game.utils.LoadSave;
@@ -30,8 +31,8 @@ public class Player extends Entity {
     private float jumpSpeed = -3f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
 
-    public Player(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Player(Playing playing, float x, float y, int width, int height) {
+        super(playing, x, y, width, height);
 
         this.action = IDLE;
         this.moveSpeed = PLAYER_SPEED;
@@ -51,6 +52,9 @@ public class Player extends Entity {
 
     public void update() {
         updatePosition();
+        if (moving) {
+            checkObjectTouched();
+        }
         updateAnimationTick();
         setAnimation();
     }
@@ -64,6 +68,10 @@ public class Player extends Entity {
                 height,
                 null);
 //        drawHitbox(g, xLvlOffset, yLvlOffset);
+    }
+
+    private void checkObjectTouched() {
+        playing.getObjectManager().checkObjectTouched(hitbox);
     }
 
     private void updateAnimationTick() {

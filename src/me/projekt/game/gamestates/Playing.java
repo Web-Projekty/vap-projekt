@@ -64,7 +64,7 @@ public class Playing extends State implements StateMethods {
     private void initClasses() {
         this.levelManager = new LevelManager(game);
         this.objectManager = new ObjectManager(this);
-        this.player = new Player(200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
+        this.player = new Player(this, 200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
@@ -83,6 +83,7 @@ public class Playing extends State implements StateMethods {
         paused = false;
         levelCompleted = false;
         player.reset();
+        objectManager.reset();
     }
 
     private void loadStartLevel() {
@@ -153,8 +154,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mousePressed(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mousePressed(e);
+            if (paused) pauseOverlay.mousePressed(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mousePressed(e);
             }
@@ -164,8 +164,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mouseReleased(e);
+            if (paused) pauseOverlay.mouseReleased(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mouseReleased(e);
             }
@@ -175,8 +174,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mouseMoved(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mouseMoved(e);
+            if (paused) pauseOverlay.mouseMoved(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mouseMoved(e);
             }
