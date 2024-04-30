@@ -10,7 +10,7 @@ public class LoadSave {
 
     // Sprites
     public static final String PLAYER_ATLAS = "Skeleton_2.png";
-    public static final String LEVEL_ATLAS = "outside_sprites.png";
+    public static final String LEVEL_ATLAS = "Tileset.png";
 
     // UI
     public static final String COMPLETED_IMG = "completed_sprite.png";

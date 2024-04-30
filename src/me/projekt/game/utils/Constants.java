@@ -5,9 +5,9 @@ import me.projekt.game.main.Game;
 public class Constants {
 
     public static class Map {
-        public static final int SPRITES_IN_SHEET = 48;
-        public static final int COLUMNS = 12;
-        public static final int ROWS = 4;
+        public static final int SPRITES_IN_SHEET = 20;
+        public static final int COLUMNS = 4;
+        public static final int ROWS = 5;
     }
 
     public static class Entities {
