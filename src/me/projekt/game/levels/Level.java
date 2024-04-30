@@ -3,6 +3,7 @@ package me.projekt.game.levels;
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.destroyable.GameContainer;
 import me.projekt.game.objects.pickable.Potion;
+import me.projekt.game.objects.pickable.Soul;
 import me.projekt.game.utils.Utils;
 
 import java.awt.*;
@@ -17,6 +18,7 @@ public class Level {
     private int[][] lvlData;
     //    private ArrayList<Slime> slimes;
     private ArrayList<Potion> potions;
+    private ArrayList<Soul> souls;
     private ArrayList<GameContainer> containers;
 
     private int lvlTilesWide;
@@ -33,14 +35,15 @@ public class Level {
         this.img = img;
         setLevelData();
         //setEnemies();
-        setPotions();
+        setPickableObjects();
         setContainers();
         setLevelOffsets();
         setPlayerSpawn();
     }
 
 
-    private void setPotions() {
+    private void setPickableObjects() {
+        this.souls = Utils.getSoulsFromImage(img);
         this.potions = Utils.getPotionsFromImage(img);
     }
 
@@ -92,6 +95,10 @@ public class Level {
 
     public ArrayList<Potion> getPotions() {
         return potions;
+    }
+
+    public ArrayList<Soul> getSouls() {
+        return souls;
     }
 
     public ArrayList<GameContainer> getContainers() {

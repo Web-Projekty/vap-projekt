@@ -4,6 +4,7 @@ import me.projekt.game.gamestates.Playing;
 import me.projekt.game.levels.Level;
 import me.projekt.game.objects.destroyable.GameContainer;
 import me.projekt.game.objects.pickable.Potion;
+import me.projekt.game.objects.pickable.Soul;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class ObjectManager {
     private Playing playing;
     private BufferedImage[][] potionImg, soulImg, containerImg;
     private ArrayList<Potion> potions;
+    private ArrayList<Soul> souls;
     private ArrayList<GameContainer> containers;
 
     public ObjectManager(Playing playing) {
@@ -51,8 +53,6 @@ public class ObjectManager {
                 soulImg[j][i] = soulSprite.getSubimage(32 * i, 32 * j, 32, 32);
             }
         }
-
-
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
@@ -100,6 +100,7 @@ public class ObjectManager {
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
         containers = newLevel.getContainers();
+        souls = newLevel.getSouls();
     }
 
     public void update() {
@@ -113,11 +114,17 @@ public class ObjectManager {
                 gc.update();
             }
         }
+        for (Soul soul : souls) {
+            if (soul.isActive()) {
+                soul.update();
+            }
+        }
     }
 
     public void draw(Graphics g, int xLvlOffset, int yLvlOffset) {
         drawPotions(g, xLvlOffset, yLvlOffset);
         drawContainers(g, xLvlOffset, yLvlOffset);
+        drawSouls(g, xLvlOffset, yLvlOffset);
     }
 
     private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
@@ -130,6 +137,21 @@ public class ObjectManager {
                         (int) (p.getHitbox().y - p.getYDrawOffset() - yLvlOffset),
                         p.getObject().getWidth(),
                         p.getObject().getHeight(),
+                        null);
+
+                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
+    private void drawSouls(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (Soul soul : souls) {
+            if (soul.isActive()) {
+                g.drawImage(potionImg[0][soul.getAnimIndex()],
+                        (int) (soul.getHitbox().x - soul.getXDrawOffset() - xLvlOffset),
+                        (int) (soul.getHitbox().y - soul.getYDrawOffset() - yLvlOffset),
+                        soul.getObject().getWidth(),
+                        soul.getObject().getHeight(),
                         null);
 
                 //p.drawHitbox(g, xLvlOffset, yLvlOffset);
@@ -160,6 +182,9 @@ public class ObjectManager {
         }
         for (GameContainer gc : containers) {
             gc.reset();
+        }
+        for (Soul soul : souls) {
+            soul.reset();
         }
     }
 }

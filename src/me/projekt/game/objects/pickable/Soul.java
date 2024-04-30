@@ -6,10 +6,10 @@ import me.projekt.game.objects.PickableGameObject;
 
 public class Soul extends PickableGameObject {
 
-    public Soul(int x, int y, ObjectType objectType) {
-        super(x, y, objectType);
+    public Soul(int x, int y) {
+        super(x, y, ObjectType.SOUL);
         doAnimation = true;
-        initHitbox(7, 14);
+        initHitbox(32, 32);
         xDrawOffset = (int) (3 * Game.SCALE);
         yDrawOffset = (int) (2 * Game.SCALE);
     }
