@@ -98,7 +98,7 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++) {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 100) {
                     return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
                 }
@@ -112,8 +112,8 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                if (value == RED_POTION.getId() || value == BLUE_POTION.getId())
+                int value = color.getRed();
+                if (value == RED_POTION.getRedValue() || value == BLUE_POTION.getRedValue())
                     list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;
@@ -124,8 +124,8 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                if (value == BOX.getId() || value == BARREL.getId())
+                int value = color.getRed();
+                if (value == BOX.getRedValue() || value == BARREL.getRedValue())
                     list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;
