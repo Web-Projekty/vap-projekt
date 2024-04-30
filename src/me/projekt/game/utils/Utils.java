@@ -3,6 +3,7 @@ package me.projekt.game.utils;
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.destroyable.GameContainer;
 import me.projekt.game.objects.pickable.Potion;
+import me.projekt.game.objects.pickable.Soul;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -112,8 +113,11 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getRed();
-                if (value == RED_POTION.getRedValue() || value == BLUE_POTION.getRedValue())
+                int value = color.getBlue();
+                if (value == RED_POTION.getBlueValue()
+                        || value == BLUE_POTION.getBlueValue()
+                        || value == SOUL.getBlueValue()
+                )
                     list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;
@@ -124,8 +128,8 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getRed();
-                if (value == BOX.getRedValue() || value == BARREL.getRedValue())
+                int value = color.getBlue();
+                if (value == BOX.getBlueValue() || value == BARREL.getBlueValue())
                     list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;

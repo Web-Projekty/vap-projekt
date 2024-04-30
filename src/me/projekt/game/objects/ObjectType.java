@@ -4,35 +4,35 @@ import me.projekt.game.main.Game;
 
 public enum ObjectType {
 
-    SOUL(101, 32, 32, 4),
-    RED_POTION(102, 12, 16, 15, 7),
-    BLUE_POTION(103, 12, 16, 10, 7),
-    BARREL(104, 40, 30, 8),
-    BOX(105, 40, 30, 8);
+    SOUL(0, 16, 16, 4),
+    RED_POTION(1, 12, 16, 15, 7),
+    BLUE_POTION(2, 12, 16, 10, 7),
+    BARREL(3, 40, 30, 8),
+    BOX(4, 40, 30, 8);
 
-    private int redValue;
+    private int blueValue;
     private int width, height;
     private int value;
     private int spriteAmount;
 
-    ObjectType(int redValue, int width, int height, int value, int spriteAmount) {
-        this.redValue = redValue;
+    ObjectType(int blueValue, int width, int height, int value, int spriteAmount) {
+        this.blueValue = blueValue;
         this.width = (int) (width * Game.SCALE);
         this.height = (int) (height * Game.SCALE);
         this.value = value;
         this.spriteAmount = spriteAmount;
     }
 
-    ObjectType(int redValue, int width, int height, int spriteAmount) {
-        this.redValue = redValue;
+    ObjectType(int blueValue, int width, int height, int spriteAmount) {
+        this.blueValue = blueValue;
         this.width = (int) (width * Game.SCALE);
         this.height = (int) (height * Game.SCALE);
         this.value = -1;
         this.spriteAmount = spriteAmount;
     }
 
-    public int getRedValue() {
-        return redValue;
+    public int getBlueValue() {
+        return blueValue;
     }
 
     public int getWidth() {
@@ -53,8 +53,8 @@ public enum ObjectType {
 
     public static ObjectType getObjectByValue(int value) {
         for (ObjectType type : ObjectType.values()) {
-            System.out.print(type.getRedValue());
-            if (type.getRedValue() == value) return type;
+            System.out.print(type.getBlueValue());
+            if (type.getBlueValue() == value) return type;
         }
         return null;
     }
