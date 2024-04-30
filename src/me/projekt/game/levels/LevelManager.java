@@ -2,7 +2,6 @@ package me.projekt.game.levels;
 
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
-import me.projekt.game.main.Game;
 import me.projekt.game.utils.LoadSave;
 
 import java.awt.*;
@@ -10,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static me.projekt.game.main.Game.TILES_SIZE;
+import static me.projekt.game.utils.Constants.Map.*;
 
 public class LevelManager {
 
@@ -51,14 +51,10 @@ public class LevelManager {
     private void importSprites() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
 
-        int spritesInSheet = 48;
-        int rows = 4;
-        int columns = 12;
-
-        levelSprite = new BufferedImage[spritesInSheet]; // 4x12 spritů v sheetu
-        for (int j = 0; j < rows; j++) { // projde řádky
-            for (int i = 0; i < columns; i++) { // projde sloupce
-                int index = j * columns + i; // vypočítá index pro sprite
+        levelSprite = new BufferedImage[SPRITES_IN_SHEET]; // 4x12 spritů v sheetu
+        for (int j = 0; j < ROWS; j++) { // projde řádky
+            for (int i = 0; i < COLUMNS; i++) { // projde sloupce
+                int index = j * COLUMNS + i; // vypočítá index pro sprite
                 levelSprite[index] = img.getSubimage(i * 32, j * 32, 32, 32);
             }
         }

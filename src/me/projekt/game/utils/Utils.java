@@ -40,7 +40,7 @@ public class Utils {
 
         int value = lvlData[(int) yIndex][(int) xIndex];
 
-        if (value >= 48 || value < 0 || value != 11) {
+        if (value >= Constants.Map.SPRITES_IN_SHEET || value < 0 || value != 11) {
             // pokud se na indexech nachází jeden z tilů, tak hráč narazí na kolizi, neprojde
             return true;
         }
@@ -85,7 +85,7 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= 48) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
+                if (value >= Constants.Map.SPRITES_IN_SHEET) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
                     value = 11; // nastaví se prázdný tile
                 }
                 lvlData[j][i] = value;
