@@ -1,5 +1,6 @@
 package me.projekt.game.levels;
 
+import me.projekt.game.enemies.Crabby;
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.destroyable.GameContainer;
 import me.projekt.game.objects.pickable.Potion;
@@ -20,6 +21,7 @@ public class Level {
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
     private ArrayList<GameContainer> containers;
+    private ArrayList<Crabby> crabbies;
 
     private int lvlTilesWide;
     private int maxTilesOffsetX;
@@ -37,7 +39,7 @@ public class Level {
     public Level(BufferedImage img) {
         this.img = img;
         setLevelData();
-        //setEnemies();
+        setEnemies();
         setPickableObjects();
         setContainers();
         setLevelOffsets();
@@ -64,8 +66,8 @@ public class Level {
         this.spawn = getPlayerSpawnFromImage(img);
     }
 
-    private void addEnemies() {
-
+    private void setEnemies() {
+        this.crabbies = Utils.getCrabsFromImage(img);
     }
 
     private void setLevelOffsets() {
@@ -121,4 +123,6 @@ public class Level {
     public ArrayList<GameContainer> getContainers() {
         return containers;
     }
+
+    public ArrayList<Crabby> getCrabbies() { return crabbies; }
 }

@@ -1,5 +1,7 @@
 package me.projekt.game.utils;
 
+import me.projekt.game.enemies.Crabby;
+import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.ObjectType;
 import me.projekt.game.objects.destroyable.GameContainer;
@@ -12,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static me.projekt.game.objects.ObjectType.*;
+import static me.projekt.game.utils.Constants.EnemyConstants.CRABBY;
 
 public class Utils {
 
@@ -80,6 +83,10 @@ public class Utils {
         return true;
     }
 
+    public static boolean isFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
+        return isSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
+    }
+
     public static int[][] getLevelDataFromImage(BufferedImage img) {
         int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 
@@ -143,6 +150,19 @@ public class Utils {
                 if (value == BOX.getRedValue() || value == BARREL.getRedValue())
                     list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
+        return list;
+    }
+
+    public static ArrayList<Crabby> getCrabsFromImage(BufferedImage img) {
+        ArrayList<Crabby> list = new ArrayList<>();
+        for(int j = 0; j <img.getHeight(); j++) {
+            for(int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i,j));
+                int value = color.getGreen();
+                if(value == CRABBY)
+                    list.add(new Crabby(i* Game.TILES_SIZE, j*Game.TILES_SIZE));
+            }
+        }
         return list;
     }
 }

@@ -1,10 +1,19 @@
 package me.projekt.game.utils;
 
+import me.projekt.game.enemies.Crabby;
+import me.projekt.game.main.Game;
+
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+
+import static me.projekt.game.utils.Constants.EnemyConstants.CRABBY;
+import me.projekt.game.enemies.Crabby.*;
 
 public class LoadSave {
 
@@ -29,6 +38,11 @@ public class LoadSave {
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
     public static final String POTION_ATLAS = "potions_sprites.png";
     public static final String SOUL_ATLAS = "Soul.png";
+
+    // Enemies
+    public static final String CRABBY_SPRITE = "crabby_sprite.png";
+
+
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;

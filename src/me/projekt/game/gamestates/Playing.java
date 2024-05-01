@@ -1,5 +1,6 @@
 package me.projekt.game.gamestates;
 
+import me.projekt.game.enemies.EnemyManager;
 import me.projekt.game.objects.ObjectManager;
 import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.ui.PauseOverlay;
@@ -21,6 +22,7 @@ import static me.projekt.game.utils.Constants.Background.*;
 public class Playing extends State implements StateMethods {
 
     private Player player;
+    private EnemyManager enemyManager;
     private LevelManager levelManager;
     private ObjectManager objectManager;
     private SoundManager soundManager;
@@ -63,6 +65,7 @@ public class Playing extends State implements StateMethods {
 
     private void initClasses() {
         this.levelManager = new LevelManager(this);
+        this.enemyManager = new EnemyManager(this);
         this.objectManager = new ObjectManager(this);
         this.player = new Player(this, 200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
@@ -89,6 +92,7 @@ public class Playing extends State implements StateMethods {
     private void loadStartLevel() {
         // TODO - loadEnemies
         objectManager.loadObjects(levelManager.getCurrentLevel());
+        enemyManager.loadEnemies(levelManager.getCurrentLevel());
     }
 
     private void setLevelOffsets() {
@@ -106,6 +110,7 @@ public class Playing extends State implements StateMethods {
             levelManager.update();
             objectManager.update();
             player.update();
+            enemyManager.update(levelManager.getCurrentLevel().getLevelData());
             checkCloseToBorder();
         }
     }
@@ -117,6 +122,7 @@ public class Playing extends State implements StateMethods {
         drawClouds(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
+        enemyManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
         objectManager.draw(g, xLvlOffset, yLvlOffset);
 
