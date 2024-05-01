@@ -4,7 +4,7 @@ import me.projekt.game.main.Game;
 
 public enum ObjectType {
 
-    SOUL(101, 32, 32, 4),
+    SOUL(101, 16, 16, 4),
     RED_POTION(102, 12, 16, 15, 7),
     BLUE_POTION(103, 12, 16, 10, 7),
     BARREL(104, 40, 30, 8),

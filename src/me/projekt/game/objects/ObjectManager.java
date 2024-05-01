@@ -26,6 +26,79 @@ public class ObjectManager {
         loadImages();
     }
 
+    public void draw(Graphics g, int xLvlOffset, int yLvlOffset) {
+        drawPotions(g, xLvlOffset, yLvlOffset);
+        drawContainers(g, xLvlOffset, yLvlOffset);
+        drawSouls(g, xLvlOffset, yLvlOffset);
+    }
+
+    private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (Potion p : potions) {
+            if (p.isActive()) {
+                int type = p.getObject() == ObjectType.BLUE_POTION ? 0 : 1;
+
+                g.drawImage(potionImg[type][p.getAnimIndex()],
+                        (int) (p.getHitbox().x - p.getXDrawOffset() - xLvlOffset),
+                        (int) (p.getHitbox().y - p.getYDrawOffset() - yLvlOffset),
+                        p.getObject().getWidth(),
+                        p.getObject().getHeight(),
+                        null);
+
+                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
+    private void drawSouls(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (Soul soul : souls) {
+            if (soul.isActive()) {
+                g.drawImage(soulImg[0][soul.getAnimIndex()],
+                        (int) (soul.getHitbox().x - soul.getXDrawOffset() - xLvlOffset),
+                        (int) (soul.getHitbox().y - soul.getYDrawOffset() - yLvlOffset),
+                        soul.getObject().getWidth(),
+                        soul.getObject().getHeight(),
+                        null);
+
+                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
+    private void drawContainers(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (GameContainer gc : containers) {
+            if (gc.isActive()) {
+                int type = gc.getObject() == ObjectType.BOX ? 0 : 1;
+
+                g.drawImage(containerImg[type][gc.getAnimIndex()],
+                        (int) (gc.getHitbox().x - gc.getXDrawOffset() - xLvlOffset),
+                        (int) (gc.getHitbox().y - gc.getYDrawOffset() - yLvlOffset),
+                        gc.getObject().getWidth(),
+                        gc.getObject().getHeight(),
+                        null);
+
+                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
+    public void update() {
+        for (Potion p : potions) {
+            if (p.isActive()) {
+                p.update();
+            }
+        }
+        for (GameContainer gc : containers) {
+            if (gc.isActive()) {
+                gc.update();
+            }
+        }
+        for (Soul soul : souls) {
+            if (soul.isActive()) {
+                soul.update();
+            }
+        }
+    }
+
     private void loadImages() {
         BufferedImage potionSprite = LoadSave.getSpriteAtlas(LoadSave.POTION_ATLAS);
         potionImg = new BufferedImage[2][7];
@@ -54,6 +127,11 @@ public class ObjectManager {
             }
         }
     }
+    public void loadObjects(Level newLevel) {
+        potions = newLevel.getPotions();
+        containers = newLevel.getContainers();
+        souls = newLevel.getSouls();
+    }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
         for (Potion p : potions) {
@@ -61,6 +139,14 @@ public class ObjectManager {
                 if (hitbox.intersects(p.getHitbox())) {
                     p.setActive(false);
                     applyEffectToPlayer(p);
+                }
+            }
+        }
+        for (Soul soul : souls) {
+            if (soul.isActive()) {
+                if (hitbox.intersects(soul.getHitbox())) {
+                    soul.setActive(false);
+                    applyEffectToPlayer(soul);
                 }
             }
         }
@@ -75,10 +161,10 @@ public class ObjectManager {
         }
     }
 
-    public void applyEffectToPlayer(Potion potion) {
-        if (potion.getObject() == ObjectType.RED_POTION) {
+    public void applyEffectToPlayer(PickableGameObject pgo) {
+        if (pgo.getObject() == ObjectType.RED_POTION) {
             // TODO add player health
-        } else if (potion.getObject() == ObjectType.BLUE_POTION) {
+        } else if (pgo.getObject() == ObjectType.BLUE_POTION) {
             // TODO idk, for example power, speed...
         }
     }
@@ -93,85 +179,6 @@ public class ObjectManager {
                         return;
                     }
                 }
-            }
-        }
-    }
-
-    public void loadObjects(Level newLevel) {
-        potions = newLevel.getPotions();
-        containers = newLevel.getContainers();
-        souls = newLevel.getSouls();
-    }
-
-    public void update() {
-        for (Potion p : potions) {
-            if (p.isActive()) {
-                p.update();
-            }
-        }
-        for (GameContainer gc : containers) {
-            if (gc.isActive()) {
-                gc.update();
-            }
-        }
-        for (Soul soul : souls) {
-            if (soul.isActive()) {
-                soul.update();
-            }
-        }
-    }
-
-    public void draw(Graphics g, int xLvlOffset, int yLvlOffset) {
-        drawPotions(g, xLvlOffset, yLvlOffset);
-        drawContainers(g, xLvlOffset, yLvlOffset);
-        drawSouls(g, xLvlOffset, yLvlOffset);
-    }
-
-    private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
-        for (Potion p : potions) {
-            if (p.isActive()) {
-                int type = p.getObject() == ObjectType.BLUE_POTION ? 0 : 1;
-
-                g.drawImage(potionImg[type][p.getAnimIndex()],
-                        (int) (p.getHitbox().x - p.getXDrawOffset() - xLvlOffset),
-                        (int) (p.getHitbox().y - p.getYDrawOffset() - yLvlOffset),
-                        p.getObject().getWidth(),
-                        p.getObject().getHeight(),
-                        null);
-
-                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
-            }
-        }
-    }
-
-    private void drawSouls(Graphics g, int xLvlOffset, int yLvlOffset) {
-        for (Soul soul : souls) {
-            if (soul.isActive()) {
-                g.drawImage(potionImg[0][soul.getAnimIndex()],
-                        (int) (soul.getHitbox().x - soul.getXDrawOffset() - xLvlOffset),
-                        (int) (soul.getHitbox().y - soul.getYDrawOffset() - yLvlOffset),
-                        soul.getObject().getWidth(),
-                        soul.getObject().getHeight(),
-                        null);
-
-                //p.drawHitbox(g, xLvlOffset, yLvlOffset);
-            }
-        }
-    }
-
-    private void drawContainers(Graphics g, int xLvlOffset, int yLvlOffset) {
-        for (GameContainer gc : containers) {
-            if (gc.isActive()) {
-                int type = gc.getObject() == ObjectType.BOX ? 0 : 1;
-
-                g.drawImage(containerImg[type][gc.getAnimIndex()],
-                        (int) (gc.getHitbox().x - gc.getXDrawOffset() - xLvlOffset),
-                        (int) (gc.getHitbox().y - gc.getYDrawOffset() - yLvlOffset),
-                        gc.getObject().getWidth(),
-                        gc.getObject().getHeight(),
-                        null);
-
-                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
             }
         }
     }
