@@ -2,7 +2,8 @@ package me.projekt.game.objects;
 
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.levels.Level;
-import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.destroyable.Box;
+import me.projekt.game.objects.pickable.PickableGameObject;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
 import me.projekt.game.utils.LoadSave;
@@ -19,7 +20,7 @@ public class ObjectManager {
 
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
-    private ArrayList<GameContainer> containers;
+    private ArrayList<Box> boxes;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -66,7 +67,7 @@ public class ObjectManager {
     }
 
     private void drawContainers(Graphics g, int xLvlOffset, int yLvlOffset) {
-        for (GameContainer gc : containers) {
+        for (Box gc : boxes) {
             if (gc.isActive()) {
                 int type = gc.getObject() == ObjectType.BOX ? 0 : 1;
 
@@ -88,7 +89,7 @@ public class ObjectManager {
                 p.update();
             }
         }
-        for (GameContainer gc : containers) {
+        for (Box gc : boxes) {
             if (gc.isActive()) {
                 gc.update();
             }
@@ -130,7 +131,7 @@ public class ObjectManager {
     }
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
-        containers = newLevel.getContainers();
+        boxes = newLevel.getContainers();
         souls = newLevel.getSouls();
     }
 
@@ -151,7 +152,7 @@ public class ObjectManager {
                 }
             }
         }
-        for (GameContainer gc : containers) {
+        for (Box gc : boxes) {
             if (gc.isActive()) {
                 if (gc.getHitbox().intersects(hitbox)) {
                     gc.setAnimation(true);
@@ -174,7 +175,7 @@ public class ObjectManager {
     }
 
     public void checkObjectHit(Rectangle2D.Float attackBox) {
-        for (GameContainer gc : containers) {
+        for (Box gc : boxes) {
             if (gc.isActive()) {
                 if (gc.getHitbox().intersects(attackBox)) {
                     gc.setAnimation(true);
@@ -191,8 +192,8 @@ public class ObjectManager {
         for (Potion p : potions) {
             p.reset();
         }
-        for (GameContainer gc : containers) {
-            gc.reset();
+        for (Box b : boxes) {
+            b.reset();
         }
         for (Soul soul : souls) {
             soul.reset();

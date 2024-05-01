@@ -1,7 +1,7 @@
 package me.projekt.game.levels;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
 import me.projekt.game.utils.Utils;
@@ -32,7 +32,7 @@ public class Level {
     // Pickable objects
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
-    private ArrayList<GameContainer> containers;
+    private ArrayList<Box> containers;
 
     // Player spawn
     private Point spawn;
@@ -125,7 +125,7 @@ public class Level {
         return souls;
     }
 
-    public ArrayList<GameContainer> getContainers() {
+    public ArrayList<Box> getContainers() {
         return containers;
     }
 }

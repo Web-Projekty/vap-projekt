@@ -1,8 +1,7 @@
 package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.objects.ObjectType;
-import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
 
@@ -134,14 +133,14 @@ public class Utils {
         return list;
     }
 
-    public static ArrayList<GameContainer> getContainersFromImage(BufferedImage img) {
-        ArrayList<GameContainer> list = new ArrayList<>();
+    public static ArrayList<Box> getContainersFromImage(BufferedImage img) {
+        ArrayList<Box> list = new ArrayList<>();
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
                 if (value == BOX.getRedValue() || value == BARREL.getRedValue())
-                    list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+                    list.add(new Box(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;
     }

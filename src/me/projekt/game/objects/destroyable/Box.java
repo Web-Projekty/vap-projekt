@@ -4,9 +4,9 @@ import me.projekt.game.main.Game;
 import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.ObjectType;
 
-public class GameContainer extends GameObject {
+public class Box extends GameObject {
 
-    public GameContainer(int x, int y, ObjectType objectType) {
+    public Box(int x, int y, ObjectType objectType) {
         super(x, y, objectType);
         setHitbox();
     }

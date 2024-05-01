@@ -1,9 +1,7 @@
 package me.projekt.game.objects.pickable;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.ObjectType;
-import me.projekt.game.objects.PickableGameObject;
 
 public class Potion extends PickableGameObject {
 
