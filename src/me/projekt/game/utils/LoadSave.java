@@ -9,7 +9,7 @@ import java.net.URL;
 public class LoadSave {
 
     // Sprites
-    public static final String PLAYER_ATLAS = "Skeleton_2.png";
+    public static final String PLAYER_ATLAS = "Skeleton.png";
     public static final String LEVEL_ATLAS = "Tileset.png";
 
     // UI
