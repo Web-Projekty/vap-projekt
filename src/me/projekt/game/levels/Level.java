@@ -31,6 +31,9 @@ public class Level {
 
     private Point spawn;
 
+    private int pickedSouls = 0;
+    private int neededSouls;
+
     public Level(BufferedImage img) {
         this.img = img;
         setLevelData();
@@ -39,6 +42,8 @@ public class Level {
         setContainers();
         setLevelOffsets();
         setPlayerSpawn();
+
+        this.neededSouls = souls.size();
     }
 
 
@@ -71,6 +76,18 @@ public class Level {
         lvlTilesHigh = img.getHeight();
         maxTilesOffsetY = lvlTilesHigh - Game.TILES_IN_HEIGHT;
         maxLvlOffsetY = Game.TILES_SIZE * maxTilesOffsetY;
+    }
+
+    public int getNeededSouls() {
+        return neededSouls;
+    }
+
+    public int getPickedSouls() {
+        return pickedSouls;
+    }
+
+    public void pickSoul() {
+        this.pickedSouls++;
     }
 
     public int getSpriteIndex(int x, int y) {

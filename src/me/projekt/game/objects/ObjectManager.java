@@ -163,9 +163,12 @@ public class ObjectManager {
 
     public void applyEffectToPlayer(PickableGameObject pgo) {
         if (pgo.getObject() == ObjectType.RED_POTION) {
-            // TODO add player health
+            // TODO playing.getPlayer().setHealth(playing.getPlayer().getHealth() + pgo.getObject().getValue());
         } else if (pgo.getObject() == ObjectType.BLUE_POTION) {
             // TODO idk, for example power, speed...
+        } else if (pgo.getObject() == ObjectType.SOUL) {
+            playing.getLevelManager().getCurrentLevel().pickSoul();
+            System.out.println(playing.getLevelManager().getCurrentLevel().getPickedSouls() + " / " + playing.getLevelManager().getCurrentLevel().getNeededSouls());
         }
     }
 

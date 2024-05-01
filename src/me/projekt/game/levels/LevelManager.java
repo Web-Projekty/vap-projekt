@@ -72,6 +72,10 @@ public class LevelManager {
 
     public void update() {
         // animace třeba vody
+
+        if (getCurrentLevel().getPickedSouls() >= getCurrentLevel().getNeededSouls()) {
+            loadNextLevel();
+        }
     }
 
     public void setCurrentLevel(int levelIndex) {
