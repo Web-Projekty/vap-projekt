@@ -16,6 +16,7 @@ public class ObjectManager {
 
     private Playing playing;
     private BufferedImage[][] potionImg, soulImg, containerImg;
+
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
     private ArrayList<GameContainer> containers;

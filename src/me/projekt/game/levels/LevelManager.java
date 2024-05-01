@@ -74,7 +74,7 @@ public class LevelManager {
         // animace třeba vody
 
         if (getCurrentLevel().getPickedSouls() >= getCurrentLevel().getNeededSouls()) {
-            loadNextLevel();
+            //loadNextLevel();
         }
     }
 

@@ -14,23 +14,30 @@ import static me.projekt.game.utils.Utils.getPlayerSpawnFromImage;
 
 public class Level {
 
+    // Level data & settings
     private BufferedImage img;
     private int[][] lvlData;
-    //    private ArrayList<Slime> slimes;
-    private ArrayList<Potion> potions;
-    private ArrayList<Soul> souls;
-    private ArrayList<GameContainer> containers;
-
     private int lvlTilesWide;
     private int maxTilesOffsetX;
     private int maxLvlOffsetX;
-
     private int lvlTilesHigh;
     private int maxTilesOffsetY;
     private int maxLvlOffsetY;
 
+    // Enemies
+    //    private ArrayList<Slime> slimes;
+    //    private ArrayList<Zombie> zombies;
+    //    ...
+
+    // Pickable objects
+    private ArrayList<Potion> potions;
+    private ArrayList<Soul> souls;
+    private ArrayList<GameContainer> containers;
+
+    // Player spawn
     private Point spawn;
 
+    // Souls (Pickable object to complete level)
     private int pickedSouls = 0;
     private int neededSouls;
 
