@@ -52,4 +52,22 @@ public abstract class Entity {
     public int getAnimationIndex() {
         return animIndex;
     }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setCurrentHealth(int health) {
+        this.currentHealth = health;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+
 }

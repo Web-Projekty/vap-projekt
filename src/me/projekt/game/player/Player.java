@@ -222,9 +222,12 @@ public class Player extends Entity {
     public void reset() {
         cancelMovement();
         inAir = false;
-        attacking = false;
         moving = false;
+        left = false;
+        right = false;
+        jump = false;
         action = IDLE;
+        attacking = false;
 
         hitbox.x = x;
         hitbox.y = y;
