@@ -41,8 +41,7 @@ public class Utils {
 
         int value = lvlData[(int) yIndex][(int) xIndex];
 
-        if (value >= Constants.Map.SPRITES_IN_SHEET || value < 0 || value != 17) {
-            // pokud se na indexech nachází jeden z tilů, tak hráč narazí na kolizi, neprojde
+        if (value != 17) { // pokud se na indexech nachází jeden ze solid tilů, tak hráč narazí na kolizi, neprojde
             return true;
         }
         return false;
