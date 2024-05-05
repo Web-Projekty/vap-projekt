@@ -52,9 +52,7 @@ public class Player extends Entity {
 
     public void update() {
         updatePosition();
-        if (moving) {
-            checkObjectTouched();
-        }
+        if (moving) checkObjectTouched();
         updateAnimationTick();
         setAnimation();
     }
