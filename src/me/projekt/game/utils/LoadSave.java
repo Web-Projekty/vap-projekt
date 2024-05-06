@@ -2,14 +2,8 @@ package me.projekt.game.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class LoadSave {
 
@@ -54,41 +48,16 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-       /* System.out.println("im not dead yet1");
-        Path folderPath = Paths.get("res/levels_img/");
-        // File file = null;
-        //new URI("file", null, uri.getPath(), null)
-        System.out.println("im not dead yet2");
-        int numFiles = 0;
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath)) {
-            System.out.println("im not dead yet3");
-            for (Path filePath : directoryStream) {
-                System.out.println("im not dead yet4");
-                if (Files.isRegularFile(filePath)) {
-                    numFiles++;
-                    System.out.println("im not dead yet5");
-                }
-            }
-            System.out.println(numFiles);
-        } catch (IOException e) {
-            System.err.println("Error while counting files: " + e.getMessage());
-            // Exit the program if an error occurs
-        }
-
-*/
         int mapCount = 4;
         BufferedImage[] images = new BufferedImage[mapCount];
         for (int i = 1; i <= mapCount; i++) {
             InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");
             try {
-                images[i-1] = ImageIO.read(is);
+                images[i - 1] = ImageIO.read(is);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
-
 
 
         return images;
