@@ -50,15 +50,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        //URL url = LoadSave.class.getResource("/levels_img");
-        URL url = Main.class.getResource("/levels_img");
-        File file = null;
-
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        File file = new File("res/levels_img");
 
         File[] files = file.listFiles();
         File[] filesSorted = new File[files.length];
