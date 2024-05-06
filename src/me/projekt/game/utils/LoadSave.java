@@ -77,8 +77,8 @@ public class LoadSave {
 
 */
         int mapCount = 4;
-        BufferedImage[] images = new BufferedImage[mapCount + 1];
-        for (int i = 1; i < mapCount + 1; i++) {
+        BufferedImage[] images = new BufferedImage[mapCount];
+        for (int i = 1; i <= mapCount; i++) {
             InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");
             try {
                 images[i-1] = ImageIO.read(is);
