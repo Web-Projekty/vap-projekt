@@ -50,7 +50,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        File file = new File("res", "levels_img");
+        File file = new File("res/levels_img");
 
         File[] files = file.listFiles();
         System.out.println(files.length);
