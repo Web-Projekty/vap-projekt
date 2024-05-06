@@ -3,8 +3,13 @@ package me.projekt.game.utils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class LoadSave {
 
@@ -49,34 +54,47 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        URL url = LoadSave.class.getResource("/levels_img");
-        File file = null;
-
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        File[] files = file.listFiles();
-        File[] filesSorted = new File[files.length];
-
-        for (int i = 0; i < filesSorted.length; i++) {
-            for (int j = 0; j < files.length; j++) {
-                if (files[j].getName().equals((i + 1) + ".png")) {
-                    filesSorted[i] = files[j];
+        System.out.println("im not dead yet1");
+        Path folderPath = Paths.get("res/levels_img/");
+        // File file = null;
+        //new URI("file", null, uri.getPath(), null)
+        System.out.println("im not dead yet2");
+        int numFiles = 0;
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath)) {
+            System.out.println("im not dead yet3");
+            for (Path filePath : directoryStream) {
+                System.out.println("im not dead yet4");
+                if (Files.isRegularFile(filePath)) {
+                    numFiles++;
+                    System.out.println("im not dead yet5");
                 }
             }
+        } catch (IOException e) {
+            System.err.println("Error while counting files: " + e.getMessage());
+            // Exit the program if an error occurs
         }
 
-        BufferedImage[] images = new BufferedImage[filesSorted.length];
-        for (int i = 0; i < images.length; i++) {
-            try {
-                images[i] = ImageIO.read(filesSorted[i]);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        BufferedImage[] images = new BufferedImage[numFiles];
+
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath)) {
+            int index = 0;
+            for (Path filePath : directoryStream) {
+                if (Files.isRegularFile(filePath)) {
+                    try (InputStream inputStream = Files.newInputStream(filePath)) {
+                        BufferedImage image = ImageIO.read(inputStream);
+                        if (image != null) {
+                            images[index++] = image;
+                            System.out.println("Image loaded successfully from: " + filePath);
+                        } else {
+                            System.err.println("Failed to load the image: " + filePath);
+                        }
+                    }
+                }
             }
+        } catch (IOException e) {
+            System.err.println("Error while loading images: " + e.getMessage());
         }
+
 
         return images;
     }
