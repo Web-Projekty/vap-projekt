@@ -37,8 +37,8 @@ public class Playing extends State implements StateMethods {
     private int maxLvlOffsetX;
 
     private int yLvlOffset;
-    private int upBorder = (int) (0.4 * GAME_HEIGHT);
-    private int downBorder = (int) (0.6 * GAME_HEIGHT);
+    private int upBorder = (int) (0.5 * GAME_HEIGHT);
+    private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
     private BufferedImage backgroundImg, bigCloud, smallCloud;

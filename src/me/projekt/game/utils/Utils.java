@@ -85,13 +85,18 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= Constants.Map.SPRITES_IN_SHEET-2) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
+                if (value >= Constants.Map.SPRITES_IN_SHEET-2 || isTileTransparent(color)) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
                     value = 17;
                 }
                 lvlData[j][i] = value;
             }
         }
         return lvlData;
+    }
+
+    private static boolean isTileTransparent(Color color) {
+        if (color.getRed() == 0 && color.getGreen() == 0 && color.getBlue() == 0) return true;
+        return false;
     }
 
     public static Point getPlayerSpawnFromImage(BufferedImage img) {

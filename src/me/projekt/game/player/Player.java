@@ -28,7 +28,7 @@ public class Player extends Entity {
     private int flipX = 0, flipW = 1;
 
     // Jumping / Gravity
-    private float jumpSpeed = -3f * Game.SCALE; // rychlost skoku
+    private float jumpSpeed = -2.6f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
 
     public Player(Playing playing, float x, float y, int width, int height) {
@@ -135,16 +135,15 @@ public class Player extends Entity {
 
         if (inAir) {
             if (canMoveTo(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
-                hitbox.y += airSpeed;
                 airSpeed += Constants.Entities.GRAVITY;
-                updateXPos(xSpeed);
+                hitbox.y += airSpeed;
             } else {
                 hitbox.y = getYUndRoofOrAboFloor(hitbox, airSpeed);
                 if (airSpeed > 0) resetInAir();
                 else airSpeed = fallSpeedAfterCollision;
-
-                updateXPos(xSpeed);
             }
+            updateXPos(xSpeed);
+
         } else
             updateXPos(xSpeed);
         moving = true;
@@ -167,7 +166,6 @@ public class Player extends Entity {
             hitbox.x += xSpeed;
         else
             hitbox.x = getXNextToWall(hitbox, xSpeed);
-
     }
 
     private void loadAnimations() {
