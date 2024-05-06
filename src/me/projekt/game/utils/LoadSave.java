@@ -53,7 +53,6 @@ public class LoadSave {
         File file = new File("res", "levels_img");
 
         File[] files = file.listFiles();
-
         System.out.println(files.length);
 
         File[] filesSorted = new File[files.length];
