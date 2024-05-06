@@ -41,8 +41,8 @@ public class Playing extends State implements StateMethods {
     private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
-    private BufferedImage backgroundImg, bigCloud, smallCloud;
-    private int[] smallCloudsPos;
+    private BufferedImage backgroundImg, mist;
+    private int[] mistPos;
     private Random ran = new Random();
 
     public Playing(Game game) {
@@ -53,11 +53,10 @@ public class Playing extends State implements StateMethods {
         loadStartLevel();
 
         backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-        bigCloud = LoadSave.getSpriteAtlas(LoadSave.BIG_CLOUDS);
-        smallCloud = LoadSave.getSpriteAtlas(LoadSave.SMALL_CLOUDS);
-        smallCloudsPos = new int[8];
-        for (int i = 0; i < smallCloudsPos.length; i++) {
-            smallCloudsPos[i] = (int) (90 * SCALE) + ran.nextInt((int) (100 * SCALE));
+        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
+        mistPos = new int[8];
+        for (int i = 0; i < mistPos.length; i++) {
+            mistPos[i] = (int) (100 * SCALE) + ran.nextInt((int) (50 * SCALE));
         }
     }
 
@@ -114,7 +113,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, GAME_HEIGHT, null);
 
-        drawClouds(g);
+        drawMist(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
@@ -129,14 +128,11 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    private void drawClouds(Graphics g) {
-        for (int i = 0; i < 3; i++) {
-            int offSet = (int) (xLvlOffset * 0.3); // čím menší, tím rychlejší
-            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - offSet, (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
-        }
-        for (int i = 0; i < smallCloudsPos.length; i++) {
-            int offSet = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
-            g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - offSet, smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+    private void drawMist(Graphics g) {
+        for (int i = 0; i < mistPos.length; i++) {
+            int offSetX = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
+            int offSetY = (int) (yLvlOffset * 0.3); // čím větší, tím pomalejší
+            g.drawImage(mist, MIST_WIDTH * 4 * i - offSetX, MIST_HEIGHT * 15 * mistPos[i] * i - offSetY, MIST_WIDTH, MIST_HEIGHT, null);
         }
     }
 

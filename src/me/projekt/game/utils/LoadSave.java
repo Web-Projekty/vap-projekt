@@ -1,5 +1,7 @@
 package me.projekt.game.utils;
 
+import me.projekt.game.Main;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -21,9 +23,8 @@ public class LoadSave {
     public static final String SOUND_BUTTONS = "sound_button.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String VOLUME_BUTTONS = "volume_buttons.png";
-    public static final String PLAYING_BG_IMG = "playing_bg_img.png";
-    public static final String BIG_CLOUDS = "big_clouds.png";
-    public static final String SMALL_CLOUDS = "small_clouds.png";
+    public static final String PLAYING_BG_IMG = "playing_bg_img_2.png";
+    public static final String MIST = "Mist_cloud.png";
 
     // Objects
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
@@ -49,7 +50,8 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        URL url = LoadSave.class.getResource("/levels_img");
+        //URL url = LoadSave.class.getResource("/levels_img");
+        URL url = Main.class.getResource("/levels_img");
         File file = null;
 
         try {
