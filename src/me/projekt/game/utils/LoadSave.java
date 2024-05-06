@@ -1,7 +1,5 @@
 package me.projekt.game.utils;
 
-import me.projekt.game.Main;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -49,7 +47,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        int mapCount = 3;
+        int mapCount = 2;
         BufferedImage[] images = new BufferedImage[mapCount];
         for (int i = 1; i <= mapCount; i++) {
             InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");
