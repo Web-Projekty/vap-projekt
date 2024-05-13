@@ -1,8 +1,9 @@
 package me.projekt.game.levels;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
+import me.projekt.game.objects.pickable.Soul;
 import me.projekt.game.utils.Utils;
 
 import java.awt.*;
@@ -13,34 +14,48 @@ import static me.projekt.game.utils.Utils.getPlayerSpawnFromImage;
 
 public class Level {
 
+    // Level data & settings
     private BufferedImage img;
     private int[][] lvlData;
-    //    private ArrayList<Slime> slimes;
-    private ArrayList<Potion> potions;
-    private ArrayList<GameContainer> containers;
-
     private int lvlTilesWide;
     private int maxTilesOffsetX;
     private int maxLvlOffsetX;
-
     private int lvlTilesHigh;
     private int maxTilesOffsetY;
     private int maxLvlOffsetY;
 
+    // Enemies
+    //    private ArrayList<Slime> slimes;
+    //    private ArrayList<Zombie> zombies;
+    //    ...
+
+    // Pickable objects
+    private ArrayList<Potion> potions;
+    private ArrayList<Soul> souls;
+    private ArrayList<Box> containers;
+
+    // Player spawn
     private Point spawn;
+
+    // Souls (Pickable object to complete level)
+    private int pickedSouls = 0;
+    private int neededSouls;
 
     public Level(BufferedImage img) {
         this.img = img;
         setLevelData();
         //setEnemies();
-        setPotions();
+        setPickableObjects();
         setContainers();
         setLevelOffsets();
         setPlayerSpawn();
+
+        this.neededSouls = souls.size();
     }
 
 
-    private void setPotions() {
+    private void setPickableObjects() {
+        this.souls = Utils.getSoulsFromImage(img);
         this.potions = Utils.getPotionsFromImage(img);
     }
 
@@ -70,6 +85,18 @@ public class Level {
         maxLvlOffsetY = Game.TILES_SIZE * maxTilesOffsetY;
     }
 
+    public int getNeededSouls() {
+        return neededSouls;
+    }
+
+    public int getPickedSouls() {
+        return pickedSouls;
+    }
+
+    public void pickSoul() {
+        this.pickedSouls++;
+    }
+
     public int getSpriteIndex(int x, int y) {
         return lvlData[y][x];
     }
@@ -94,7 +121,11 @@ public class Level {
         return potions;
     }
 
-    public ArrayList<GameContainer> getContainers() {
+    public ArrayList<Soul> getSouls() {
+        return souls;
+    }
+
+    public ArrayList<Box> getContainers() {
         return containers;
     }
 }

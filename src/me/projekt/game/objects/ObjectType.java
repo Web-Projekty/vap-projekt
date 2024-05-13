@@ -4,27 +4,35 @@ import me.projekt.game.main.Game;
 
 public enum ObjectType {
 
-    RED_POTION(0, 12, 16, 15, 0, 7),
-    BLUE_POTION(1, 12, 16, 10, 1, 7),
-    BARREL(2, 40, 30, -1, 2, 8),
-    BOX(3, 40, 30, -1, 3, 8);
+    SOUL(101, 16, 16, 4),
+    RED_POTION(102, 12, 16, 15, 7),
+    BLUE_POTION(103, 12, 16, 10, 7),
+    BARREL(104, 40, 30, 8),
+    BOX(105, 40, 30, 8);
 
-    private int id;
+    private int redValue;
     private int width, height;
     private int value;
-    private int orderInSheet, spriteAmount;
+    private int spriteAmount;
 
-    ObjectType(int id, int width, int height, int value, int orderInSheet, int spriteAmount) {
-        this.id = id;
+    ObjectType(int redValue, int width, int height, int value, int spriteAmount) {
+        this.redValue = redValue;
         this.width = (int) (width * Game.SCALE);
         this.height = (int) (height * Game.SCALE);
         this.value = value;
-        this.orderInSheet = orderInSheet;
         this.spriteAmount = spriteAmount;
     }
 
-    public int getId() {
-        return id;
+    ObjectType(int redValue, int width, int height, int spriteAmount) {
+        this.redValue = redValue;
+        this.width = (int) (width * Game.SCALE);
+        this.height = (int) (height * Game.SCALE);
+        this.value = -1;
+        this.spriteAmount = spriteAmount;
+    }
+
+    public int getRedValue() {
+        return redValue;
     }
 
     public int getWidth() {
@@ -39,17 +47,13 @@ public enum ObjectType {
         return value;
     }
 
-    public int getOrderInSheet() {
-        return orderInSheet;
-    }
-
     public int getSpriteAmount() {
         return spriteAmount;
     }
 
     public static ObjectType getObjectByValue(int value) {
         for (ObjectType type : ObjectType.values()) {
-            if (type.getId() == value) return type;
+            if (type.getRedValue() == value) return type;
         }
         return null;
     }

@@ -1,8 +1,9 @@
 package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.objects.destroyable.GameContainer;
+import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
+import me.projekt.game.objects.pickable.Soul;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -40,8 +41,7 @@ public class Utils {
 
         int value = lvlData[(int) yIndex][(int) xIndex];
 
-        if (value >= 48 || value < 0 || value != 11) {
-            // pokud se na indexech nachází jeden z tilů, tak hráč narazí na kolizi, neprojde
+        if (value != 17) { // pokud se na indexech nachází jeden ze solid tilů, tak hráč narazí na kolizi, neprojde
             return true;
         }
         return false;
@@ -85,8 +85,8 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= 48) {
-                    value = 0;
+                if (value >= Constants.Map.SPRITES_IN_SHEET-2 || isTileTransparent(color)) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
+                    value = 17;
                 }
                 lvlData[j][i] = value;
             }
@@ -94,11 +94,16 @@ public class Utils {
         return lvlData;
     }
 
+    private static boolean isTileTransparent(Color color) {
+        if (color.getRed() == 0 && color.getGreen() == 0 && color.getBlue() == 0) return true;
+        return false;
+    }
+
     public static Point getPlayerSpawnFromImage(BufferedImage img) {
         for (int j = 0; j < img.getHeight(); j++) {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
+                int value = color.getRed();
                 if (value == 100) {
                     return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
                 }
@@ -112,25 +117,35 @@ public class Utils {
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                if (value == RED_POTION.getId() || value == BLUE_POTION.getId())
+                int value = color.getRed();
+                if (value == RED_POTION.getRedValue() || value == BLUE_POTION.getRedValue())
                     list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
-            }
 
+            }
         return list;
     }
 
-    public static ArrayList<GameContainer> getContainersFromImage(BufferedImage img) {
-        ArrayList<GameContainer> list = new ArrayList<>();
+    public static ArrayList<Soul> getSoulsFromImage(BufferedImage img) {
+        ArrayList<Soul> list = new ArrayList<>();
         for (int j = 0; j < img.getHeight(); j++)
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
-                int value = color.getBlue();
-                if (value == BOX.getId() || value == BARREL.getId())
-                    list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+                int value = color.getRed();
+                if (value == SOUL.getRedValue())
+                    list.add(new Soul(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
             }
-
         return list;
     }
 
+    public static ArrayList<Box> getContainersFromImage(BufferedImage img) {
+        ArrayList<Box> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getRed();
+                if (value == BOX.getRedValue() || value == BARREL.getRedValue())
+                    list.add(new Box(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+            }
+        return list;
+    }
 }

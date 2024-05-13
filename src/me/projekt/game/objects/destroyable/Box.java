@@ -4,9 +4,9 @@ import me.projekt.game.main.Game;
 import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.ObjectType;
 
-public class GameContainer extends GameObject {
+public class Box extends GameObject {
 
-    public GameContainer(int x, int y, ObjectType objectType) {
+    public Box(int x, int y, ObjectType objectType) {
         super(x, y, objectType);
         setHitbox();
     }
@@ -21,6 +21,9 @@ public class GameContainer extends GameObject {
             xDrawOffset = (int) (8 * Game.SCALE);
             yDrawOffset = (int) (5 * Game.SCALE);
         }
+
+        hitbox.y += yDrawOffset + (int) (Game.SCALE * 2); // aby se containery (box, barrel...) dotýkaly tilu a nebyly ve vzduchu
+        hitbox.x += xDrawOffset / 2; // posunutí do středu
     }
 
     public void update() {

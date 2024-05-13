@@ -1,14 +1,15 @@
 package me.projekt.game.objects;
 
 import me.projekt.game.main.Game;
-import me.projekt.game.utils.Constants;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
+
 public class GameObject {
 
-    protected int x,y;
+    protected int x, y;
     protected ObjectType objectType;
     protected Rectangle2D.Float hitbox;
     protected boolean doAnimation, active = true;
@@ -24,7 +25,7 @@ public class GameObject {
 
     protected void updateAnimationTick() {
         animTick++;
-        if (animTick >= Constants.Animations.DEFAULT_SPEED) {
+        if (animTick >= DEFAULT_SPEED) {
             animTick = 0;
             animIndex++;
             if (animIndex >= objectType.getSpriteAmount()) {
@@ -58,12 +59,16 @@ public class GameObject {
             doAnimation = true;
     }
 
-    public void setAction(boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setAnimation(boolean doAnimation) {
+        this.doAnimation = doAnimation;
     }
 
     public boolean doAnimation() {

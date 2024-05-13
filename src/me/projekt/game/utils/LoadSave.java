@@ -2,17 +2,14 @@ package me.projekt.game.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class LoadSave {
 
     // Sprites
-    public static final String PLAYER_ATLAS = "Skeleton_2.png";
-    public static final String LEVEL_ATLAS = "outside_sprites.png";
+    public static final String PLAYER_ATLAS = "Skeleton.png";
+    public static final String LEVEL_ATLAS = "Tileset.png";
 
     // UI
     public static final String COMPLETED_IMG = "completed_sprite.png";
@@ -23,13 +20,13 @@ public class LoadSave {
     public static final String SOUND_BUTTONS = "sound_button.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String VOLUME_BUTTONS = "volume_buttons.png";
-    public static final String PLAYING_BG_IMG = "playing_bg_img.png";
-    public static final String BIG_CLOUDS = "big_clouds.png";
-    public static final String SMALL_CLOUDS = "small_clouds.png";
+    public static final String PLAYING_BG_IMG = "playing_bg_img_2.png";
+    public static final String MIST = "Mist_cloud.png";
 
     // Objects
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
     public static final String POTION_ATLAS = "potions_sprites.png";
+    public static final String SOUL_ATLAS = "Soul.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
@@ -50,34 +47,17 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        URL url = LoadSave.class.getResource("/levels_img");
-        File file = null;
-
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        File[] files = file.listFiles();
-        File[] filesSorted = new File[files.length];
-
-        for (int i = 0; i < filesSorted.length; i++) {
-            for (int j = 0; j < files.length; j++) {
-                if (files[j].getName().equals((i + 1) + ".png")) {
-                    filesSorted[i] = files[j];
-                }
-            }
-        }
-
-        BufferedImage[] images = new BufferedImage[filesSorted.length];
-        for (int i = 0; i < images.length; i++) {
+        int mapCount = 2;
+        BufferedImage[] images = new BufferedImage[mapCount];
+        for (int i = 1; i <= mapCount; i++) {
+            InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");
             try {
-                images[i] = ImageIO.read(filesSorted[i]);
+                images[i - 1] = ImageIO.read(is);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
+
 
         return images;
     }

@@ -1,6 +1,7 @@
 package me.projekt.game.gamestates;
 
 import me.projekt.game.objects.ObjectManager;
+import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.ui.PauseOverlay;
 import me.projekt.game.player.Player;
 import me.projekt.game.levels.LevelManager;
@@ -22,6 +23,7 @@ public class Playing extends State implements StateMethods {
     private Player player;
     private LevelManager levelManager;
     private ObjectManager objectManager;
+    private SoundManager soundManager;
     private LevelCompletedOverlay levelCompletedOverlay;
     private PauseOverlay pauseOverlay;
 
@@ -35,12 +37,12 @@ public class Playing extends State implements StateMethods {
     private int maxLvlOffsetX;
 
     private int yLvlOffset;
-    private int upBorder = (int) (0.4 * GAME_HEIGHT);
-    private int downBorder = (int) (0.6 * GAME_HEIGHT);
+    private int upBorder = (int) (0.5 * GAME_HEIGHT);
+    private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
-    private BufferedImage backgroundImg, bigCloud, smallCloud;
-    private int[] smallCloudsPos;
+    private BufferedImage backgroundImg, mist;
+    private int[] mistPos;
     private Random ran = new Random();
 
     public Playing(Game game) {
@@ -51,18 +53,17 @@ public class Playing extends State implements StateMethods {
         loadStartLevel();
 
         backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-        bigCloud = LoadSave.getSpriteAtlas(LoadSave.BIG_CLOUDS);
-        smallCloud = LoadSave.getSpriteAtlas(LoadSave.SMALL_CLOUDS);
-        smallCloudsPos = new int[8];
-        for (int i = 0; i < smallCloudsPos.length; i++) {
-            smallCloudsPos[i] = (int) (90 * SCALE) + ran.nextInt((int) (100 * SCALE));
+        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
+        mistPos = new int[8];
+        for (int i = 0; i < mistPos.length; i++) {
+            mistPos[i] = (int) (100 * SCALE) + ran.nextInt((int) (50 * SCALE));
         }
     }
 
     private void initClasses() {
-        this.levelManager = new LevelManager(game);
+        this.levelManager = new LevelManager(this);
         this.objectManager = new ObjectManager(this);
-        this.player = new Player(200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
+        this.player = new Player(this, 200, 200, (int) (48 * SCALE), (int) (32 * SCALE));
         this.player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
 
@@ -71,16 +72,17 @@ public class Playing extends State implements StateMethods {
     }
 
     public void loadNextLevel() {
-        reset();
         levelManager.loadNextLevel();
         player.setSpawn(levelManager.getCurrentLevel().getSpawn());
+        reset();
     }
 
-    private void reset() {
+    public void reset() {
         gameOver = false;
         paused = false;
         levelCompleted = false;
         player.reset();
+        objectManager.reset();
     }
 
     private void loadStartLevel() {
@@ -111,7 +113,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, GAME_HEIGHT, null);
 
-        drawClouds(g);
+        drawMist(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
@@ -126,19 +128,16 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    private void drawClouds(Graphics g) {
-        for (int i = 0; i < 3; i++) {
-            int offSet = (int) (xLvlOffset * 0.3); // čím menší, tím rychlejší
-            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - offSet, (int) (204 * SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
-        }
-        for (int i = 0; i < smallCloudsPos.length; i++) {
-            int offSet = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
-            g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - offSet, smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+    private void drawMist(Graphics g) {
+        for (int i = 0; i < mistPos.length; i++) {
+            int offSetX = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
+            int offSetY = (int) (yLvlOffset * 0.3); // čím větší, tím pomalejší
+            g.drawImage(mist, MIST_WIDTH * 4 * i - offSetX, MIST_HEIGHT * 15 * mistPos[i] * i - offSetY, MIST_WIDTH, MIST_HEIGHT, null);
         }
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (paused) pauseOverlay.mouseDragged(e);
+
     }
 
     @Override
@@ -151,8 +150,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mousePressed(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mousePressed(e);
+            if (paused) pauseOverlay.mousePressed(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mousePressed(e);
             }
@@ -162,8 +160,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mouseReleased(e);
+            if (paused) pauseOverlay.mouseReleased(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mouseReleased(e);
             }
@@ -173,8 +170,7 @@ public class Playing extends State implements StateMethods {
     @Override
     public void mouseMoved(MouseEvent e) {
         if (!gameOver) {
-            if (paused)
-                pauseOverlay.mouseMoved(e);
+            if (paused) pauseOverlay.mouseMoved(e);
             else if (levelCompleted) {
                 levelCompletedOverlay.mouseMoved(e);
             }
@@ -270,5 +266,9 @@ public class Playing extends State implements StateMethods {
 
     public LevelManager getLevelManager() {
         return levelManager;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

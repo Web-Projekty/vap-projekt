@@ -1,6 +1,7 @@
 package me.projekt.game.player;
 
 import me.projekt.game.enemies.Entity;
+import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
 import me.projekt.game.utils.Constants;
 import me.projekt.game.utils.LoadSave;
@@ -9,8 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static me.projekt.game.player.PlayerAction.*;
-import static me.projekt.game.utils.Constants.Animations.DEFAULT_SPEED;
-import static me.projekt.game.utils.Constants.Animations.MOVING_SPEED;
+import static me.projekt.game.utils.Constants.Entities.*;
+import static me.projekt.game.utils.Constants.Animations.*;
 import static me.projekt.game.utils.Utils.*;
 
 public class Player extends Entity {
@@ -27,14 +28,14 @@ public class Player extends Entity {
     private int flipX = 0, flipW = 1;
 
     // Jumping / Gravity
-    private float jumpSpeed = -3f * Game.SCALE; // rychlost skoku
+    private float jumpSpeed = -2.6f * Game.SCALE; // rychlost skoku
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE; // rychlost pádu po dotyku kolize
 
-    public Player(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Player(Playing playing, float x, float y, int width, int height) {
+        super(playing, x, y, width, height);
 
         this.action = IDLE;
-        this.moveSpeed = 1.2f * Game.SCALE;
+        this.moveSpeed = PLAYER_SPEED;
         this.maxHealth = 100;
         this.currentHealth = maxHealth;
 
@@ -51,6 +52,7 @@ public class Player extends Entity {
 
     public void update() {
         updatePosition();
+        if (moving) checkObjectTouched();
         updateAnimationTick();
         setAnimation();
     }
@@ -66,9 +68,15 @@ public class Player extends Entity {
 //        drawHitbox(g, xLvlOffset, yLvlOffset);
     }
 
+    private void checkObjectTouched() {
+        playing.getObjectManager().checkObjectTouched(hitbox);
+    }
+
     private void updateAnimationTick() {
+        int animationSpeed = moving ? MOVING_SPEED : DEFAULT_SPEED;
+
         animTick++;
-        if (animTick >= (moving ? MOVING_SPEED : DEFAULT_SPEED)) {
+        if (animTick >= animationSpeed) {
             animTick = 0;
             animIndex++;
             if (animIndex >= action.getSpriteAmount()) {
@@ -127,16 +135,15 @@ public class Player extends Entity {
 
         if (inAir) {
             if (canMoveTo(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
+                airSpeed += Constants.Entities.GRAVITY;
                 hitbox.y += airSpeed;
-                airSpeed += Constants.GRAVITY;
-                updateXPos(xSpeed);
             } else {
                 hitbox.y = getYUndRoofOrAboFloor(hitbox, airSpeed);
                 if (airSpeed > 0) resetInAir();
                 else airSpeed = fallSpeedAfterCollision;
-
-                updateXPos(xSpeed);
             }
+            updateXPos(xSpeed);
+
         } else
             updateXPos(xSpeed);
         moving = true;
@@ -159,7 +166,6 @@ public class Player extends Entity {
             hitbox.x += xSpeed;
         else
             hitbox.x = getXNextToWall(hitbox, xSpeed);
-
     }
 
     private void loadAnimations() {
@@ -212,9 +218,12 @@ public class Player extends Entity {
     public void reset() {
         cancelMovement();
         inAir = false;
-        attacking = false;
         moving = false;
+        left = false;
+        right = false;
+        jump = false;
         action = IDLE;
+        attacking = false;
 
         hitbox.x = x;
         hitbox.y = y;

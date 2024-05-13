@@ -6,32 +6,30 @@ import me.projekt.game.utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static me.projekt.game.utils.Constants.Buttons.*;
+import static me.projekt.game.utils.Constants.Buttons.SOUND_SIZE_DEFAULT;
 
-public class SoundButton extends Button {
+public class SFXButton extends Button {
 
-    private BufferedImage[][] soundImgs;
+    private BufferedImage[][] sfxImgs;
     private boolean mouseOver, mousePressed;
     private int rowIndex, columnIndex;
 
-    public SoundButton(int x, int y, int width, int height) {
+    public SFXButton(int x, int y, int width, int height) {
         super(x, y, width, height);
 
-        loadSoundImgs();
+        loadImgs();
     }
 
-    private void loadSoundImgs() {
+    private void loadImgs() {
         BufferedImage temp = LoadSave.getSpriteAtlas(LoadSave.SOUND_BUTTONS);
-        soundImgs = new BufferedImage[2][3];
-        for (int j = 0; j < soundImgs.length; j++)
-            for (int i = 0; i < soundImgs[j].length; i++)
-                soundImgs[j][i] = temp.getSubimage(i * SOUND_SIZE_DEFAULT, j * SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
-
-
+        sfxImgs = new BufferedImage[2][3];
+        for (int j = 0; j < sfxImgs.length; j++)
+            for (int i = 0; i < sfxImgs[j].length; i++)
+                sfxImgs[j][i] = temp.getSubimage(i * SOUND_SIZE_DEFAULT, j * SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
     }
 
     public void update() {
-        rowIndex = SoundManager.isSoundsMuted() ? 1 : 0;
+        rowIndex = SoundManager.isSFXMuted() ? 1 : 0;
 
         columnIndex = 0;
         if (mouseOver)
@@ -46,7 +44,7 @@ public class SoundButton extends Button {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(soundImgs[rowIndex][columnIndex], x, y, width, height, null);
+        g.drawImage(sfxImgs[rowIndex][columnIndex], x, y, width, height, null);
     }
 
     public boolean isMousePressed() {

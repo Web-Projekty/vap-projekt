@@ -2,12 +2,12 @@ package me.projekt.game.ui.buttons;
 
 import java.awt.*;
 
-public class PauseButton {
+public class Button {
 
     protected int x,y,width,height;
     protected Rectangle bounds;
 
-    public PauseButton(int x, int y, int width, int height) {
+    public Button(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
