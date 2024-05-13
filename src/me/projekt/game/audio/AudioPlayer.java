@@ -64,12 +64,6 @@ public class AudioPlayer {
 
         return c;
     }
-
-    /*public void setVolume(){
-            this.volume = volume;
-            updateSongVolume();
-            updateEffectsVolume();
-    }*/
     public void stopSong() {
         if (songs[currentSongId].isActive()) {
             songs[currentSongId].stop();

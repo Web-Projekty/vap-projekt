@@ -1,5 +1,6 @@
 package me.projekt.game.player;
 
+import me.projekt.game.audio.AudioPlayer;
 import me.projekt.game.enemies.Entity;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
@@ -151,7 +152,7 @@ public class Player extends Entity {
 
     private void jump() {
         if (inAir) return;
-
+        playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
         inAir = true;
         airSpeed = jumpSpeed;
     }
