@@ -1,8 +1,10 @@
 package me.projekt.game.main;
 
+import me.projekt.game.audio.AudioPlayer;
 import me.projekt.game.gamestates.GameOptions;
 import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.GameMenu;
+import me.projekt.game.gamestates.GameState;
 import me.projekt.game.gamestates.Playing;
 
 import java.awt.*;
@@ -17,6 +19,7 @@ public class Game implements Runnable {
 
     private Playing playing;
     private GameMenu menu;
+    private AudioPlayer audioPlayer;
     private GameOptions options;
 
     public static final int TILES_DEFAULT_SIZE = 32;
@@ -46,6 +49,7 @@ public class Game implements Runnable {
         menu = new GameMenu(this);
         options = new GameOptions(this);
         playing = new Playing(this);
+        audioPlayer = new AudioPlayer();
     }
 
     private void startGameLoop() {
@@ -153,4 +157,7 @@ public class Game implements Runnable {
     public Playing getPlaying() {
         return this.playing;
     }
+
+    public AudioPlayer getAudioPlayer() {return this.audioPlayer;}
 }
+
