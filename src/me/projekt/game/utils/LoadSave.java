@@ -58,8 +58,6 @@ public class LoadSave {
                 e.printStackTrace();
             }
         }
-
-
         return images;
     }
 }
