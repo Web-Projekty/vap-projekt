@@ -40,8 +40,7 @@ public class Utils {
         float yIndex = y / Game.TILES_SIZE;
 
         int value = lvlData[(int) yIndex][(int) xIndex];
-
-        if (value != 17) { // pokud se na indexech nachází jeden ze solid tilů, tak hráč narazí na kolizi, neprojde
+        if (value != Constants.Map.AIR_BLOCK) { // pokud se na indexech nachází jeden ze solid tilů, tak hráč narazí na kolizi, neprojde
             return true;
         }
         return false;
@@ -86,7 +85,7 @@ public class Utils {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
                 if (value >= Constants.Map.SPRITES_IN_SHEET-1 || isTileTransparent(color)) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
-                    value = 17;
+                    value = Constants.Map.AIR_BLOCK;
                 }
                 lvlData[j][i] = value;
             }

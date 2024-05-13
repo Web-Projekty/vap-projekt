@@ -8,6 +8,8 @@ public class Constants {
         public static final int SPRITES_IN_SHEET = 20;
         public static final int COLUMNS = 4;
         public static final int ROWS = 5;
+
+        public static final int AIR_BLOCK = 16;
     }
 
     public static class Entities {
