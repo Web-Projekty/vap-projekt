@@ -25,22 +25,32 @@ public class AudioPlayer {
     private Random rand = new Random();
 
     public AudioPlayer() {
-
+        loadSongs();
+        loadEffects();
+        playSong(MENU_1);
     }
 
-    private void loadSongs() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    private void loadSongs() {
         String[] names = {"main_v2"};
         songs = new Clip[names.length];
         for (int i = 0; i < songs.length; i++) {
-            songs[i] = getClip(names[i]);
+            try {
+                songs[i] = getClip(names[i]);
+            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void loadEffects() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    private void loadEffects() {
         String[] effectNames = {"jump"};
-        songs = new Clip[effectNames.length];
+        effects = new Clip[effectNames.length];
         for (int i = 0; i < songs.length; i++) {
-            songs[i] = getClip(effectNames[i]);
+            try {
+                effects[i] = getClip(effectNames[i]);
+            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -53,5 +63,43 @@ public class AudioPlayer {
         c.open(audio);
 
         return c;
+    }
+
+    /*public void setVolume(){
+            this.volume = volume;
+            updateSongVolume();
+            updateEffectsVolume();
+    }*/
+    public void stopSong() {
+        if (songs[currentSongId].isActive()) {
+            songs[currentSongId].stop();
+        }
+    }
+
+   /* public void setLevelSong(int lvlIndex) {
+if (lvlIndex % 2 ==0){
+    playSong(1);
+}else {
+    playSong(2);
+}
+    }*/
+
+    public void LvlCompleted() {
+        stopSong();
+        playEffect(LVL_COMPLETED);
+    }
+
+    public void playEffect(int effect) {
+        effects[effect].setMicrosecondPosition(0);
+        effects[effect].start();
+    }
+
+    public void playSong(int song) {
+        stopSong();
+
+        currentSongId = song;
+        //updateSongVolume();
+        songs[currentSongId].setMicrosecondPosition(0);
+        songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
     }
 }
