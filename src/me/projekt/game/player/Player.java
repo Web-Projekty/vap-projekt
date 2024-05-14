@@ -4,8 +4,10 @@ import me.projekt.game.audio.AudioPlayer;
 import me.projekt.game.enemies.Entity;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
+import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.utils.Constants;
 import me.projekt.game.utils.LoadSave;
+import me.projekt.game.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -151,7 +153,7 @@ public class Player extends Entity {
 
     private void jump() {
         if (inAir) return;
-        playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
+        if (!SoundManager.isSFXMuted()) playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
         inAir = true;
         airSpeed = jumpSpeed;
     }
