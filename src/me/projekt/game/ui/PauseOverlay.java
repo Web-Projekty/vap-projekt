@@ -96,7 +96,7 @@ public class PauseOverlay {
     public void mouseReleased(MouseEvent e) {
         if (isIn(e, musicButton)) {
             if (musicButton.isMousePressed()) {
-                SoundManager.setSoundsMuted(!SoundManager.isSoundsMuted());
+                SoundManager.setSongsMuted(!SoundManager.isSongsMuted());
             }
         } else if (isIn(e, sfxButton)) {
             if (sfxButton.isMousePressed()) {

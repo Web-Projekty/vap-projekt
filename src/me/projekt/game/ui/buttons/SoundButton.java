@@ -31,7 +31,7 @@ public class SoundButton extends Button {
     }
 
     public void update() {
-        rowIndex = SoundManager.isSoundsMuted() ? 1 : 0;
+        rowIndex = SoundManager.isSongsMuted() ? 1 : 0;
 
         columnIndex = 0;
         if (mouseOver)
