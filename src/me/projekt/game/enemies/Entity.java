@@ -31,8 +31,8 @@ public abstract class Entity {
         this.height = height;
     }
 
-    protected void initHitbox(int width, int height) {
-        hitbox = new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
+    protected void initHitbox(float x, float y, int width, int height) {
+        hitbox = new Rectangle2D.Float(x, y, width, (int)(height * Game.SCALE));
     }
 
     public void drawHitbox(Graphics g, int xLvlOffset, int yLvlOffset) {
