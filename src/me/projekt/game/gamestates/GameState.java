@@ -7,7 +7,7 @@ public enum GameState {
     PLAYING,
     QUIT;
 
-    private static GameState state = MENU;
+    public static GameState state = MENU;
 
     public static GameState getState() {
         return state;

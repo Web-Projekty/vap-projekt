@@ -13,6 +13,7 @@ import me.projekt.game.utils.LoadSave;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -110,7 +111,7 @@ public class Playing extends State implements StateMethods {
             levelManager.update();
             objectManager.update();
             player.update();
-            enemyManager.update(levelManager.getCurrentLevel().getLevelData());
+            enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             checkCloseToBorder();
         }
     }
@@ -144,6 +145,14 @@ public class Playing extends State implements StateMethods {
             int offSet = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
             g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - offSet, smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
         }
+    }
+
+    public void resetAll() {
+        //TODO: reset everything
+    }
+
+    public void checkEnemyHit(Rectangle2D.Float attackBox) {
+        enemyManager.checkEnemyHit(attackBox);
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -281,4 +290,5 @@ public class Playing extends State implements StateMethods {
     public SoundManager getSoundManager() {
         return soundManager;
     }
-}
+
+
