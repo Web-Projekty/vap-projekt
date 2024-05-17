@@ -6,6 +6,8 @@ public class Constants {
 
     public static class EnemyConstants {
         public static final int CRABBY = 101;
+        public static final int GHOST = 111;
+        public static final int SLIME = 121;
 
         public static final int IDLE = 0;
         public static final int RUNNING = 1;
@@ -15,12 +17,28 @@ public class Constants {
 
         public static final int CRABBY_WIDTH_DEFAULT = 72;
         public static final int CRABBY_HEIGHT_DEFAULT = 32;
+        public static final int GHOST_WIDTH_DEFAULT = 72;
+        public static final int GHOST_HEIGHT_DEFAULT = 32;
+        public static final int SLIME_WIDTH_DEFAULT = 72;
+        public static final int SLIME_HEIGHT_DEFAULT = 32;
+
 
         public static final int CRABBY_WIDTH = (int)(CRABBY_WIDTH_DEFAULT*Game.SCALE);
         public static final int CRABBY_HEIGHT = (int)(CRABBY_HEIGHT_DEFAULT*Game.SCALE);
+        public static final int GHOST_WIDTH = (int)(GHOST_WIDTH_DEFAULT*Game.SCALE);
+        public static final int GHOST_HEIGHT = (int)(GHOST_HEIGHT_DEFAULT*Game.SCALE);
+        public static final int SLIME_WIDTH = (int)(SLIME_WIDTH_DEFAULT*Game.SCALE);
+        public static final int SLIME_HEIGHT = (int)(SLIME_HEIGHT_DEFAULT*Game.SCALE);
+
 
         public static final int CRABBY_DRAWOFFSETX_X = (int)(26 * Game.SCALE);
         public static final int CRABBY_DRAWOFFSETX_Y = (int)(9 * Game.SCALE);
+        public static final int GHOST_DRAWOFFSETX_X = (int)(26 * Game.SCALE);
+        public static final int GHOST_DRAWOFFSETX_Y = (int)(9 * Game.SCALE);
+        public static final int SLIME_DRAWOFFSETX_X = (int)(26 * Game.SCALE);
+        public static final int SLIME_DRAWOFFSETX_Y = (int)(9 * Game.SCALE);
+
+
 
         public static int GetSpriteAmount(int enemyType, int enemyState) {
             switch (enemyType) {
@@ -39,6 +57,28 @@ public class Constants {
                     }
             }
             return 0;
+        }
+
+        public static int GetMaxHealth(int enemyType) {
+            switch (enemyType) {
+                case CRABBY:
+                    return 10;
+                case GHOST:
+                    return 150;
+                default:
+                    return 0;
+            }
+        }
+
+        public static int GetEnemyDmg(int enemyType) {
+            switch (enemyType) {
+                case CRABBY:
+                    return 20;
+                case GHOST:
+                    return 100;
+                default:
+                    return 0;
+            }
         }
     }
 
