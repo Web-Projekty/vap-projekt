@@ -6,9 +6,9 @@ public enum PlayerAction {
     RUNNING(1, 6),
     JUMP(2, 2),
     FALLING(3, 2),
-    GROUND(4, 2),
+    ATTACK(4, 3),
     HIT(5, 3),
-    ATTACK(4, 3);
+    DEAD(6,4);
 
     private int orderInSheet = 0;
     private int spriteAmount = 1;
