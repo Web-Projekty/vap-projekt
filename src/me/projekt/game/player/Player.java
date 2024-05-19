@@ -135,9 +135,8 @@ public class Player extends Entity {
                 if (airSpeed > 0) resetInAir();
                 else airSpeed = fallSpeedAfterCollision;
             }
-            updateXPos(xSpeed);
-
-        } else updateXPos(xSpeed);
+        }
+        updateXPos(xSpeed);
         moving = true;
     }
 
