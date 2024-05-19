@@ -60,7 +60,6 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g, int xLvlOffset, int yLvlOffset) {
-
         g.drawImage(animations[action.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - xLvlOffset + flipX, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width * flipW, height, null);
 //        drawHitbox(g, xLvlOffset, yLvlOffset);
     }
@@ -204,6 +203,14 @@ public class Player extends Entity {
 
     public void setJump(boolean jump) {
         this.jump = jump;
+    }
+
+    public void setJumpSpeed(float jumpSpeed) {
+        this.jumpSpeed = jumpSpeed;
+    }
+
+    public float getJumpSpeed() {
+        return this.jumpSpeed;
     }
 
     public void reset() {
