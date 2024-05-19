@@ -7,8 +7,9 @@ import java.util.Random;
 
 public class AudioPlayer {
     public static int MENU_1 = 0;
-    public static int LEVEL_1 = 1;
-    public static int LEVEL_2 = 2;
+    public static int MENU_2 = 1;
+    public static int LEVEL_1 = 2;
+    public static int LEVEL_2 = 3;
 
     public static int JUMP = 0;
     public static int DIE = 1;
@@ -31,7 +32,7 @@ public class AudioPlayer {
     }
 
     private void loadSongs() {
-        String[] names = {"main_v2"};
+        String[] names = {"main_continuous_start", "main_continuous_repeat"};
         songs = new Clip[names.length];
         for (int i = 0; i < songs.length; i++) {
             try {
@@ -45,7 +46,7 @@ public class AudioPlayer {
     private void loadEffects() {
         String[] effectNames = {"jump"};
         effects = new Clip[effectNames.length];
-        for (int i = 0; i < songs.length; i++) {
+        for (int i = 0; i < effects.length; i++) {
             try {
                 effects[i] = getClip(effectNames[i]);
             } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
@@ -64,6 +65,7 @@ public class AudioPlayer {
 
         return c;
     }
+
     public void stopSong() {
         if (songs[currentSongId].isActive()) {
             songs[currentSongId].stop();
@@ -94,6 +96,20 @@ if (lvlIndex % 2 ==0){
         currentSongId = song;
         //updateSongVolume();
         songs[currentSongId].setMicrosecondPosition(0);
-        songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
+        if (song == MENU_1) {
+            songs[currentSongId].start();
+            songs[currentSongId].addLineListener(new LineListener() {
+                @Override
+                public void update(LineEvent event) {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        stopSong();
+                        songs[MENU_2].loop(Clip.LOOP_CONTINUOUSLY);
+                    }
+                }
+            });
+        } else {
+            songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
+        }
+
     }
 }
