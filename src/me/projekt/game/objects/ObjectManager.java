@@ -16,11 +16,12 @@ import java.util.ArrayList;
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage[][] potionImg, soulImg, containerImg;
+    private BufferedImage[][] potionImg, soulImg, containerImg, decorationsImg;
 
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
     private ArrayList<Box> boxes;
+    private ArrayList<GameObject> decorations;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -32,6 +33,7 @@ public class ObjectManager {
         drawPotions(g, xLvlOffset, yLvlOffset);
         drawContainers(g, xLvlOffset, yLvlOffset);
         drawSouls(g, xLvlOffset, yLvlOffset);
+        drawDecorations(g, xLvlOffset, yLvlOffset);
     }
 
     private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
@@ -83,6 +85,22 @@ public class ObjectManager {
         }
     }
 
+    private void drawDecorations(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (GameObject decoration : decorations) {
+            if (decoration.isActive()) {
+
+                g.drawImage(decorationsImg[6][decoration.getAnimIndex()],
+                        (int) (decoration.getHitbox().x - decoration.getXDrawOffset() - xLvlOffset),
+                        (int) (decoration.getHitbox().y - decoration.getYDrawOffset() - yLvlOffset),
+                        decoration.getObject().getWidth(),
+                        decoration.getObject().getHeight(),
+                        null);
+
+                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
     public void update() {
         for (Potion p : potions) {
             if (p.isActive()) {
@@ -97,6 +115,11 @@ public class ObjectManager {
         for (Soul soul : souls) {
             if (soul.isActive()) {
                 soul.update();
+            }
+        }
+        for (GameObject decoration : decorations) {
+            if (decoration.isActive()) {
+                decoration.update();
             }
         }
     }
@@ -128,11 +151,21 @@ public class ObjectManager {
                 soulImg[j][i] = soulSprite.getSubimage(32 * i, 32 * j, 32, 32);
             }
         }
+
+        BufferedImage decorationsSprite = LoadSave.getSpriteAtlas(LoadSave.DECORATIONS);
+        decorationsImg = new BufferedImage[7][4];
+
+        for (int j = 0; j < decorationsImg.length; j++) {
+            for (int i = 0; i < decorationsImg[j].length; i++) {
+                decorationsImg[j][i] = decorationsSprite.getSubimage(32 * i, 32 * j, 32, 32);
+            }
+        }
     }
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
         boxes = newLevel.getContainers();
         souls = newLevel.getSouls();
+        decorations = newLevel.getDecorations();
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {

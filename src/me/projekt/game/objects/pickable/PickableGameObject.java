@@ -25,8 +25,4 @@ public class PickableGameObject extends GameObject {
 
         hitbox.y = y + hoverOffset;
     }
-
-    public void update() {
-        updateAnimationTick();
-    }
 }

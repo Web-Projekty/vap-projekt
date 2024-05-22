@@ -8,7 +8,11 @@ public enum ObjectType {
     RED_POTION(102, 12, 16, 15, 7),
     BLUE_POTION(103, 12, 16, 10, 7),
     BARREL(104, 40, 30, 8),
-    BOX(105, 40, 30, 8);
+    BOX(105, 40, 30, 8),
+    LAMP(106, 32, 32, 2),
+    TREE(107, 32, 32, 2),
+    TORCH(108, 32, 32, 4),
+    STONES(109, 32, 32);
 
     private int redValue;
     private int width, height;
@@ -29,6 +33,14 @@ public enum ObjectType {
         this.height = (int) (height * Game.SCALE);
         this.value = -1;
         this.spriteAmount = spriteAmount;
+    }
+
+    ObjectType(int redValue, int width, int height) {
+        this.redValue = redValue;
+        this.width = (int) (width * Game.SCALE);
+        this.height = (int) (height * Game.SCALE);
+        this.value = -1;
+        this.spriteAmount = 1;
     }
 
     public int getRedValue() {

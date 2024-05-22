@@ -21,6 +21,7 @@ public class GameObject {
         this.x = x;
         this.y = y;
         this.objectType = objectType;
+        if (hitbox == null) initHitbox(32, 32);
     }
 
     protected void updateAnimationTick() {
@@ -73,6 +74,10 @@ public class GameObject {
 
     public boolean doAnimation() {
         return doAnimation;
+    }
+
+    public void update() {
+        updateAnimationTick();
     }
 
     public Rectangle2D.Float getHitbox() {

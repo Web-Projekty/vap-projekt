@@ -5,7 +5,7 @@ public enum PlayerAction {
     IDLE(0, 4),
     RUNNING(1, 6),
     JUMP(2, 2),
-    FALLING(3, 2),
+    FALLING(3, 3),
     GROUND(4, 2),
     HIT(5, 3),
     ATTACK(4, 3);

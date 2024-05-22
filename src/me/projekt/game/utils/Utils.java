@@ -1,6 +1,7 @@
 package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
@@ -144,6 +145,18 @@ public class Utils {
                 int value = color.getRed();
                 if (value == BOX.getRedValue() || value == BARREL.getRedValue())
                     list.add(new Box(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+            }
+        return list;
+    }
+
+    public static ArrayList<GameObject> getDecorationsFromImage(BufferedImage img) {
+        ArrayList<GameObject> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getRed();
+                if (value == TORCH.getRedValue() || value == LAMP.getRedValue())
+                    list.add(new GameObject(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;
     }
