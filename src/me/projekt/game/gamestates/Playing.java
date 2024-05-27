@@ -1,5 +1,6 @@
 package me.projekt.game.gamestates;
 
+import me.projekt.game.levels.Level;
 import me.projekt.game.objects.ObjectManager;
 import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.ui.PauseOverlay;
@@ -13,10 +14,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static me.projekt.game.main.Game.*;
 import static me.projekt.game.utils.Constants.Background.*;
+import static me.projekt.game.utils.Constants.Map.*;
+import static me.projekt.game.utils.Constants.Map.COLUMNS;
 
 public class Playing extends State implements StateMethods {
 
@@ -42,7 +46,7 @@ public class Playing extends State implements StateMethods {
     private int maxLvlOffsetY;
 
     private BufferedImage backgroundImg, mist;
-    private int[] mistPos;
+    private BufferedImage[] details;
     private Random ran = new Random();
 
     public Playing(Game game) {
@@ -52,12 +56,7 @@ public class Playing extends State implements StateMethods {
         setLevelOffsets();
         loadStartLevel();
 
-        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
-        mistPos = new int[8];
-        for (int i = 0; i < mistPos.length; i++) {
-            mistPos[i] = (int) (100 * SCALE) + ran.nextInt((int) (50 * SCALE));
-        }
+        importSprites();
     }
 
     private void initClasses() {
@@ -69,6 +68,19 @@ public class Playing extends State implements StateMethods {
 
         this.levelCompletedOverlay = new LevelCompletedOverlay(this);
         this.pauseOverlay = new PauseOverlay(this);
+    }
+
+    private void importSprites() {
+        BufferedImage detailsImg = LoadSave.getSpriteAtlas(LoadSave.BG_DETAILS);
+
+        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
+        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
+
+        details = new BufferedImage[5]; // 4x12 spritů v sheetu
+        for (int i = 0; i < 5; i++) { // projde sloupce
+            details[i] = detailsImg.getSubimage(i * 48, 0, 48, 48);
+        }
+
     }
 
     public void loadNextLevel() {
@@ -113,7 +125,7 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, GAME_HEIGHT, null);
 
-        drawMist(g);
+        drawBgDetails(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
@@ -128,12 +140,9 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    private void drawMist(Graphics g) {
-        for (int i = 0; i < mistPos.length; i++) {
-            int offSetX = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
-            int offSetY = (int) (yLvlOffset * 0.3); // čím větší, tím pomalejší
-            g.drawImage(mist, MIST_WIDTH * 4 * i - offSetX, MIST_HEIGHT * 15 * mistPos[i] * i - offSetY, MIST_WIDTH, MIST_HEIGHT, null);
-        }
+    private void drawBgDetails(Graphics g) {
+        for (int i = 0; i < details.length; i++)
+            g.drawImage(details[1], (WIDTH * i) - xLvlOffset, 50, WIDTH, HEIGHT, null);
     }
 
     public void mouseDragged(MouseEvent e) {

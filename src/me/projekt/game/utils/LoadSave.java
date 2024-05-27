@@ -23,6 +23,7 @@ public class LoadSave {
     public static final String PLAYING_BG_IMG = "playing_bg_img.png";
     public static final String PLAYING_DARK_BG_IMG = "playing_bg_img_2.png";
     public static final String MIST = "Mist_cloud.png";
+    public static final String BG_DETAILS = "playing_bg_details.png";
     public static final String DOOR = "door.png";
 
     // Objects

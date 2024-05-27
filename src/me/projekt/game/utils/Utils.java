@@ -155,7 +155,11 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value == TORCH.getRedValue() || value == LAMP.getRedValue())
+                if (value == TORCH.getRedValue()
+                        || value == LAMP.getRedValue()
+                        || value == TREE.getRedValue()
+                        || value == STONES.getRedValue()
+                )
                     list.add(new GameObject(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
             }
         return list;

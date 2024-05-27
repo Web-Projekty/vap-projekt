@@ -57,7 +57,6 @@ public class GameMenu extends State implements StateMethods {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -109,6 +108,5 @@ public class GameMenu extends State implements StateMethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

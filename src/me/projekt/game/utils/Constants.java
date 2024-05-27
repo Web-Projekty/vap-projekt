@@ -38,10 +38,10 @@ public class Constants {
 
     public static class Background {
 
-        public static final int MIST_WIDTH_DEFAULT = 74;
-        public static final int MIST_HEIGHT_DEFAULT = 24;
+        public static final int WIDTH_DEFAULT = 48;
+        public static final int HEIGHT_DEFAULT = 48;
 
-        public static final int MIST_WIDTH = (int) (MIST_WIDTH_DEFAULT * Game.SCALE);
-        public static final int MIST_HEIGHT = (int) (MIST_HEIGHT_DEFAULT * Game.SCALE);
+        public static final int WIDTH = (int) (WIDTH_DEFAULT * Game.SCALE);
+        public static final int HEIGHT = (int) (HEIGHT_DEFAULT * Game.SCALE);
     }
 }
