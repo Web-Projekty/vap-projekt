@@ -13,6 +13,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import static me.projekt.game.main.Game.*;
@@ -74,8 +76,7 @@ public class Playing extends State implements StateMethods {
         bones = detailsImg.getSubimage(48 * 4, 0, 48, 48);
 
         shaftsPos = new int[20];
-        for (int i = 0; i < shaftsPos.length; i++)
-            shaftsPos[i] = (int) (100 * Game.SCALE) + ran.nextInt((int) (200 * Game.SCALE));
+        Arrays.fill(shaftsPos, ran.nextInt(5)+5);
     }
 
     public void loadNextLevel() {
@@ -136,9 +137,14 @@ public class Playing extends State implements StateMethods {
     }
 
     private void drawBgDetails(Graphics g) {
-        for (int i = 0; i < shaftsPos.length; i++) {
-            for (int j = shaftsPos.length; j > 0; j--) {
-                g.drawImage(shaft, WIDTH * 4 * i - (int) (xLvlOffset * 0.7), HEIGHT * 3 * j - (int) (yLvlOffset * 0.7), WIDTH * 2, HEIGHT * 2, null);
+        for (int i = 0; i < 20; i++) {
+            for (int j = 19; j > 0; j--) {
+                g.drawImage(shaft,
+                        WIDTH * 4 * i - (int) (xLvlOffset * 0.7),
+                        HEIGHT * 2 * j - (int) (yLvlOffset * 0.7),
+                        WIDTH * 2,
+                        HEIGHT * 2,
+                        null);
             }
         }
     }
