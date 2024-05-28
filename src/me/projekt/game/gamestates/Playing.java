@@ -1,6 +1,5 @@
 package me.projekt.game.gamestates;
 
-import me.projekt.game.levels.Level;
 import me.projekt.game.objects.ObjectManager;
 import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.ui.PauseOverlay;
@@ -14,13 +13,10 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Random;
 
 import static me.projekt.game.main.Game.*;
 import static me.projekt.game.utils.Constants.Background.*;
-import static me.projekt.game.utils.Constants.Map.*;
-import static me.projekt.game.utils.Constants.Map.COLUMNS;
 
 public class Playing extends State implements StateMethods {
 
@@ -45,18 +41,17 @@ public class Playing extends State implements StateMethods {
     private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
-    private BufferedImage backgroundImg, mist;
-    private BufferedImage[] details;
+    private BufferedImage backgroundImg, mist, shaft, bones;
+    private int[] shaftsPos;
     private Random ran = new Random();
 
     public Playing(Game game) {
         super(game);
         initClasses();
 
+        importSprites();
         setLevelOffsets();
         loadStartLevel();
-
-        importSprites();
     }
 
     private void initClasses() {
@@ -75,12 +70,12 @@ public class Playing extends State implements StateMethods {
 
         backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
         mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
+        shaft = detailsImg.getSubimage(48, 0, 48, 48);
+        bones = detailsImg.getSubimage(48 * 4, 0, 48, 48);
 
-        details = new BufferedImage[5]; // 4x12 spritů v sheetu
-        for (int i = 0; i < 5; i++) { // projde sloupce
-            details[i] = detailsImg.getSubimage(i * 48, 0, 48, 48);
-        }
-
+        shaftsPos = new int[20];
+        for (int i = 0; i < shaftsPos.length; i++)
+            shaftsPos[i] = (int) (100 * Game.SCALE) + ran.nextInt((int) (200 * Game.SCALE));
     }
 
     public void loadNextLevel() {
@@ -141,8 +136,11 @@ public class Playing extends State implements StateMethods {
     }
 
     private void drawBgDetails(Graphics g) {
-        for (int i = 0; i < details.length; i++)
-            g.drawImage(details[1], (WIDTH * i) - xLvlOffset, 50, WIDTH, HEIGHT, null);
+        for (int i = 0; i < shaftsPos.length; i++) {
+            for (int j = shaftsPos.length; j > 0; j--) {
+                g.drawImage(shaft, WIDTH * 4 * i - (int) (xLvlOffset * 0.7), HEIGHT * 3 * j - (int) (yLvlOffset * 0.7), WIDTH * 2, HEIGHT * 2, null);
+            }
+        }
     }
 
     public void mouseDragged(MouseEvent e) {
