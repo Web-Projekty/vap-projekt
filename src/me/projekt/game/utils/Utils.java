@@ -2,6 +2,7 @@ package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.GameObject;
+import me.projekt.game.objects.LevelDoor;
 import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
@@ -161,6 +162,18 @@ public class Utils {
                         || value == STONES.getRedValue()
                 )
                     list.add(new GameObject(i * Game.TILES_SIZE, j * Game.TILES_SIZE, getObjectByValue(value)));
+            }
+        return list;
+    }
+
+    public static ArrayList<LevelDoor> getLevelDoorsFromImage(BufferedImage img) {
+        ArrayList<LevelDoor> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getRed();
+                if (value == LEVEL_DOORS.getRedValue())
+                    list.add(new LevelDoor(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
             }
         return list;
     }

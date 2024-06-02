@@ -92,6 +92,10 @@ public class GameObject {
         return animIndex;
     }
 
+    public void setAnimIndex(int animIndex) {
+        this.animIndex = animIndex;
+    }
+
     public int getXDrawOffset() {
         return xDrawOffset;
     }

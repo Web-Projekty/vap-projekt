@@ -24,13 +24,13 @@ public class LoadSave {
     public static final String PLAYING_DARK_BG_IMG = "playing_bg_img_2.png";
     public static final String MIST = "Mist_cloud.png";
     public static final String BG_DETAILS = "playing_bg_details.png";
-    public static final String DOOR = "door.png";
 
     // Objects
     public static final String DECORATIONS = "decorations.png";
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
     public static final String POTION_ATLAS = "potions_sprites.png";
     public static final String SOUL_ATLAS = "Soul.png";
+    public static final String DOOR = "door.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;

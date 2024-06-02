@@ -12,12 +12,14 @@ public enum ObjectType {
     LAMP(106, 32, 32, 2),
     TREE(107, 32, 32, 2),
     TORCH(108, 32, 32, 4),
-    STONES(109, 32, 32);
+    STONES(109, 32, 32),
+    LEVEL_DOORS(99, 32, 32, 2),
+    DEATH_ZONE(98, 32, 32);
 
-    private int redValue;
-    private int width, height;
-    private int value;
-    private int spriteAmount;
+    private final int redValue;
+    private final int width, height;
+    private final int value;
+    private final int spriteAmount;
 
     ObjectType(int redValue, int width, int height, int value, int spriteAmount) {
         this.redValue = redValue;

@@ -2,6 +2,7 @@ package me.projekt.game.levels;
 
 import me.projekt.game.main.Game;
 import me.projekt.game.objects.GameObject;
+import me.projekt.game.objects.LevelDoor;
 import me.projekt.game.objects.destroyable.Box;
 import me.projekt.game.objects.pickable.Potion;
 import me.projekt.game.objects.pickable.Soul;
@@ -35,6 +36,7 @@ public class Level {
     private ArrayList<Soul> souls;
     private ArrayList<Box> containers;
     private ArrayList<GameObject> decorations;
+    private ArrayList<LevelDoor> levelDoors;
 
     // Player spawn
     private Point spawn;
@@ -50,6 +52,7 @@ public class Level {
         setPickableObjects();
         setContainers();
         setDecorations();
+        setLevelDoors();
         setLevelOffsets();
         setPlayerSpawn();
 
@@ -68,6 +71,10 @@ public class Level {
 
     private void setDecorations() {
         this.decorations = Utils.getDecorationsFromImage(img);
+    }
+
+    private void setLevelDoors() {
+        this.levelDoors = Utils.getLevelDoorsFromImage(img);
     }
 
     private void setLevelData() {
@@ -138,5 +145,9 @@ public class Level {
 
     public ArrayList<GameObject> getDecorations() {
         return decorations;
+    }
+
+    public ArrayList<LevelDoor> getLevelDoors() {
+        return levelDoors;
     }
 }

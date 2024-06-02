@@ -16,12 +16,15 @@ import java.util.ArrayList;
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage[][] potionImg, soulImg, containerImg, decorationsImg;
+    private BufferedImage[][] potionImg, soulImg, containerImg, decorationsImg, levelDoorImg;
 
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
     private ArrayList<Box> boxes;
     private ArrayList<GameObject> decorations;
+    private ArrayList<LevelDoor> levelDoors;
+
+    private boolean inDoor;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -100,6 +103,21 @@ public class ObjectManager {
             }
         }
     }
+    public void drawDoors(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (LevelDoor levelDoor : levelDoors) {
+            if (levelDoor.isActive()) {
+
+                g.drawImage(levelDoorImg[0][levelDoor.getAnimIndex()],
+                        (int) (levelDoor.getHitbox().x - levelDoor.getXDrawOffset() - xLvlOffset),
+                        (int) (levelDoor.getHitbox().y - levelDoor.getYDrawOffset() - yLvlOffset),
+                        levelDoor.getObject().getWidth(),
+                        levelDoor.getObject().getHeight(),
+                        null);
+
+                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
 
     public void update() {
         for (Potion p : potions) {
@@ -117,11 +135,17 @@ public class ObjectManager {
                 soul.update();
             }
         }
+        for (LevelDoor levelDoor : levelDoors) {
+            if (levelDoor.isActive()) {
+                levelDoor.update();
+            }
+        }
         for (GameObject decoration : decorations) {
             if (decoration.isActive()) {
                 decoration.update();
             }
         }
+
     }
 
     private void loadImages() {
@@ -160,12 +184,22 @@ public class ObjectManager {
                 decorationsImg[j][i] = decorationsSprite.getSubimage(32 * i, 32 * j, 32, 32);
             }
         }
+
+        BufferedImage levelDoorSprite = LoadSave.getSpriteAtlas(LoadSave.DOOR);
+        levelDoorImg = new BufferedImage[1][2];
+
+        for (int j = 0; j < levelDoorImg.length; j++) {
+            for (int i = 0; i < levelDoorImg[j].length; i++) {
+                levelDoorImg[j][i] = levelDoorSprite.getSubimage(32 * i, 32 * j, 32, 32);
+            }
+        }
     }
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
         boxes = newLevel.getContainers();
         souls = newLevel.getSouls();
         decorations = newLevel.getDecorations();
+        levelDoors = newLevel.getLevelDoors();
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
@@ -191,6 +225,24 @@ public class ObjectManager {
                     gc.setAnimation(true);
                     potions.add(new Potion((int) (gc.getHitbox().x + gc.getHitbox().width / 2), (int) (gc.getHitbox().y), ObjectType.RED_POTION));
                     return;
+                }
+            }
+        }
+        for (LevelDoor levelDoor : levelDoors) {
+            if (levelDoor.isActive()) {
+                if (levelDoor.getHitbox().intersects(hitbox)) {
+                    if (playing.getLevelManager().getCurrentLevel().getPickedSouls() >= playing.getLevelManager().getCurrentLevel().getNeededSouls()) {
+                        setInDoor(true);
+                        if (isInDoor()) {
+                            System.out.println("Door is now opened!");
+                            levelDoor.setAnimIndex(1);
+                        }
+                    } else {
+                        System.out.println("You need to pick up more souls!");
+                    }
+                    return;
+                } else {
+                    setInDoor(false);
                 }
             }
         }
@@ -231,5 +283,20 @@ public class ObjectManager {
         for (Soul soul : souls) {
             soul.reset();
         }
+        for (GameObject decoration : decorations) {
+            decoration.reset();
+        }
+        for (LevelDoor levelDoor : levelDoors) {
+            levelDoor.reset();
+        }
+        setInDoor(false);
+    }
+
+    public void setInDoor(boolean inDoor) {
+        this.inDoor = inDoor;
+    }
+
+    public boolean isInDoor() {
+        return inDoor;
     }
 }

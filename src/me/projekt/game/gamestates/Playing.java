@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -43,7 +42,7 @@ public class Playing extends State implements StateMethods {
     private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
-    private BufferedImage backgroundImg, mist, shaft, bones;
+    private BufferedImage backgroundImg, shaft;
     private int[] shaftsPos;
     private Random ran = new Random();
 
@@ -71,9 +70,7 @@ public class Playing extends State implements StateMethods {
         BufferedImage detailsImg = LoadSave.getSpriteAtlas(LoadSave.BG_DETAILS);
 
         backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
         shaft = detailsImg.getSubimage(48, 0, 48, 48);
-        bones = detailsImg.getSubimage(48 * 4, 0, 48, 48);
 
         shaftsPos = new int[20];
         Arrays.fill(shaftsPos, ran.nextInt(5)+5);
@@ -124,6 +121,7 @@ public class Playing extends State implements StateMethods {
         drawBgDetails(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
+        objectManager.drawDoors(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
         objectManager.draw(g, xLvlOffset, yLvlOffset);
 
@@ -208,8 +206,10 @@ public class Playing extends State implements StateMethods {
             case KeyEvent.VK_ESCAPE:
                 paused = !paused;
                 break;
-            case KeyEvent.VK_N:
-                game.getPlaying().setLevelCompleted(true);
+            case KeyEvent.VK_ENTER:
+                if (objectManager.isInDoor()) {
+                    game.getPlaying().setLevelCompleted(true);
+                }
                 break;
         }
     }
