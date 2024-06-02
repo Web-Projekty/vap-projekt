@@ -16,13 +16,14 @@ import java.util.ArrayList;
 public class ObjectManager {
 
     private Playing playing;
-    private BufferedImage[][] potionImg, soulImg, containerImg, decorationsImg, levelDoorImg;
+    private BufferedImage[][] potionImg, soulImg, containerImg, decorationsImg, levelDoorImg, deathZoneImg;
 
     private ArrayList<Potion> potions;
     private ArrayList<Soul> souls;
     private ArrayList<Box> boxes;
     private ArrayList<GameObject> decorations;
     private ArrayList<LevelDoor> levelDoors;
+    private ArrayList<DeathZone> deathZones;
 
     private boolean inDoor;
 
@@ -37,6 +38,7 @@ public class ObjectManager {
         drawContainers(g, xLvlOffset, yLvlOffset);
         drawSouls(g, xLvlOffset, yLvlOffset);
         drawDecorations(g, xLvlOffset, yLvlOffset);
+        drawDeathZones(g, xLvlOffset, yLvlOffset);
     }
 
     private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
@@ -103,6 +105,7 @@ public class ObjectManager {
             }
         }
     }
+
     public void drawDoors(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (LevelDoor levelDoor : levelDoors) {
             if (levelDoor.isActive()) {
@@ -112,6 +115,22 @@ public class ObjectManager {
                         (int) (levelDoor.getHitbox().y - levelDoor.getYDrawOffset() - yLvlOffset),
                         levelDoor.getObject().getWidth(),
                         levelDoor.getObject().getHeight(),
+                        null);
+
+                //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
+            }
+        }
+    }
+
+    public void drawDeathZones(Graphics g, int xLvlOffset, int yLvlOffset) {
+        for (DeathZone deathZone : deathZones) {
+            if (deathZone.isActive()) {
+
+                g.drawImage(deathZoneImg[0][deathZone.getAnimIndex()],
+                        (int) (deathZone.getHitbox().x - deathZone.getXDrawOffset() - xLvlOffset),
+                        (int) (deathZone.getHitbox().y - deathZone.getYDrawOffset() - yLvlOffset),
+                        deathZone.getObject().getWidth(),
+                        deathZone.getObject().getHeight(),
                         null);
 
                 //gc.drawHitbox(g, xLvlOffset, yLvlOffset);
@@ -143,6 +162,11 @@ public class ObjectManager {
         for (GameObject decoration : decorations) {
             if (decoration.isActive()) {
                 decoration.update();
+            }
+        }
+        for (DeathZone deathZone : deathZones) {
+            if (deathZone.isActive()) {
+                deathZone.update();
             }
         }
 
@@ -193,6 +217,15 @@ public class ObjectManager {
                 levelDoorImg[j][i] = levelDoorSprite.getSubimage(32 * i, 32 * j, 32, 32);
             }
         }
+
+        BufferedImage deathZoneSprite = LoadSave.getSpriteAtlas(LoadSave.SPIKES);
+        deathZoneImg = new BufferedImage[1][1];
+
+        for (int j = 0; j < deathZoneImg.length; j++) {
+            for (int i = 0; i < deathZoneImg[j].length; i++) {
+                deathZoneImg[j][i] = deathZoneSprite.getSubimage(32 * i, 32 * j, 32, 32);
+            }
+        }
     }
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
@@ -200,6 +233,7 @@ public class ObjectManager {
         souls = newLevel.getSouls();
         decorations = newLevel.getDecorations();
         levelDoors = newLevel.getLevelDoors();
+        deathZones = newLevel.getDeathZones();
     }
 
     public void checkObjectTouched(Rectangle2D.Float hitbox) {
@@ -243,6 +277,14 @@ public class ObjectManager {
                     return;
                 } else {
                     setInDoor(false);
+                }
+            }
+        }
+        for (DeathZone dz : deathZones) {
+            if (dz.isActive()) {
+                if (dz.getHitbox().intersects(hitbox)) {
+                    playing.reset();
+                    return;
                 }
             }
         }

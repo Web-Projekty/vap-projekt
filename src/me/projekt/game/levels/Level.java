@@ -1,6 +1,7 @@
 package me.projekt.game.levels;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.DeathZone;
 import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.LevelDoor;
 import me.projekt.game.objects.destroyable.Box;
@@ -37,6 +38,7 @@ public class Level {
     private ArrayList<Box> containers;
     private ArrayList<GameObject> decorations;
     private ArrayList<LevelDoor> levelDoors;
+    private ArrayList<DeathZone> deathZones;
 
     // Player spawn
     private Point spawn;
@@ -53,6 +55,7 @@ public class Level {
         setContainers();
         setDecorations();
         setLevelDoors();
+        setDeathZones();
         setLevelOffsets();
         setPlayerSpawn();
 
@@ -75,6 +78,10 @@ public class Level {
 
     private void setLevelDoors() {
         this.levelDoors = Utils.getLevelDoorsFromImage(img);
+    }
+
+    private void setDeathZones() {
+        this.deathZones = Utils.getDeathZonesFromImage(img);
     }
 
     private void setLevelData() {
@@ -149,5 +156,9 @@ public class Level {
 
     public ArrayList<LevelDoor> getLevelDoors() {
         return levelDoors;
+    }
+
+    public ArrayList<DeathZone> getDeathZones() {
+        return deathZones;
     }
 }

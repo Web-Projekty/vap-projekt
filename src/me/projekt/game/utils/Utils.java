@@ -1,6 +1,7 @@
 package me.projekt.game.utils;
 
 import me.projekt.game.main.Game;
+import me.projekt.game.objects.DeathZone;
 import me.projekt.game.objects.GameObject;
 import me.projekt.game.objects.LevelDoor;
 import me.projekt.game.objects.destroyable.Box;
@@ -174,6 +175,18 @@ public class Utils {
                 int value = color.getRed();
                 if (value == LEVEL_DOORS.getRedValue())
                     list.add(new LevelDoor(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+            }
+        return list;
+    }
+
+    public static ArrayList<DeathZone> getDeathZonesFromImage(BufferedImage img) {
+        ArrayList<DeathZone> list = new ArrayList<>();
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getRed();
+                if (value == DEATH_ZONE.getRedValue())
+                    list.add(new DeathZone(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
             }
         return list;
     }

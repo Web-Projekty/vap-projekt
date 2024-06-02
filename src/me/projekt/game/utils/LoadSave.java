@@ -31,6 +31,7 @@ public class LoadSave {
     public static final String POTION_ATLAS = "potions_sprites.png";
     public static final String SOUL_ATLAS = "Soul.png";
     public static final String DOOR = "door.png";
+    public static final String SPIKES = "spikes.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
