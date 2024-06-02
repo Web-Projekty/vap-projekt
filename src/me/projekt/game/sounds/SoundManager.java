@@ -8,24 +8,41 @@ import java.util.Random;
 import static me.projekt.game.sounds.Sounds.Songs.*;
 import static me.projekt.game.sounds.Sounds.SFX.*;
 
+
 public class SoundManager {
 
-    private static Clip[] songs, effects;
-    private static Sounds.Songs currentSong;
-    private static float volume = 0.5f;
-    private static Random rand = new Random();
+    public static int MENU_1 = 0;
+    public static int MENU_2 = 1;
+    public static int LEVEL_1 = 2;
+    public static int LEVEL_2 = 3;
+
+    public static int JUMP = 0;
+    public static int DIE = 1;
+    public static int GAMEOVER = 2;
+    public static int LVL_COMPLETED = 3;
+    public static int ATTACK_ONE = 4;
+    public static int ATTACK_TWO = 5;
+    public static int ATTACK_THREE = 6;
+
+    private Clip[] songs, effects;
+    private int currentSongId;
+    private float volume = 0.5f;
+    private boolean songMute, effectMute;
+    private Random rand = new Random();
+
 
     private static boolean songsMuted = false;
     private static boolean sfxMuted = false;
+    private static Sounds.Songs currentSong;
 
     public SoundManager() {
         loadSongs();
         loadEffects();
-        if (!songsMuted) playSong(MENU_1);
+        playSong(MENU_1);
     }
 
     private void loadSongs() {
-        String[] names = {"main_v2"};
+        String[] names = {"main_continuous_start", "main_continuous_repeat"};
         songs = new Clip[names.length];
         for (int i = 0; i < songs.length; i++) {
             try {
@@ -39,7 +56,7 @@ public class SoundManager {
     private void loadEffects() {
         String[] effectNames = {"jump"};
         effects = new Clip[effectNames.length];
-        for (int i = 0; i < songs.length; i++) {
+        for (int i = 0; i < effects.length; i++) {
             try {
                 effects[i] = getClip(effectNames[i]);
             } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
@@ -58,14 +75,11 @@ public class SoundManager {
 
         return c;
     }
-    public static void stopSong() {
-        if (songs[currentSong.getId()].isActive()) {
-            songs[currentSong.getId()].stop();
-        }
-    }
 
-    public static Clip getCurrentSong() {
-        return songs[currentSong.getId()];
+    public void stopSong() {
+        if (songs[currentSongId].isActive()) {
+            songs[currentSongId].stop();
+        }
     }
 
    /* public void setLevelSong(int lvlIndex) {
@@ -76,32 +90,40 @@ if (lvlIndex % 2 ==0){
 }
     }*/
 
-    public static void LvlCompleted() {
+    public void LvlCompleted() {
         stopSong();
         playEffect(LVL_COMPLETED);
     }
 
-    public static void playEffect(Sounds.SFX effect) {
-        effects[effect.getId()].setMicrosecondPosition(0);
-        effects[effect.getId()].start();
+    public void playEffect(int effect) {
+        effects[effect].setMicrosecondPosition(0);
+        effects[effect].start();
     }
 
-    public static void playSong(Sounds.Songs song) {
-        if (currentSong != null) stopSong();
+    public void playSong(int song) {
+        stopSong();
 
-        currentSong = song;
+        currentSongId = song;
         //updateSongVolume();
-        songs[song.getId()].setMicrosecondPosition(0);
-        songs[song.getId()].loop(Clip.LOOP_CONTINUOUSLY);
-    }
+        songs[currentSongId].setMicrosecondPosition(0);
+        if (song == MENU_1) {
+            songs[currentSongId].start();
+            songs[currentSongId].addLineListener(new LineListener() {
+                @Override
+                public void update(LineEvent event) {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        stopSong();
+                        songs[MENU_2].loop(Clip.LOOP_CONTINUOUSLY);
+                    }
+                }
+            });
+        } else {
+            songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
+        }
 
+    }
     public static boolean isSongsMuted() {
         return songsMuted;
-    }
-    public static void setSongsMuted(boolean mute) {
-        songsMuted = mute;
-        if (songsMuted) stopSong();
-        else playSong(currentSong);
     }
 
     public static boolean isSFXMuted() {
@@ -109,5 +131,10 @@ if (lvlIndex % 2 ==0){
     }
     public static void setSFXMuted(boolean mute) {
         sfxMuted = mute;
+    }
+    public static void setSongsMuted(boolean mute) {
+        songsMuted = mute;
+       /* if (songsMuted) stopSong();
+        else playSong(currentSong);*/
     }
 }

@@ -144,7 +144,7 @@ public class Player extends Entity {
         if (inAir) return;
         inAir = true;
         airSpeed = jumpSpeed;
-        if (!SoundManager.isSFXMuted()) playing.getGame().getSoundManager().playEffect(Sounds.SFX.JUMP);
+        if (!SoundManager.isSFXMuted()) playing.getGame().getSoundManager().playEffect(0);
     }
 
     private void resetInAir() {
