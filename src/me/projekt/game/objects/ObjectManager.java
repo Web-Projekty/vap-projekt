@@ -44,9 +44,8 @@ public class ObjectManager {
     private void drawPotions(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (Potion p : potions) {
             if (p.isActive()) {
-                int type = p.getObject() == ObjectType.BLUE_POTION ? 0 : 1;
 
-                g.drawImage(potionImg[type][p.getAnimIndex()],
+                g.drawImage(potionImg[p.getObject().getSpritePos()][p.getAnimIndex()],
                         (int) (p.getHitbox().x - p.getXDrawOffset() - xLvlOffset),
                         (int) (p.getHitbox().y - p.getYDrawOffset() - yLvlOffset),
                         p.getObject().getWidth(),
@@ -76,9 +75,7 @@ public class ObjectManager {
     private void drawContainers(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (Box gc : boxes) {
             if (gc.isActive()) {
-                int type = gc.getObject() == ObjectType.BOX ? 0 : 1;
-
-                g.drawImage(containerImg[type][gc.getAnimIndex()],
+                g.drawImage(containerImg[gc.getObject().getSpritePos()][gc.getAnimIndex()],
                         (int) (gc.getHitbox().x - gc.getXDrawOffset() - xLvlOffset),
                         (int) (gc.getHitbox().y - gc.getYDrawOffset() - yLvlOffset),
                         gc.getObject().getWidth(),
@@ -93,8 +90,7 @@ public class ObjectManager {
     private void drawDecorations(Graphics g, int xLvlOffset, int yLvlOffset) {
         for (GameObject decoration : decorations) {
             if (decoration.isActive()) {
-
-                g.drawImage(decorationsImg[6][decoration.getAnimIndex()],
+                g.drawImage(decorationsImg[decoration.getObject().getSpritePos()][decoration.getAnimIndex()],
                         (int) (decoration.getHitbox().x - decoration.getXDrawOffset() - xLvlOffset),
                         (int) (decoration.getHitbox().y - decoration.getYDrawOffset() - yLvlOffset),
                         decoration.getObject().getWidth(),
