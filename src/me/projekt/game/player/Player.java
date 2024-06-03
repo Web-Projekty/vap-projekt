@@ -240,7 +240,6 @@ public class Player extends Entity {
         currentHealth += value;
         if(currentHealth <= 0) {
             currentHealth = 0;
-            //GameOver()
         }
         else if( currentHealth >= maxHealth) {
             currentHealth = maxHealth;
