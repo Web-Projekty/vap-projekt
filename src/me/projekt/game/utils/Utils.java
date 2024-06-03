@@ -87,7 +87,12 @@ public class Utils {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= Constants.Map.SPRITES_IN_SHEET-1 || isTileTransparent(color)) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
+                if (value == 50) {
+                    value = 18;
+                } else if (value == 51) {
+                    value = 19;
+                }
+                else if (value >= Constants.Map.SPRITES_IN_SHEET-1 || isTileTransparent(color)) { // pokud se přesáhne počet tilů ve spritesheetu pro červenou barvu
                     value = Constants.Map.AIR_BLOCK;
                 }
                 lvlData[j][i] = value;

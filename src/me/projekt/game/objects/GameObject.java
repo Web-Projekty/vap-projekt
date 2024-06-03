@@ -34,7 +34,10 @@ public class GameObject {
                 if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX) {
                     doAnimation = false;
                     active = false;
+                } else if (objectType == ObjectType.LEVEL_DOORS) {
+                    doAnimation = false;
                 }
+
             }
         }
     }

@@ -52,7 +52,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] getLevels() {
-        int mapCount = 2;
+        int mapCount = 4;
         BufferedImage[] images = new BufferedImage[mapCount];
         for (int i = 1; i <= mapCount; i++) {
             InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");
