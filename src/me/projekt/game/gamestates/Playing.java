@@ -290,5 +290,6 @@ public class Playing extends State implements StateMethods {
     public SoundManager getSoundManager() {
         return soundManager;
     }
+}
 
 
