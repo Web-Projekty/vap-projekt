@@ -20,12 +20,12 @@ public class Crabby extends Enemy {
 
     public Crabby(float x, float y) {
         super(null, x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
-        initHitbox(x, y, (int)(22 * Game.SCALE), (int)(17 * Game.SCALE)); // Správně by mělo být 22 a 17 ale hitbox se jinak špatně načte. A hitbox je spatne udelělán je nutná oprava.
+        initHitbox(x, y, (int)(22 * Game.SCALE), (int)(15 * Game.SCALE)); // Správně by mělo být 22 a 17 ale hitbox se jinak špatně načte. A hitbox je spatne udelělán je nutná oprava.
         initAttackBox();
     }
 
     private void initAttackBox() {
-        attackBox = new Rectangle2D.Float(x,(int)(y+CRABBY_DRAWOFFSETX_Y),(int)(74 * Game.SCALE), (int)(17 * Game.SCALE));
+        attackBox = new Rectangle2D.Float(x,(int)(y+CRABBY_DRAWOFFSETX_Y),(int)(74 * Game.SCALE), (int)(15 * Game.SCALE));
         attackBoxOffsetX = (int)(Game.SCALE * 30);
     }
 

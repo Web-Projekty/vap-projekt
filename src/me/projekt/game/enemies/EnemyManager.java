@@ -57,11 +57,11 @@ public class EnemyManager {
                 crabbyArr[j][i] = temp.getSubimage(i * CRABBY_WIDTH_DEFAULT, j * CRABBY_HEIGHT_DEFAULT, CRABBY_WIDTH_DEFAULT, CRABBY_HEIGHT_DEFAULT);
     }
 
-    public void checkPlayerHit(Rectangle2D.Float attackBox) {
+    public void checkEnemyHit(Rectangle2D.Float attackBox) {
         for(Crabby c : crabbies)
             if(c.isActive())
                 if(attackBox.intersects(c.getHitbox())) {
-                    c.hit(10);
+                    c.hit(1);
                     return;
                 }
     }
