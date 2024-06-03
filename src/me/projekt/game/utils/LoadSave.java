@@ -8,8 +8,8 @@ import java.io.InputStream;
 public class LoadSave {
 
     // Sprites
-    public static final String PLAYER_ATLAS = "Skeleton.png";
-    public static final String LEVEL_ATLAS = "Tileset.png";
+    public static final String PLAYER_ATLAS = "skeleton.png";
+    public static final String LEVEL_ATLAS = "tileset.png";
 
     // UI
     public static final String COMPLETED_IMG = "completed_sprite.png";
@@ -19,15 +19,16 @@ public class LoadSave {
     public static final String PAUSE_BACKGROUND = "pause_menu.png";
     public static final String SOUND_BUTTONS = "sound_button.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
-    public static final String VOLUME_BUTTONS = "volume_buttons.png";
     public static final String PLAYING_BG_IMG = "playing_bg_img.png";
-    public static final String PLAYING_DARK_BG_IMG = "playing_bg_img_2.png";
-    public static final String MIST = "Mist_cloud.png";
+    public static final String BG_DETAILS = "playing_bg_details.png";
 
     // Objects
+    public static final String DECORATIONS = "decorations.png";
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
     public static final String POTION_ATLAS = "potions_sprites.png";
-    public static final String SOUL_ATLAS = "Soul.png";
+    public static final String SOUL_ATLAS = "soul.png";
+    public static final String DOOR = "door.png";
+    public static final String SPIKES = "spikes.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
@@ -38,17 +39,20 @@ public class LoadSave {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
         return img;
     }
 
     public static BufferedImage[] getLevels() {
-        int mapCount = 2;
+        int mapCount = 4;
         BufferedImage[] images = new BufferedImage[mapCount];
         for (int i = 1; i <= mapCount; i++) {
             InputStream is = LoadSave.class.getResourceAsStream("/levels_img/" + i + ".png");

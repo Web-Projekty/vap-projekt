@@ -21,6 +21,7 @@ public class GameObject {
         this.x = x;
         this.y = y;
         this.objectType = objectType;
+        if (hitbox == null) initHitbox(32, 32);
     }
 
     protected void updateAnimationTick() {
@@ -33,7 +34,10 @@ public class GameObject {
                 if (objectType == ObjectType.BARREL || objectType == ObjectType.BOX) {
                     doAnimation = false;
                     active = false;
+                } else if (objectType == ObjectType.LEVEL_DOORS) {
+                    doAnimation = false;
                 }
+
             }
         }
     }
@@ -75,6 +79,10 @@ public class GameObject {
         return doAnimation;
     }
 
+    public void update() {
+        updateAnimationTick();
+    }
+
     public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
@@ -85,6 +93,10 @@ public class GameObject {
 
     public int getAnimIndex() {
         return animIndex;
+    }
+
+    public void setAnimIndex(int animIndex) {
+        this.animIndex = animIndex;
     }
 
     public int getXDrawOffset() {

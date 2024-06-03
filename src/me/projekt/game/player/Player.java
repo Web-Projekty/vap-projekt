@@ -1,9 +1,10 @@
 package me.projekt.game.player;
 
-import me.projekt.game.audio.AudioPlayer;
+import me.projekt.game.sounds.SoundManager;
 import me.projekt.game.enemies.Entity;
 import me.projekt.game.gamestates.Playing;
 import me.projekt.game.main.Game;
+import me.projekt.game.sounds.Sounds;
 import me.projekt.game.utils.Constants;
 import me.projekt.game.utils.LoadSave;
 
@@ -59,13 +60,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g, int xLvlOffset, int yLvlOffset) {
-
-        g.drawImage(animations[action.getOrder()][animIndex],
-                (int) (hitbox.x - xDrawOffset) - xLvlOffset + flipX,
-                (int) (hitbox.y - yDrawOffset) - yLvlOffset,
-                width * flipW,
-                height,
-                null);
+        g.drawImage(animations[action.getOrder()][animIndex], (int) (hitbox.x - xDrawOffset) - xLvlOffset + flipX, (int) (hitbox.y - yDrawOffset) - yLvlOffset, width * flipW, height, null);
 //        drawHitbox(g, xLvlOffset, yLvlOffset);
     }
 
@@ -129,9 +124,7 @@ public class Player extends Entity {
             flipW = 1;
         }
 
-        if (!inAir)
-            if (!isOnFloor(hitbox, lvlData))
-                inAir = true;
+        if (!inAir) if (!isOnFloor(hitbox, lvlData)) inAir = true;
 
         if (inAir) {
             if (canMoveTo(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
@@ -142,18 +135,16 @@ public class Player extends Entity {
                 if (airSpeed > 0) resetInAir();
                 else airSpeed = fallSpeedAfterCollision;
             }
-            updateXPos(xSpeed);
-
-        } else
-            updateXPos(xSpeed);
+        }
+        updateXPos(xSpeed);
         moving = true;
     }
 
     private void jump() {
         if (inAir) return;
-        playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
         inAir = true;
         airSpeed = jumpSpeed;
+        if (!SoundManager.isSFXMuted()) playing.getGame().getSoundManager().playEffect(0);
     }
 
     private void resetInAir() {
@@ -162,10 +153,8 @@ public class Player extends Entity {
     }
 
     private void updateXPos(float xSpeed) {
-        if (canMoveTo(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData))
-            hitbox.x += xSpeed;
-        else
-            hitbox.x = getXNextToWall(hitbox, xSpeed);
+        if (canMoveTo(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) hitbox.x += xSpeed;
+        else hitbox.x = getXNextToWall(hitbox, xSpeed);
     }
 
     private void loadAnimations() {
@@ -213,6 +202,14 @@ public class Player extends Entity {
 
     public void setJump(boolean jump) {
         this.jump = jump;
+    }
+
+    public void setJumpSpeed(float jumpSpeed) {
+        this.jumpSpeed = jumpSpeed;
+    }
+
+    public float getJumpSpeed() {
+        return this.jumpSpeed;
     }
 
     public void reset() {

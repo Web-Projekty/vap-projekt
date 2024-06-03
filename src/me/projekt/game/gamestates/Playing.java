@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Random;
 
 import static me.projekt.game.main.Game.*;
@@ -41,23 +42,17 @@ public class Playing extends State implements StateMethods {
     private int downBorder = (int) (0.5 * GAME_HEIGHT);
     private int maxLvlOffsetY;
 
-    private BufferedImage backgroundImg, mist;
-    private int[] mistPos;
+    private BufferedImage backgroundImg, shaft;
+    private int[] shaftsPos;
     private Random ran = new Random();
 
     public Playing(Game game) {
         super(game);
         initClasses();
 
+        importSprites();
         setLevelOffsets();
         loadStartLevel();
-
-        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
-        mist = LoadSave.getSpriteAtlas(LoadSave.MIST);
-        mistPos = new int[8];
-        for (int i = 0; i < mistPos.length; i++) {
-            mistPos[i] = (int) (100 * SCALE) + ran.nextInt((int) (50 * SCALE));
-        }
     }
 
     private void initClasses() {
@@ -69,6 +64,16 @@ public class Playing extends State implements StateMethods {
 
         this.levelCompletedOverlay = new LevelCompletedOverlay(this);
         this.pauseOverlay = new PauseOverlay(this);
+    }
+
+    private void importSprites() {
+        BufferedImage detailsImg = LoadSave.getSpriteAtlas(LoadSave.BG_DETAILS);
+
+        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
+        shaft = detailsImg.getSubimage(48, 0, 48, 48);
+
+        shaftsPos = new int[20];
+        Arrays.fill(shaftsPos, ran.nextInt(5)+5);
     }
 
     public void loadNextLevel() {
@@ -113,9 +118,10 @@ public class Playing extends State implements StateMethods {
     public void draw(Graphics g) {
         g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, GAME_HEIGHT, null);
 
-        drawMist(g);
+        drawBgDetails(g);
 
         levelManager.draw(g, xLvlOffset, yLvlOffset);
+        objectManager.drawDoors(g, xLvlOffset, yLvlOffset);
         player.render(g, xLvlOffset, yLvlOffset);
         objectManager.draw(g, xLvlOffset, yLvlOffset);
 
@@ -128,11 +134,16 @@ public class Playing extends State implements StateMethods {
         }
     }
 
-    private void drawMist(Graphics g) {
-        for (int i = 0; i < mistPos.length; i++) {
-            int offSetX = (int) (xLvlOffset * 0.7); // čím větší, tím pomalejší
-            int offSetY = (int) (yLvlOffset * 0.3); // čím větší, tím pomalejší
-            g.drawImage(mist, MIST_WIDTH * 4 * i - offSetX, MIST_HEIGHT * 15 * mistPos[i] * i - offSetY, MIST_WIDTH, MIST_HEIGHT, null);
+    private void drawBgDetails(Graphics g) {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 19; j > 0; j--) {
+                g.drawImage(shaft,
+                        WIDTH * 4 * i - (int) (xLvlOffset * 0.7),
+                        HEIGHT * 2 * j - (int) (yLvlOffset * 0.7),
+                        WIDTH * 2,
+                        HEIGHT * 2,
+                        null);
+            }
         }
     }
 
@@ -195,8 +206,10 @@ public class Playing extends State implements StateMethods {
             case KeyEvent.VK_ESCAPE:
                 paused = !paused;
                 break;
-            case KeyEvent.VK_N:
-                game.getPlaying().setLevelCompleted(true);
+            case KeyEvent.VK_ENTER:
+                if (objectManager.isInDoor()) {
+                    game.getPlaying().setLevelCompleted(true);
+                }
                 break;
         }
     }
