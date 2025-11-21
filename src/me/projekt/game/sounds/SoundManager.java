@@ -71,7 +71,12 @@ public class SoundManager {
 
         audio = AudioSystem.getAudioInputStream(url);
         Clip c = AudioSystem.getClip();
-        c.open(audio);
+        try {
+            c.open(audio);
+        }catch (IllegalArgumentException e ){
+            System.out.println("Your java version is not compatible with the used audio format (this problem should be fixed from java 11+)");
+            System.exit(0);
+        }
 
         return c;
     }
