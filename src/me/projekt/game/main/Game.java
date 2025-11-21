@@ -136,6 +136,14 @@ public class Game implements Runnable {
                 frames = 0;
                 updates = 0;
             }
+            long sleepTime = (long) ((timePerUpdate - (System.nanoTime() - previousTime)) / 1_000_000);
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
